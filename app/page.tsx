@@ -37,8 +37,7 @@ export default function Home() {
           <ul className="space-y-2 text-muted-foreground">
             <li>• Browse tools in the sidebar on the right</li>
             <li>• Use the search bar to find tools by name or tags</li>
-            <li>• Access Gantt Chart and Notepad from the top navigation</li>
-            <li>• Toggle between light and dark themes</li>
+                            <li>• Access Kanban Board and Notepad from the top navigation</li>            <li>• Toggle between light and dark themes</li>
           </ul>
         </div>
       </div>

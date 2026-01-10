@@ -130,7 +130,7 @@ export default function CanonicalUrlChecker() {
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                    Note: Many websites block direct browser requests (CORS). If this fails, view the page source (Ctrl+U) and use the "Paste HTML" tab.
+                    Note: Many websites block direct browser requests (CORS). If this fails, view the page source (Ctrl+U) and use the &quot;Paste HTML&quot; tab.
                 </p>
               </div>
             </div>

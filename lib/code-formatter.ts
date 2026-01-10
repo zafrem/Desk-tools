@@ -80,7 +80,7 @@ function formatPython(code: string, tabWidth: number): string {
   let indentLevel = 0;
   const indent = ' '.repeat(tabWidth);
 
-  for (let line of lines) {
+  for (const line of lines) {
     const trimmed = line.trim();
     if (!trimmed) {
       formatted.push('');

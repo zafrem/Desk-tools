@@ -4,12 +4,12 @@ import * as React from "react";
 import { AppLayout } from "@/components/app-layout";
 import { Button } from "@/components/ui/button";
 import { GanttTaskForm } from "@/components/gantt-task-form";
-import { GanttTaskList } from "@/components/gantt-task-list";
+import { KanbanBoard } from "@/components/kanban-board";
 import { db, GanttTask } from "@/lib/db";
 import { Plus, Download, Upload } from "lucide-react";
 import { useLiveQuery } from "dexie-react-hooks";
 
-export default function GanttPage() {
+export default function KanbanPage() {
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [editingTask, setEditingTask] = React.useState<GanttTask | undefined>();
 
@@ -42,6 +42,15 @@ export default function GanttPage() {
     }
   };
 
+  const handleUpdateStatus = async (task: GanttTask, newProgress: number) => {
+    if (task.id) {
+      await db.ganttTasks.update(task.id, {
+        progress: newProgress,
+        updatedAt: new Date(),
+      });
+    }
+  };
+
   const handleDeleteTask = async (id: number) => {
     if (confirm("Are you sure you want to delete this task?")) {
       await db.ganttTasks.delete(id);
@@ -68,7 +77,7 @@ export default function GanttPage() {
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `gantt-tasks-${new Date().toISOString().split("T")[0]}.json`;
+    link.download = `kanban-tasks-${new Date().toISOString().split("T")[0]}.json`;
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -112,12 +121,11 @@ export default function GanttPage() {
 
   return (
     <AppLayout>
-      <div className="container mx-auto p-8 max-w-6xl">
+      <div className="container mx-auto p-8 max-w-7xl">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold mb-2">Gantt Chart</h1>
+          <h1 className="text-3xl font-bold mb-2">Kanban Board</h1>
           <p className="text-muted-foreground">
-            Manage your project tasks and timelines. All data is stored locally
-            in your browser.
+            Manage your project tasks with a simple drag-and-drop workflow. All data is stored locally.
           </p>
         </div>
 
@@ -142,16 +150,17 @@ export default function GanttPage() {
           </Button>
         </div>
 
-        {/* Task List */}
+        {/* Board */}
         {tasks === undefined ? (
           <div className="text-center py-12 text-muted-foreground">
             Loading tasks...
           </div>
         ) : (
-          <GanttTaskList
+          <KanbanBoard
             tasks={tasks}
             onEdit={handleEdit}
             onDelete={handleDeleteTask}
+            onUpdateStatus={handleUpdateStatus}
           />
         )}
 
@@ -169,9 +178,7 @@ export default function GanttPage() {
             Local Storage Notice
           </h3>
           <p>
-            All tasks are stored locally in your browser using IndexedDB. Your
-            data never leaves your device. Use the Export feature to backup your
-            tasks, and Import to restore them.
+            Your Kanban board data is stored locally in your browser. Use Export/Import to backup or transfer your data.
           </p>
         </div>
       </div>

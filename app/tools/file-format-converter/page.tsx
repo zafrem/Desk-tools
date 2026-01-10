@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Copy, Download, Upload, ArrowRight, FileText } from "lucide-react";
+import { Copy, Download, Upload, ArrowRight, FileText, ArrowLeftRight } from "lucide-react";
 import {
   convertFormat,
   SAMPLE_DATA,
@@ -38,6 +38,16 @@ export default function FileFormatConverterPage() {
       setOutput("");
       setError(result.error || "Conversion failed");
     }
+  };
+
+  const handleSwap = () => {
+    setFromFormat(toFormat);
+    setToFormat(fromFormat);
+    setInput(output);
+    setOutput(""); // Clear output since input changed, or we could try to convert back immediately? 
+    // Let's just clear output to avoid confusion, or better, try to reverse convert if possible? 
+    // Usually swap just swaps formats and puts previous output as input.
+    setError("");
   };
 
   const handleLoadSample = () => {
@@ -101,7 +111,9 @@ export default function FileFormatConverterPage() {
             </SelectContent>
           </Select>
 
-          <ArrowRight className="h-5 w-5 text-muted-foreground" />
+          <Button variant="ghost" size="icon" onClick={handleSwap} title="Swap formats">
+            <ArrowLeftRight className="h-4 w-4" />
+          </Button>
 
           <Select value={toFormat} onValueChange={(v) => setToFormat(v as Format)}>
             <SelectTrigger className="w-[180px]">

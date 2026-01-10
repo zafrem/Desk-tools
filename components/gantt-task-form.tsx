@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GanttTask } from "@/lib/db";
 import { format } from "date-fns";
 
@@ -33,7 +34,7 @@ export function GanttTaskForm({
   const [description, setDescription] = React.useState("");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
-  const [progress, setProgress] = React.useState(0);
+  const [status, setStatus] = React.useState("todo");
 
   React.useEffect(() => {
     if (task) {
@@ -41,7 +42,10 @@ export function GanttTaskForm({
       setDescription(task.description || "");
       setStartDate(format(task.startDate, "yyyy-MM-dd"));
       setEndDate(format(task.endDate, "yyyy-MM-dd"));
-      setProgress(task.progress);
+      
+      if (task.progress === 0) setStatus("todo");
+      else if (task.progress === 100) setStatus("done");
+      else setStatus("in-progress");
     } else {
       // Reset form for new task
       setTitle("");
@@ -49,12 +53,16 @@ export function GanttTaskForm({
       const today = format(new Date(), "yyyy-MM-dd");
       setStartDate(today);
       setEndDate(today);
-      setProgress(0);
+      setStatus("todo");
     }
   }, [task, open]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    let progress = 0;
+    if (status === "in-progress") progress = 50;
+    if (status === "done") progress = 100;
 
     onSave({
       title,
@@ -78,7 +86,7 @@ export function GanttTaskForm({
             <DialogDescription>
               {task
                 ? "Update task details below."
-                : "Add a new task to your Gantt chart."}
+                : "Add a new task to your board."}
             </DialogDescription>
           </DialogHeader>
 
@@ -136,15 +144,17 @@ export function GanttTaskForm({
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="progress">Progress: {progress}%</Label>
-              <Input
-                id="progress"
-                type="range"
-                min="0"
-                max="100"
-                value={progress}
-                onChange={(e) => setProgress(Number(e.target.value))}
-              />
+              <Label htmlFor="status">Status</Label>
+              <Select value={status} onValueChange={setStatus}>
+                <SelectTrigger id="status">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todo">To Do</SelectItem>
+                  <SelectItem value="in-progress">In Progress</SelectItem>
+                  <SelectItem value="done">Done</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 

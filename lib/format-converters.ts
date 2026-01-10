@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import yaml from "js-yaml";
 import Papa from "papaparse";
 import convert from "xml-js";

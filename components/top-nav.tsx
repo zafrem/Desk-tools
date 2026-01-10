@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Database, Calendar, StickyNote } from "lucide-react";
+import { Database, LayoutDashboard, StickyNote } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -19,10 +19,10 @@ export function TopNav() {
 
         {/* Core Navigation */}
         <nav className="flex items-center gap-6 text-sm font-medium flex-1">
-          <Link href="/gantt">
+          <Link href="/kanban">
             <Button variant="ghost" className="gap-2">
-              <Calendar className="h-4 w-4" />
-              Gantt Chart
+              <LayoutDashboard className="h-4 w-4" />
+              Kanban Board
             </Button>
           </Link>
           <Link href="/notepad">
