@@ -5,9 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // If deploying to GitHub Pages with a repo name, uncomment and set basePath
-  // basePath: '/Desk-tools',
-  // assetPrefix: '/Desk-tools/',
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH ? `${process.env.NEXT_PUBLIC_BASE_PATH}/` : '',
 };
 
 export default nextConfig;
