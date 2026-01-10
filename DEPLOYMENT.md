@@ -1,69 +1,66 @@
 # Deployment Guide for GitHub Pages
 
-## Quick Setup
+This project is configured to be deployed to **GitHub Pages** using GitHub Actions.
 
-### 1. Enable GitHub Pages
-1. Go to your repository on GitHub
-2. Navigate to **Settings** → **Pages**
-3. Under "Source", select **GitHub Actions**
+## Prerequisites
 
-### 2. Push to Main Branch
-The deployment workflow will automatically trigger when you push to the `main` branch:
+1.  **GitHub Repository**: This project must be pushed to a GitHub repository.
+2.  **Settings**: You need to configure the repository settings to allow deployment from GitHub Actions.
+
+## Step-by-Step Guide
+
+### 1. Push to GitHub
+Ensure your code is committed and pushed to the `main` branch of your GitHub repository.
 
 ```bash
 git add .
-git commit -m "Initial deployment setup"
+git commit -m "Prepare for deployment"
 git push origin main
 ```
 
-### 3. Access Your Site
-After the workflow completes (2-5 minutes), your site will be available at:
-- `https://<your-username>.github.io/Desk-tools/`
+### 2. Configure GitHub Pages
+1.  Go to your repository on GitHub.
+2.  Navigate to **Settings** > **Pages**.
+3.  Under **Build and deployment**, select **GitHub Actions** from the "Source" dropdown menu.
+4.  (Optional) If you are using a custom domain, configure it here.
 
-## Configuration Notes
+### 3. Check the Workflow
+The deployment workflow is defined in `.github/workflows/deploy.yml`.
+- It triggers on every push to the `main` branch.
+- It builds the Next.js app using `npm run build`.
+- It uploads the `./out` directory as an artifact.
+- It deploys the artifact to GitHub Pages.
 
-### Base Path (If Using Repository Name)
-If deploying to `https://<username>.github.io/Desk-tools/`, uncomment these lines in `next.config.ts`:
+### 4. Verify Deployment
+After pushing, go to the **Actions** tab in your repository to see the workflow running.
+Once it completes (green checkmark), your site will be live at:
+`https://<your-username>.github.io/<repo-name>/` (or your custom domain).
 
+## Configuration Details
+
+### `next.config.ts`
+The configuration is set for static export:
 ```typescript
-basePath: '/Desk-tools',
-assetPrefix: '/Desk-tools/',
+const nextConfig: NextConfig = {
+  output: "export",
+  images: {
+    unoptimized: true,
+  },
+  // ...
+};
 ```
 
-### Custom Domain (Optional)
-If using a custom domain:
-1. Add a `CNAME` file to the `public/` directory with your domain
-2. Configure DNS according to [GitHub's documentation](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)
-
-## Local Development
-
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production (test before deploying)
-npm run build
-
-# Preview production build locally
-npx serve@latest out
-```
+### `.nojekyll`
+A `.nojekyll` file is added to the `public/` directory to bypass Jekyll processing on GitHub Pages, ensuring files starting with `_` (like `_next`) are served correctly.
 
 ## Troubleshooting
 
-### Workflow Failed
-- Check the Actions tab for error logs
-- Ensure Node.js version matches workflow (v20)
-- Verify all dependencies are in `package.json`
-
-### 404 on Page Refresh
-This is expected behavior for static exports. The app uses client-side routing.
-
-### Assets Not Loading
-Ensure `basePath` and `assetPrefix` are correctly configured in `next.config.ts` if using a repository subdirectory.
-
-## Privacy & Data Storage
-
-All data (Gantt tasks, notes, preferences) is stored locally in IndexedDB. No data is sent to external servers. The static site runs entirely in the browser.
+- **404 on Assets**: If CSS or JS files fail to load, you might need to set the `basePath` in `next.config.ts` if your site is not at the root domain (e.g., `username.github.io/repo-name`).
+  - Uncomment the `basePath` lines in `next.config.ts` and set it to `/<repo-name>`.
+- **Permissions Error**: Ensure the workflow has write permissions. This is set in `deploy.yml`:
+  ```yaml
+  permissions:
+    contents: read
+    pages: write
+    id-token: write
+  ```
