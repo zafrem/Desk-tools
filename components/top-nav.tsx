@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Database, LayoutDashboard, StickyNote, PenTool, BookA } from "lucide-react";
+import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -52,6 +52,13 @@ export function TopNav() {
             <div className="h-2 w-2 rounded-full bg-green-500" />
             <span>Local Storage</span>
           </div>
+
+          <Link href="https://github.com/zafrem/Desk-tools/issues" target="_blank" rel="noopener noreferrer">
+            <Button variant="ghost" size="icon" title="Report an issue on GitHub">
+              <Github className="h-5 w-5" />
+              <span className="sr-only">GitHub</span>
+            </Button>
+          </Link>
 
           {/* Theme toggle */}
           <ThemeToggle />
