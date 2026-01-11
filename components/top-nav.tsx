@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github } from "lucide-react";
+import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github, ExternalLink } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -41,6 +41,12 @@ export function TopNav() {
             <Button variant="ghost" className="gap-2">
               <BookA className="h-4 w-4" />
               Terms
+            </Button>
+          </Link>
+          <Link href="/bookmarks">
+            <Button variant="ghost" className="gap-2">
+              <ExternalLink className="h-4 w-4" />
+              Bookmarks
             </Button>
           </Link>
         </nav>

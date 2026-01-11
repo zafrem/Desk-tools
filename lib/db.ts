@@ -33,6 +33,25 @@ export interface Term {
   updatedAt: Date;
 }
 
+export interface Bookmark {
+  id?: number;
+  title: string;
+  url: string;
+  group?: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Command {
+  id?: number;
+  title: string;
+  command: string;
+  tags?: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface UserPreference {
   id?: number;
   key: string;
@@ -45,6 +64,8 @@ class DeskToolsDatabase extends Dexie {
   ganttTasks!: EntityTable<GanttTask, 'id'>;
   notes!: EntityTable<Note, 'id'>;
   terms!: EntityTable<Term, 'id'>;
+  bookmarks!: EntityTable<Bookmark, 'id'>;
+  commands!: EntityTable<Command, 'id'>;
   preferences!: EntityTable<UserPreference, 'id'>;
 
   constructor() {
@@ -54,6 +75,8 @@ class DeskToolsDatabase extends Dexie {
       ganttTasks: "++id, title, startDate, endDate, *tags, createdAt",
       notes: "++id, title, *tags, createdAt, updatedAt",
       terms: "++id, term, category, *tags, createdAt",
+      bookmarks: "++id, title, group, order, createdAt",
+      commands: "++id, title, *tags, createdAt",
       preferences: "++id, &key, updatedAt",
     });
   }
