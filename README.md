@@ -19,9 +19,9 @@ All data is stored locally in your browser (using IndexedDB), ensuring your work
 - **🎨 Whiteboard**: Sketch out ideas, diagrams, or wireframes and export them as images.
 - **📖 Definition of Terms**: Organize and share project terminology with import/export capabilities.
 - **🔖 Bookmarks**: Organize your frequently used links into groups with drag-and-drop support.
-- **🔍 Instant Search**: Find any of the 45+ specialized tools instantly using tag-based fuzzy search.
+- 🔍 **Instant Search**: Find any of the 47 specialized tools instantly using tag-based fuzzy search.
 
-## 🛠️ Specialized Tools (45+)
+## 🛠️ Specialized Tools (47)
 
 | Category | Tools |
 | --- | --- |

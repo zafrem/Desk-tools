@@ -9,7 +9,7 @@ export default function Home() {
           Desk-tools
         </h1>
         <p className="text-xl text-muted-foreground">
-          A high-performance, local-first utility platform with 50+ developer tools.
+          A high-performance, local-first utility platform with 47 developer tools.
         </p>
         <p className="text-muted-foreground">
           Originally created for multi-tasking individuals at startups. With the advancement of AI, the lines between developer, designer, planner, and marketer are collapsing. Desk-tools is designed to empower this new breed of hybrid professionals by providing a comprehensive suite of utilities in one place.
