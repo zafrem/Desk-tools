@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { AppLayout } from "@/components/app-layout";
 import { Button } from "@/components/ui/button";
 import { GanttTaskForm } from "@/components/gantt-task-form";
 import { KanbanBoard } from "@/components/kanban-board";
@@ -120,68 +119,66 @@ export default function KanbanPage() {
   };
 
   return (
-    <AppLayout>
-      <div className="container mx-auto p-8 max-w-7xl">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold mb-2">Kanban Board</h1>
-          <p className="text-muted-foreground">
-            Manage your project tasks with a simple drag-and-drop workflow. All data is stored locally.
-          </p>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          <Button onClick={() => setIsFormOpen(true)} className="gap-2">
-            <Plus className="h-4 w-4" />
-            New Task
-          </Button>
-          <Button
-            variant="outline"
-            onClick={handleExport}
-            disabled={!tasks || tasks.length === 0}
-            className="gap-2"
-          >
-            <Download className="h-4 w-4" />
-            Export
-          </Button>
-          <Button variant="outline" onClick={handleImport} className="gap-2">
-            <Upload className="h-4 w-4" />
-            Import
-          </Button>
-        </div>
-
-        {/* Board */}
-        {tasks === undefined ? (
-          <div className="text-center py-12 text-muted-foreground">
-            Loading tasks...
-          </div>
-        ) : (
-          <KanbanBoard
-            tasks={tasks}
-            onEdit={handleEdit}
-            onDelete={handleDeleteTask}
-            onUpdateStatus={handleUpdateStatus}
-          />
-        )}
-
-        {/* Task Form Dialog */}
-        <GanttTaskForm
-          open={isFormOpen}
-          onOpenChange={handleFormClose}
-          onSave={editingTask ? handleUpdateTask : handleCreateTask}
-          task={editingTask}
-        />
-
-        {/* Info Box */}
-        <div className="mt-8 rounded-lg border bg-card p-4 text-sm text-muted-foreground">
-          <h3 className="font-semibold text-foreground mb-2">
-            Local Storage Notice
-          </h3>
-          <p>
-            Your Kanban board data is stored locally in your browser. Use Export/Import to backup or transfer your data.
-          </p>
-        </div>
+    <div className="container mx-auto p-8 max-w-7xl">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2">Kanban Board</h1>
+        <p className="text-muted-foreground">
+          Manage your project tasks with a simple drag-and-drop workflow. All data is stored locally.
+        </p>
       </div>
-    </AppLayout>
+
+      {/* Action Buttons */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <Button onClick={() => setIsFormOpen(true)} className="gap-2">
+          <Plus className="h-4 w-4" />
+          New Task
+        </Button>
+        <Button
+          variant="outline"
+          onClick={handleExport}
+          disabled={!tasks || tasks.length === 0}
+          className="gap-2"
+        >
+          <Download className="h-4 w-4" />
+          Export
+        </Button>
+        <Button variant="outline" onClick={handleImport} className="gap-2">
+          <Upload className="h-4 w-4" />
+          Import
+        </Button>
+      </div>
+
+      {/* Board */}
+      {tasks === undefined ? (
+        <div className="text-center py-12 text-muted-foreground">
+          Loading tasks...
+        </div>
+      ) : (
+        <KanbanBoard
+          tasks={tasks}
+          onEdit={handleEdit}
+          onDelete={handleDeleteTask}
+          onUpdateStatus={handleUpdateStatus}
+        />
+      )}
+
+      {/* Task Form Dialog */}
+      <GanttTaskForm
+        open={isFormOpen}
+        onOpenChange={handleFormClose}
+        onSave={editingTask ? handleUpdateTask : handleCreateTask}
+        task={editingTask}
+      />
+
+      {/* Info Box */}
+      <div className="mt-8 rounded-lg border bg-card p-4 text-sm text-muted-foreground">
+        <h3 className="font-semibold text-foreground mb-2">
+          Local Storage Notice
+        </h3>
+        <p>
+          Your Kanban board data is stored locally in your browser. Use Export/Import to backup or transfer your data.
+        </p>
+      </div>
+    </div>
   );
 }

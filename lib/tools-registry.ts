@@ -281,15 +281,6 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "TrendingUp",
   },
   {
-    id: "marketing-tools",
-    name: "Marketing Tools",
-    description: "ROI, ROAS, and funnel calculators",
-    tags: ["roi", "roas", "funnel", "ab-test"],
-    category: "calculator",
-    path: "/tools/marketing-tools",
-    icon: "TrendingUp",
-  },
-  {
     id: "design-tools",
     name: "Design Tools",
     description: "Color picker, palette, and image tools",

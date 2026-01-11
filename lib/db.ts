@@ -23,6 +23,16 @@ export interface Note {
   updatedAt: Date;
 }
 
+export interface Term {
+  id?: number;
+  term: string;
+  definition: string;
+  category?: string;
+  tags?: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface UserPreference {
   id?: number;
   key: string;
@@ -34,6 +44,7 @@ export interface UserPreference {
 class DeskToolsDatabase extends Dexie {
   ganttTasks!: EntityTable<GanttTask, 'id'>;
   notes!: EntityTable<Note, 'id'>;
+  terms!: EntityTable<Term, 'id'>;
   preferences!: EntityTable<UserPreference, 'id'>;
 
   constructor() {
@@ -42,6 +53,7 @@ class DeskToolsDatabase extends Dexie {
     this.version(1).stores({
       ganttTasks: "++id, title, startDate, endDate, *tags, createdAt",
       notes: "++id, title, *tags, createdAt, updatedAt",
+      terms: "++id, term, category, *tags, createdAt",
       preferences: "++id, &key, updatedAt",
     });
   }

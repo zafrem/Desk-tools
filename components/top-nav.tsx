@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Database, LayoutDashboard, StickyNote } from "lucide-react";
+import { Database, LayoutDashboard, StickyNote, PenTool, BookA } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -29,6 +29,18 @@ export function TopNav() {
             <Button variant="ghost" className="gap-2">
               <StickyNote className="h-4 w-4" />
               Notepad
+            </Button>
+          </Link>
+          <Link href="/whiteboard">
+            <Button variant="ghost" className="gap-2">
+              <PenTool className="h-4 w-4" />
+              Whiteboard
+            </Button>
+          </Link>
+          <Link href="/terms">
+            <Button variant="ghost" className="gap-2">
+              <BookA className="h-4 w-4" />
+              Terms
             </Button>
           </Link>
         </nav>
