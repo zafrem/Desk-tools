@@ -1,0 +1,18 @@
+{
+  "brand": "Desk-tools",
+  "kanban": "칸반 보드",
+  "notepad": "메모장",
+  "whiteboard": "화이트보드",
+  "terms": "용어 정의",
+  "bookmarks": "북마크",
+  "localStorage": "로컬 저장소",
+  "searchPlaceholder": "도구 검색...",
+  "toolsAvailable": "{{count}}개 도구 사용 가능",
+  "toggleSidebar": "사이드바 전환",
+  "toggleMenu": "메뉴 전환",
+  "closeSidebar": "사이드바 닫기",
+  "openSidebar": "도구 사이드바 열기",
+  "tools": "도구",
+  "github": "GitHub",
+  "changeLanguage": "언어 변경"
+}

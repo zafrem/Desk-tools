@@ -1,0 +1,194 @@
+{
+  "text-encoder": {
+    "name": "텍스트 인코더",
+    "description": "다양한 형식으로 텍스트 인코딩 및 디코딩"
+  },
+  "file-format-converter": {
+    "name": "파일 형식 변환기",
+    "description": "JSON, XML, CSV 형식 간 변환"
+  },
+  "chmod-calculator": {
+    "name": "Chmod 계산기",
+    "description": "Linux 파일 권한 계산 (8진수 및 기호)"
+  },
+  "code-formatter": {
+    "name": "코드 포맷터",
+    "description": "코드 정리 및 포맷팅"
+  },
+  "json-explorer": {
+    "name": "JSON 탐색기",
+    "description": "JSON 데이터를 트리로 시각화"
+  },
+  "icon-generator": {
+    "name": "아이콘 생성기",
+    "description": "이미지에서 파비콘 및 앱 아이콘 생성"
+  },
+  "ip-subnet-calculator": {
+    "name": "IP 서브넷 계산기",
+    "description": "IPv4/IPv6 서브넷 마스크, 범위, CIDR 계산"
+  },
+  "json-csv-converter": {
+    "name": "JSON-CSV 변환",
+    "description": "JSON과 CSV 형식 간 변환"
+  },
+  "json-to-code": {
+    "name": "JSON to 코드",
+    "description": "JSON에서 Python 클래스 또는 TypeScript 인터페이스 생성"
+  },
+  "json-schema-gen": {
+    "name": "JSON 스키마 생성",
+    "description": "데이터에서 JSON 스키마 생성"
+  },
+  "base64-converter": {
+    "name": "Base64 변환기",
+    "description": "Base64 인코딩 및 디코딩"
+  },
+  "binary-hex-converter": {
+    "name": "2진수-16진수 변환",
+    "description": "2진수와 16진수 간 변환"
+  },
+  "url-encoder": {
+    "name": "URL 인코더",
+    "description": "URL 인코딩 및 디코딩"
+  },
+  "short-url-gen": {
+    "name": "단축 URL 생성",
+    "description": "단축 URL 생성"
+  },
+  "jwt-decoder": {
+    "name": "JWT 디코더",
+    "description": "JWT 토큰 디코딩 및 검증"
+  },
+  "html-entities": {
+    "name": "HTML 엔티티",
+    "description": "HTML 엔티티 인코딩 및 디코딩"
+  },
+  "text-case": {
+    "name": "텍스트 케이스",
+    "description": "텍스트 대소문자 변환 (대문자, 소문자, 카멜 등)"
+  },
+  "hash-generator": {
+    "name": "해시 생성기",
+    "description": "SHA256, MD5 등 해시 생성"
+  },
+  "encryption-tool": {
+    "name": "암호화 도구",
+    "description": "AES로 암호화 및 복호화"
+  },
+  "uuid-generator": {
+    "name": "UUID 생성기",
+    "description": "고유 식별자 생성"
+  },
+  "password-gen": {
+    "name": "비밀번호 생성",
+    "description": "안전한 비밀번호 생성"
+  },
+  "timestamp-conv": {
+    "name": "타임스탬프 변환",
+    "description": "Unix 타임스탬프를 날짜로 변환"
+  },
+  "cron-expression": {
+    "name": "Cron 표현식",
+    "description": "Cron 표현식 작성 및 파싱"
+  },
+  "regex-tester": {
+    "name": "정규식 테스터",
+    "description": "정규 표현식 테스트"
+  },
+  "sql-formatter": {
+    "name": "SQL 포맷터",
+    "description": "SQL 쿼리 포맷팅"
+  },
+  "text-diff": {
+    "name": "텍스트 비교",
+    "description": "텍스트 비교 및 차이점 확인"
+  },
+  "markdown-preview": {
+    "name": "마크다운 미리보기",
+    "description": "실시간 마크다운 미리보기"
+  },
+  "markup-converter": {
+    "name": "마크업 변환기",
+    "description": "마크다운과 Atlassian Wiki 마크업 간 변환"
+  },
+  "pdf-tools": {
+    "name": "PDF 편집기/도구",
+    "description": "PDF 파일 편집 및 조작"
+  },
+  "unit-converter": {
+    "name": "단위 변환기",
+    "description": "단위 변환 (무게, 길이 등)"
+  },
+  "date-dday-calc": {
+    "name": "날짜/D-Day 계산",
+    "description": "날짜 간 일수 계산"
+  },
+  "salary-tax-calc": {
+    "name": "급여/세금 계산",
+    "description": "급여 및 세금 계산"
+  },
+  "loan-calculator": {
+    "name": "대출 계산기",
+    "description": "대출 상환금 및 이자 계산"
+  },
+  "command-palette": {
+    "name": "명령어 팔레트",
+    "description": "자주 사용하는 명령어나 스니펫 저장 및 빠른 복사"
+  },
+  "compound-interest-calculator": {
+    "name": "복리 계산기",
+    "description": "시간에 따른 복리 성장 시각화"
+  },
+  "design-tools": {
+    "name": "디자인 도구",
+    "description": "색상 선택기, 팔레트, 이미지 도구"
+  },
+  "qr-code-gen": {
+    "name": "QR 코드 생성",
+    "description": "QR 코드 생성"
+  },
+  "keyword-density": {
+    "name": "키워드 밀도",
+    "description": "키워드 밀도 및 빈도 계산"
+  },
+  "meta-tag-checker": {
+    "name": "메타 태그 검사",
+    "description": "메타 제목 및 설명 길이 확인"
+  },
+  "reading-time-calc": {
+    "name": "읽기 시간 계산",
+    "description": "예상 읽기 시간 계산"
+  },
+  "word-counter": {
+    "name": "단어 수 세기",
+    "description": "단어, 문자, 문장 수 세기"
+  },
+  "slug-generator": {
+    "name": "슬러그 생성기",
+    "description": "SEO 친화적 URL 슬러그 생성"
+  },
+  "robots-txt-generator": {
+    "name": "Robots.txt 생성",
+    "description": "SEO용 robots.txt 파일 생성"
+  },
+  "sitemap-generator": {
+    "name": "사이트맵 생성기",
+    "description": "XML 사이트맵 구조 생성"
+  },
+  "open-graph-generator": {
+    "name": "Open Graph 생성",
+    "description": "Open Graph 메타 태그 생성"
+  },
+  "schema-markup-generator": {
+    "name": "스키마 마크업 생성",
+    "description": "JSON-LD 스키마 마크업 생성"
+  },
+  "canonical-url-checker": {
+    "name": "Canonical URL 검사",
+    "description": "Canonical URL 검증 및 생성"
+  },
+  "pomodoro-timer": {
+    "name": "뽀모도로 타이머",
+    "description": "작업과 휴식 간격이 있는 집중 타이머"
+  }
+}

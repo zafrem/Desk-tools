@@ -9,11 +9,14 @@ import { searchTools } from "@/lib/search";
 import { Tool } from "@/types/tool";
 import * as LucideIcons from "lucide-react";
 import { useSidebar } from "@/components/sidebar-context";
+import { useTranslation } from "react-i18next";
 
 export function ToolSidebar() {
   const { isOpen, toggle, close } = useSidebar();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filteredTools, setFilteredTools] = React.useState<Tool[]>([]);
+  const { t } = useTranslation("navigation");
+  const { t: tTools } = useTranslation("tools");
 
   React.useEffect(() => {
     const results = searchTools(searchQuery);
@@ -45,7 +48,7 @@ export function ToolSidebar() {
         className={`fixed bottom-4 right-4 z-50 lg:hidden shadow-lg ${isOpen ? "hidden" : ""}`}
       >
         <PanelRightOpen className="h-5 w-5" />
-        <span className="sr-only">Open tools sidebar</span>
+        <span className="sr-only">{t("openSidebar")}</span>
       </Button>
 
       <aside
@@ -56,24 +59,24 @@ export function ToolSidebar() {
         {/* Sticky Search Bar */}
         <div className="p-4 border-b bg-background">
           <div className="flex items-center gap-2 mb-2 lg:hidden">
-            <span className="font-semibold flex-1">Tools</span>
+            <span className="font-semibold flex-1">{t("tools")}</span>
             <Button variant="ghost" size="icon" onClick={close}>
               <X className="h-5 w-5" />
-              <span className="sr-only">Close sidebar</span>
+              <span className="sr-only">{t("closeSidebar")}</span>
             </Button>
           </div>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search tools..."
+              placeholder={t("searchPlaceholder")}
               className="pl-9"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <p className="text-xs text-muted-foreground mt-2">
-            {filteredTools.length} tools available
+            {t("toolsAvailable", { count: filteredTools.length })}
           </p>
         </div>
 
@@ -100,9 +103,11 @@ export function ToolSidebar() {
                     )}
                   </div>
                   <div className="flex-1 space-y-1">
-                    <div className="font-medium leading-none">{tool.name}</div>
+                    <div className="font-medium leading-none">
+                      {tTools(`${tool.id}.name`, { defaultValue: tool.name })}
+                    </div>
                     <div className="text-xs text-muted-foreground line-clamp-2">
-                      {tool.description}
+                      {tTools(`${tool.id}.description`, { defaultValue: tool.description })}
                     </div>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {tool.tags.slice(0, 3).map((tag) => (

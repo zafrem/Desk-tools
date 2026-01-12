@@ -1,0 +1,18 @@
+{
+  "brand": "Desk-tools",
+  "kanban": "カンバンボード",
+  "notepad": "メモ帳",
+  "whiteboard": "ホワイトボード",
+  "terms": "用語集",
+  "bookmarks": "ブックマーク",
+  "localStorage": "ローカルストレージ",
+  "searchPlaceholder": "ツールを検索...",
+  "toolsAvailable": "{{count}}個のツールが利用可能",
+  "toggleSidebar": "サイドバーを切り替え",
+  "toggleMenu": "メニューを切り替え",
+  "closeSidebar": "サイドバーを閉じる",
+  "openSidebar": "ツールサイドバーを開く",
+  "tools": "ツール",
+  "github": "GitHub",
+  "changeLanguage": "言語を変更"
+}

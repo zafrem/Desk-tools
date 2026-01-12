@@ -1,0 +1,18 @@
+{
+  "brand": "Desk-tools",
+  "kanban": "Kanban Board",
+  "notepad": "Notepad",
+  "whiteboard": "Whiteboard",
+  "terms": "Terms",
+  "bookmarks": "Bookmarks",
+  "localStorage": "Local Storage",
+  "searchPlaceholder": "Search tools...",
+  "toolsAvailable": "{{count}} tools available",
+  "toggleSidebar": "Toggle sidebar",
+  "toggleMenu": "Toggle menu",
+  "closeSidebar": "Close sidebar",
+  "openSidebar": "Open tools sidebar",
+  "tools": "Tools",
+  "github": "GitHub",
+  "changeLanguage": "Change language"
+}

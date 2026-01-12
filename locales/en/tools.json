@@ -1,0 +1,194 @@
+{
+  "text-encoder": {
+    "name": "Text Encoder",
+    "description": "Encode and decode text with multiple formats"
+  },
+  "file-format-converter": {
+    "name": "File Format Converter",
+    "description": "Convert between JSON, XML, and CSV formats"
+  },
+  "chmod-calculator": {
+    "name": "Chmod Calculator",
+    "description": "Calculate Linux file permissions (octal and symbolic)"
+  },
+  "code-formatter": {
+    "name": "Code Formatter",
+    "description": "Format and beautify your code"
+  },
+  "json-explorer": {
+    "name": "JSON Explorer",
+    "description": "Visualize JSON data as a tree"
+  },
+  "icon-generator": {
+    "name": "Icon Generator",
+    "description": "Generate favicons and app icons from an image"
+  },
+  "ip-subnet-calculator": {
+    "name": "IP Subnet Calculator",
+    "description": "Calculate IPv4/IPv6 subnet masks, ranges, and CIDR"
+  },
+  "json-csv-converter": {
+    "name": "JSON to CSV",
+    "description": "Convert between JSON and CSV formats"
+  },
+  "json-to-code": {
+    "name": "JSON to Code",
+    "description": "Generate Python classes or TypeScript interfaces from JSON"
+  },
+  "json-schema-gen": {
+    "name": "JSON Schema Gen",
+    "description": "Generate JSON schema from data"
+  },
+  "base64-converter": {
+    "name": "Base64 Converter",
+    "description": "Encode and decode Base64"
+  },
+  "binary-hex-converter": {
+    "name": "Binary to HEX",
+    "description": "Convert between binary and hexadecimal"
+  },
+  "url-encoder": {
+    "name": "URL Encoder",
+    "description": "Encode and decode URLs"
+  },
+  "short-url-gen": {
+    "name": "Short URL Gen",
+    "description": "Generate short URLs"
+  },
+  "jwt-decoder": {
+    "name": "JWT Decoder",
+    "description": "Decode and verify JWT tokens"
+  },
+  "html-entities": {
+    "name": "HTML Entities",
+    "description": "Encode and decode HTML entities"
+  },
+  "text-case": {
+    "name": "Text Case",
+    "description": "Convert text case (upper, lower, camel, etc.)"
+  },
+  "hash-generator": {
+    "name": "Hash Generator",
+    "description": "Generate SHA256, MD5, and other hashes"
+  },
+  "encryption-tool": {
+    "name": "Encryption Tool",
+    "description": "Encrypt and decrypt with AES"
+  },
+  "uuid-generator": {
+    "name": "UUID Generator",
+    "description": "Generate unique identifiers"
+  },
+  "password-gen": {
+    "name": "Password Gen",
+    "description": "Generate secure passwords"
+  },
+  "timestamp-conv": {
+    "name": "Timestamp Conv",
+    "description": "Convert Unix timestamps to dates"
+  },
+  "cron-expression": {
+    "name": "Cron Expression",
+    "description": "Build and parse cron expressions"
+  },
+  "regex-tester": {
+    "name": "Regex Tester",
+    "description": "Test regular expressions"
+  },
+  "sql-formatter": {
+    "name": "SQL Formatter",
+    "description": "Format SQL queries"
+  },
+  "text-diff": {
+    "name": "Text Diff",
+    "description": "Compare and diff text"
+  },
+  "markdown-preview": {
+    "name": "Markdown Preview",
+    "description": "Preview markdown in real-time"
+  },
+  "markup-converter": {
+    "name": "Markup Converter",
+    "description": "Convert between Markdown and Atlassian Wiki Markup"
+  },
+  "pdf-tools": {
+    "name": "PDF Editor/Tools",
+    "description": "Edit and manipulate PDF files"
+  },
+  "unit-converter": {
+    "name": "Unit Converter",
+    "description": "Convert units (weight, length, etc.)"
+  },
+  "date-dday-calc": {
+    "name": "Date/D-Day Calc",
+    "description": "Calculate days between dates"
+  },
+  "salary-tax-calc": {
+    "name": "Salary/Tax Calc",
+    "description": "Calculate salary and taxes"
+  },
+  "loan-calculator": {
+    "name": "Loan Calculator",
+    "description": "Calculate loan payments and interest"
+  },
+  "command-palette": {
+    "name": "Command Palette",
+    "description": "Save and quickly copy frequently used commands or snippets"
+  },
+  "compound-interest-calculator": {
+    "name": "Compound Interest Calc",
+    "description": "Visualize compound interest growth over time"
+  },
+  "design-tools": {
+    "name": "Design Tools",
+    "description": "Color picker, palette, and image tools"
+  },
+  "qr-code-gen": {
+    "name": "QR Code Gen",
+    "description": "Generate QR codes"
+  },
+  "keyword-density": {
+    "name": "Keyword Density",
+    "description": "Calculate keyword density and frequency"
+  },
+  "meta-tag-checker": {
+    "name": "Meta Tag Checker",
+    "description": "Check meta title and description lengths"
+  },
+  "reading-time-calc": {
+    "name": "Reading Time Calc",
+    "description": "Calculate estimated reading time"
+  },
+  "word-counter": {
+    "name": "Word Counter",
+    "description": "Count words, characters, and sentences"
+  },
+  "slug-generator": {
+    "name": "Slug Generator",
+    "description": "Generate SEO-friendly URL slugs"
+  },
+  "robots-txt-generator": {
+    "name": "Robots.txt Generator",
+    "description": "Generate robots.txt file for SEO"
+  },
+  "sitemap-generator": {
+    "name": "Sitemap Generator",
+    "description": "Generate XML sitemap structure"
+  },
+  "open-graph-generator": {
+    "name": "Open Graph Generator",
+    "description": "Generate Open Graph meta tags"
+  },
+  "schema-markup-generator": {
+    "name": "Schema Markup Gen",
+    "description": "Generate JSON-LD schema markup"
+  },
+  "canonical-url-checker": {
+    "name": "Canonical URL Checker",
+    "description": "Validate and generate canonical URLs"
+  },
+  "pomodoro-timer": {
+    "name": "Pomodoro Timer",
+    "description": "Focus timer with work and break intervals"
+  }
+}

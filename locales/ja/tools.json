@@ -1,0 +1,194 @@
+{
+  "text-encoder": {
+    "name": "テキストエンコーダー",
+    "description": "複数の形式でテキストをエンコード・デコード"
+  },
+  "file-format-converter": {
+    "name": "ファイル形式変換",
+    "description": "JSON、XML、CSV形式間の変換"
+  },
+  "chmod-calculator": {
+    "name": "Chmod計算機",
+    "description": "Linuxファイル権限の計算（8進数と記号）"
+  },
+  "code-formatter": {
+    "name": "コードフォーマッター",
+    "description": "コードの整形と美化"
+  },
+  "json-explorer": {
+    "name": "JSONエクスプローラー",
+    "description": "JSONデータをツリーで可視化"
+  },
+  "icon-generator": {
+    "name": "アイコン生成",
+    "description": "画像からファビコンとアプリアイコンを生成"
+  },
+  "ip-subnet-calculator": {
+    "name": "IPサブネット計算機",
+    "description": "IPv4/IPv6サブネットマスク、範囲、CIDRの計算"
+  },
+  "json-csv-converter": {
+    "name": "JSON-CSV変換",
+    "description": "JSONとCSV形式間の変換"
+  },
+  "json-to-code": {
+    "name": "JSONからコード",
+    "description": "JSONからPythonクラスまたはTypeScriptインターフェースを生成"
+  },
+  "json-schema-gen": {
+    "name": "JSONスキーマ生成",
+    "description": "データからJSONスキーマを生成"
+  },
+  "base64-converter": {
+    "name": "Base64変換",
+    "description": "Base64エンコード・デコード"
+  },
+  "binary-hex-converter": {
+    "name": "2進数-16進数変換",
+    "description": "2進数と16進数間の変換"
+  },
+  "url-encoder": {
+    "name": "URLエンコーダー",
+    "description": "URLエンコード・デコード"
+  },
+  "short-url-gen": {
+    "name": "短縮URL生成",
+    "description": "短縮URLを生成"
+  },
+  "jwt-decoder": {
+    "name": "JWTデコーダー",
+    "description": "JWTトークンのデコードと検証"
+  },
+  "html-entities": {
+    "name": "HTMLエンティティ",
+    "description": "HTMLエンティティのエンコード・デコード"
+  },
+  "text-case": {
+    "name": "テキストケース",
+    "description": "テキストの大文字小文字変換（大文字、小文字、キャメルなど）"
+  },
+  "hash-generator": {
+    "name": "ハッシュ生成",
+    "description": "SHA256、MD5などのハッシュを生成"
+  },
+  "encryption-tool": {
+    "name": "暗号化ツール",
+    "description": "AESで暗号化・復号化"
+  },
+  "uuid-generator": {
+    "name": "UUID生成",
+    "description": "一意の識別子を生成"
+  },
+  "password-gen": {
+    "name": "パスワード生成",
+    "description": "安全なパスワードを生成"
+  },
+  "timestamp-conv": {
+    "name": "タイムスタンプ変換",
+    "description": "Unixタイムスタンプを日付に変換"
+  },
+  "cron-expression": {
+    "name": "Cron式",
+    "description": "Cron式の作成とパース"
+  },
+  "regex-tester": {
+    "name": "正規表現テスター",
+    "description": "正規表現のテスト"
+  },
+  "sql-formatter": {
+    "name": "SQLフォーマッター",
+    "description": "SQLクエリの整形"
+  },
+  "text-diff": {
+    "name": "テキスト比較",
+    "description": "テキストの比較と差分"
+  },
+  "markdown-preview": {
+    "name": "Markdownプレビュー",
+    "description": "リアルタイムMarkdownプレビュー"
+  },
+  "markup-converter": {
+    "name": "マークアップ変換",
+    "description": "MarkdownとAtlassian Wikiマークアップ間の変換"
+  },
+  "pdf-tools": {
+    "name": "PDFエディタ/ツール",
+    "description": "PDFファイルの編集と操作"
+  },
+  "unit-converter": {
+    "name": "単位変換",
+    "description": "単位変換（重さ、長さなど）"
+  },
+  "date-dday-calc": {
+    "name": "日付/D-Day計算",
+    "description": "日付間の日数を計算"
+  },
+  "salary-tax-calc": {
+    "name": "給与/税金計算",
+    "description": "給与と税金の計算"
+  },
+  "loan-calculator": {
+    "name": "ローン計算機",
+    "description": "ローン返済額と利息の計算"
+  },
+  "command-palette": {
+    "name": "コマンドパレット",
+    "description": "よく使うコマンドやスニペットを保存して素早くコピー"
+  },
+  "compound-interest-calculator": {
+    "name": "複利計算機",
+    "description": "時間経過による複利成長を可視化"
+  },
+  "design-tools": {
+    "name": "デザインツール",
+    "description": "カラーピッカー、パレット、画像ツール"
+  },
+  "qr-code-gen": {
+    "name": "QRコード生成",
+    "description": "QRコードを生成"
+  },
+  "keyword-density": {
+    "name": "キーワード密度",
+    "description": "キーワード密度と頻度の計算"
+  },
+  "meta-tag-checker": {
+    "name": "メタタグチェック",
+    "description": "メタタイトルと説明の長さを確認"
+  },
+  "reading-time-calc": {
+    "name": "読了時間計算",
+    "description": "推定読了時間の計算"
+  },
+  "word-counter": {
+    "name": "文字数カウント",
+    "description": "単語、文字、文の数をカウント"
+  },
+  "slug-generator": {
+    "name": "スラグ生成",
+    "description": "SEOフレンドリーなURLスラグを生成"
+  },
+  "robots-txt-generator": {
+    "name": "Robots.txt生成",
+    "description": "SEO用robots.txtファイルを生成"
+  },
+  "sitemap-generator": {
+    "name": "サイトマップ生成",
+    "description": "XMLサイトマップ構造を生成"
+  },
+  "open-graph-generator": {
+    "name": "Open Graph生成",
+    "description": "Open Graphメタタグを生成"
+  },
+  "schema-markup-generator": {
+    "name": "スキーママークアップ生成",
+    "description": "JSON-LDスキーママークアップを生成"
+  },
+  "canonical-url-checker": {
+    "name": "Canonical URLチェック",
+    "description": "Canonical URLの検証と生成"
+  },
+  "pomodoro-timer": {
+    "name": "ポモドーロタイマー",
+    "description": "作業と休憩の間隔がある集中タイマー"
+  }
+}

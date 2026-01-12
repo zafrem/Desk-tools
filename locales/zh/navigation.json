@@ -1,0 +1,18 @@
+{
+  "brand": "Desk-tools",
+  "kanban": "看板",
+  "notepad": "记事本",
+  "whiteboard": "白板",
+  "terms": "术语",
+  "bookmarks": "书签",
+  "localStorage": "本地存储",
+  "searchPlaceholder": "搜索工具...",
+  "toolsAvailable": "{{count}} 个可用工具",
+  "toggleSidebar": "切换侧边栏",
+  "toggleMenu": "切换菜单",
+  "closeSidebar": "关闭侧边栏",
+  "openSidebar": "打开工具侧边栏",
+  "tools": "工具",
+  "github": "GitHub",
+  "changeLanguage": "切换语言"
+}

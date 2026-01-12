@@ -1,0 +1,194 @@
+{
+  "text-encoder": {
+    "name": "文本编码器",
+    "description": "使用多种格式编码和解码文本"
+  },
+  "file-format-converter": {
+    "name": "文件格式转换器",
+    "description": "在JSON、XML和CSV格式之间转换"
+  },
+  "chmod-calculator": {
+    "name": "Chmod计算器",
+    "description": "计算Linux文件权限（八进制和符号）"
+  },
+  "code-formatter": {
+    "name": "代码格式化",
+    "description": "格式化和美化代码"
+  },
+  "json-explorer": {
+    "name": "JSON浏览器",
+    "description": "将JSON数据可视化为树形结构"
+  },
+  "icon-generator": {
+    "name": "图标生成器",
+    "description": "从图片生成网站图标和应用图标"
+  },
+  "ip-subnet-calculator": {
+    "name": "IP子网计算器",
+    "description": "计算IPv4/IPv6子网掩码、范围和CIDR"
+  },
+  "json-csv-converter": {
+    "name": "JSON-CSV转换",
+    "description": "在JSON和CSV格式之间转换"
+  },
+  "json-to-code": {
+    "name": "JSON转代码",
+    "description": "从JSON生成Python类或TypeScript接口"
+  },
+  "json-schema-gen": {
+    "name": "JSON Schema生成",
+    "description": "从数据生成JSON Schema"
+  },
+  "base64-converter": {
+    "name": "Base64转换器",
+    "description": "Base64编码和解码"
+  },
+  "binary-hex-converter": {
+    "name": "二进制-十六进制转换",
+    "description": "在二进制和十六进制之间转换"
+  },
+  "url-encoder": {
+    "name": "URL编码器",
+    "description": "URL编码和解码"
+  },
+  "short-url-gen": {
+    "name": "短链接生成",
+    "description": "生成短链接"
+  },
+  "jwt-decoder": {
+    "name": "JWT解码器",
+    "description": "解码和验证JWT令牌"
+  },
+  "html-entities": {
+    "name": "HTML实体",
+    "description": "HTML实体编码和解码"
+  },
+  "text-case": {
+    "name": "文本大小写",
+    "description": "转换文本大小写（大写、小写、驼峰等）"
+  },
+  "hash-generator": {
+    "name": "哈希生成器",
+    "description": "生成SHA256、MD5等哈希值"
+  },
+  "encryption-tool": {
+    "name": "加密工具",
+    "description": "使用AES加密和解密"
+  },
+  "uuid-generator": {
+    "name": "UUID生成器",
+    "description": "生成唯一标识符"
+  },
+  "password-gen": {
+    "name": "密码生成器",
+    "description": "生成安全密码"
+  },
+  "timestamp-conv": {
+    "name": "时间戳转换",
+    "description": "将Unix时间戳转换为日期"
+  },
+  "cron-expression": {
+    "name": "Cron表达式",
+    "description": "构建和解析Cron表达式"
+  },
+  "regex-tester": {
+    "name": "正则表达式测试",
+    "description": "测试正则表达式"
+  },
+  "sql-formatter": {
+    "name": "SQL格式化",
+    "description": "格式化SQL查询"
+  },
+  "text-diff": {
+    "name": "文本比较",
+    "description": "比较和对比文本"
+  },
+  "markdown-preview": {
+    "name": "Markdown预览",
+    "description": "实时预览Markdown"
+  },
+  "markup-converter": {
+    "name": "标记语言转换",
+    "description": "在Markdown和Atlassian Wiki标记之间转换"
+  },
+  "pdf-tools": {
+    "name": "PDF编辑器/工具",
+    "description": "编辑和处理PDF文件"
+  },
+  "unit-converter": {
+    "name": "单位转换器",
+    "description": "转换单位（重量、长度等）"
+  },
+  "date-dday-calc": {
+    "name": "日期/倒计时计算",
+    "description": "计算两个日期之间的天数"
+  },
+  "salary-tax-calc": {
+    "name": "工资/税收计算",
+    "description": "计算工资和税收"
+  },
+  "loan-calculator": {
+    "name": "贷款计算器",
+    "description": "计算贷款还款和利息"
+  },
+  "command-palette": {
+    "name": "命令面板",
+    "description": "保存并快速复制常用命令或代码片段"
+  },
+  "compound-interest-calculator": {
+    "name": "复利计算器",
+    "description": "可视化复利随时间的增长"
+  },
+  "design-tools": {
+    "name": "设计工具",
+    "description": "颜色选择器、调色板和图像工具"
+  },
+  "qr-code-gen": {
+    "name": "二维码生成",
+    "description": "生成二维码"
+  },
+  "keyword-density": {
+    "name": "关键词密度",
+    "description": "计算关键词密度和频率"
+  },
+  "meta-tag-checker": {
+    "name": "Meta标签检查",
+    "description": "检查Meta标题和描述长度"
+  },
+  "reading-time-calc": {
+    "name": "阅读时间计算",
+    "description": "计算预计阅读时间"
+  },
+  "word-counter": {
+    "name": "字数统计",
+    "description": "统计单词、字符和句子数量"
+  },
+  "slug-generator": {
+    "name": "Slug生成器",
+    "description": "生成SEO友好的URL别名"
+  },
+  "robots-txt-generator": {
+    "name": "Robots.txt生成",
+    "description": "为SEO生成robots.txt文件"
+  },
+  "sitemap-generator": {
+    "name": "网站地图生成器",
+    "description": "生成XML网站地图结构"
+  },
+  "open-graph-generator": {
+    "name": "Open Graph生成",
+    "description": "生成Open Graph元标签"
+  },
+  "schema-markup-generator": {
+    "name": "Schema标记生成",
+    "description": "生成JSON-LD Schema标记"
+  },
+  "canonical-url-checker": {
+    "name": "Canonical URL检查",
+    "description": "验证和生成Canonical URL"
+  },
+  "pomodoro-timer": {
+    "name": "番茄钟",
+    "description": "带有工作和休息间隔的专注计时器"
+  }
+}

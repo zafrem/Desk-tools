@@ -1,0 +1,48 @@
+{
+  "title": "Desk-tools",
+  "subtitle": "拥有47种开发者工具的高性能本地优先实用平台。",
+  "description": "最初是为创业公司的多任务处理人员创建的。随着AI的发展，开发者、设计师、策划和营销人员之间的界限正在消失。Desk-tools旨在通过在一个地方提供全面的实用工具套件，为这类新型混合型专业人士赋能。",
+  "features": {
+    "privacy": {
+      "title": "隐私优先",
+      "description": "所有数据都保存在您的设备上。没有云存储，没有追踪。您的笔记和任务都本地存储在浏览器中。"
+    },
+    "search": {
+      "title": "即时搜索",
+      "description": "使用侧边栏中基于标签的模糊搜索快速找到任何工具。"
+    },
+    "evolving": {
+      "title": "持续进化",
+      "description": "我致力于添加更具挑战性和实用性的工具。有需求？在GitHub上提交issue！"
+    }
+  },
+  "howToUse": {
+    "title": "使用方法",
+    "browseTools": {
+      "label": "浏览工具：",
+      "text": "使用右侧边栏浏览实用工具集合。工具已分类以便于访问。"
+    },
+    "productivity": {
+      "label": "生产力：",
+      "text": "从顶部导航栏访问<strong>看板</strong>来管理您的任务，使用<strong>记事本</strong>快速记录。"
+    },
+    "whiteboard": {
+      "label": "白板：",
+      "text": "使用<strong>白板</strong>绘制创意或图表，并导出为图片。"
+    },
+    "terms": {
+      "label": "术语定义：",
+      "text": "在<strong>术语</strong>部分整理您的项目术语。"
+    },
+    "feedback": {
+      "label": "反馈与请求：",
+      "text": "如果您需要特定工具或有功能请求，请在GitHub上提交issue。我将继续用新功能更新平台。",
+      "linkText": "在GitHub上提交issue"
+    }
+  },
+  "roadmap": {
+    "title": "未来路线图",
+    "description": "我的目标是构建更复杂和更具「挑战性」的工具，直接在浏览器中解决现实世界的工程问题。这个项目是一个随着您的需求而成长的活跃工作空间。",
+    "requestFeature": "请求新功能"
+  }
+}

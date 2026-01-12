@@ -1,0 +1,48 @@
+{
+  "title": "Desk-tools",
+  "subtitle": "A high-performance, local-first utility platform with 47 developer tools.",
+  "description": "Originally created for multi-tasking individuals at startups. With the advancement of AI, the lines between developer, designer, planner, and marketer are collapsing. Desk-tools is designed to empower this new breed of hybrid professionals by providing a comprehensive suite of utilities in one place.",
+  "features": {
+    "privacy": {
+      "title": "Privacy First",
+      "description": "All data stays on your device. No cloud storage, no tracking. Your notes and tasks are stored locally in your browser."
+    },
+    "search": {
+      "title": "Instant Search",
+      "description": "Find any tool quickly using the tag-based fuzzy search in the sidebar."
+    },
+    "evolving": {
+      "title": "Constantly Evolving",
+      "description": "I am committed to adding more challenging and useful tools. Have a request? File an issue on GitHub!"
+    }
+  },
+  "howToUse": {
+    "title": "How to Use",
+    "browseTools": {
+      "label": "Browse Tools:",
+      "text": "Use the sidebar on the right to navigate through the collection of utilities. Tools are categorized for easy access."
+    },
+    "productivity": {
+      "label": "Productivity:",
+      "text": "Access the <strong>Kanban Board</strong> to manage your tasks and the <strong>Notepad</strong> for quick jottings from the top navigation bar."
+    },
+    "whiteboard": {
+      "label": "Whiteboard:",
+      "text": "Use the <strong>Whiteboard</strong> to sketch out ideas or diagrams and export them as images."
+    },
+    "terms": {
+      "label": "Definition of Terms:",
+      "text": "Organize your project terminology in the <strong>Terms</strong> section."
+    },
+    "feedback": {
+      "label": "Feedback & Requests:",
+      "text": "If you need a specific tool or have a feature request, please open an issue on GitHub. I will continue to update the platform with new features.",
+      "linkText": "open an issue on GitHub"
+    }
+  },
+  "roadmap": {
+    "title": "Future Roadmap",
+    "description": "I aim to build more complex and \"challenging\" tools that solve real-world engineering problems directly in the browser. This project is a living workspace that grows with your needs.",
+    "requestFeature": "Request a Feature"
+  }
+}

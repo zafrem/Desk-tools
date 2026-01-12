@@ -1,0 +1,42 @@
+{
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "export": "Export",
+    "import": "Import",
+    "copy": "Copy",
+    "clear": "Clear",
+    "new": "New",
+    "edit": "Edit",
+    "back": "Back to Home",
+    "create": "Create",
+    "update": "Update",
+    "add": "Add",
+    "close": "Close"
+  },
+  "labels": {
+    "input": "Input",
+    "output": "Output",
+    "search": "Search",
+    "loading": "Loading...",
+    "title": "Title",
+    "description": "Description",
+    "status": "Status",
+    "category": "Category",
+    "required": "Required"
+  },
+  "messages": {
+    "confirmDelete": "Are you sure you want to delete this?",
+    "importSuccess": "Successfully imported {{count}} items",
+    "importError": "Failed to import. Please check the file format.",
+    "copySuccess": "Copied to clipboard",
+    "invalidFormat": "Invalid file format",
+    "noData": "No data found"
+  },
+  "status": {
+    "todo": "To Do",
+    "inProgress": "In Progress",
+    "done": "Done"
+  }
+}

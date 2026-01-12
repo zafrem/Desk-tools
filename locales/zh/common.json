@@ -1,0 +1,42 @@
+{
+  "buttons": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "export": "导出",
+    "import": "导入",
+    "copy": "复制",
+    "clear": "清除",
+    "new": "新建",
+    "edit": "编辑",
+    "back": "返回首页",
+    "create": "创建",
+    "update": "更新",
+    "add": "添加",
+    "close": "关闭"
+  },
+  "labels": {
+    "input": "输入",
+    "output": "输出",
+    "search": "搜索",
+    "loading": "加载中...",
+    "title": "标题",
+    "description": "描述",
+    "status": "状态",
+    "category": "分类",
+    "required": "必填"
+  },
+  "messages": {
+    "confirmDelete": "确定要删除吗？",
+    "importSuccess": "成功导入 {{count}} 个项目",
+    "importError": "导入失败。请检查文件格式。",
+    "copySuccess": "已复制到剪贴板",
+    "invalidFormat": "文件格式无效",
+    "noData": "没有找到数据"
+  },
+  "status": {
+    "todo": "待办",
+    "inProgress": "进行中",
+    "done": "已完成"
+  }
+}

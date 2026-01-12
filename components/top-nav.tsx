@@ -4,20 +4,23 @@ import { useState } from "react";
 import Link from "next/link";
 import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github, ExternalLink, PanelRightClose, PanelRightOpen, Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/sidebar-context";
+import { useTranslation } from "react-i18next";
 
 const navItems = [
-  { href: "/kanban", icon: LayoutDashboard, label: "Kanban Board" },
-  { href: "/notepad", icon: StickyNote, label: "Notepad" },
-  { href: "/whiteboard", icon: PenTool, label: "Whiteboard" },
-  { href: "/terms", icon: BookA, label: "Terms" },
-  { href: "/bookmarks", icon: ExternalLink, label: "Bookmarks" },
+  { href: "/kanban", icon: LayoutDashboard, labelKey: "kanban" },
+  { href: "/notepad", icon: StickyNote, labelKey: "notepad" },
+  { href: "/whiteboard", icon: PenTool, labelKey: "whiteboard" },
+  { href: "/terms", icon: BookA, labelKey: "terms" },
+  { href: "/bookmarks", icon: ExternalLink, labelKey: "bookmarks" },
 ];
 
 export function TopNav() {
   const { isOpen, toggle } = useSidebar();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useTranslation("navigation");
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -30,14 +33,14 @@ export function TopNav() {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          <span className="sr-only">Toggle menu</span>
+          <span className="sr-only">{t("toggleMenu")}</span>
         </Button>
 
         {/* Logo/Brand */}
         <div className="mr-4 flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Database className="h-6 w-6 md:ml-2" />
-            <span className="font-bold text-xl hidden sm:inline"> Desk-tools</span>
+            <span className="font-bold text-xl hidden sm:inline"> {t("brand")}</span>
           </Link>
         </div>
 
@@ -47,7 +50,7 @@ export function TopNav() {
             <Link key={item.href} href={item.href}>
               <Button variant="ghost" className="gap-2">
                 <item.icon className="h-4 w-4" />
-                <span className="hidden lg:inline">{item.label}</span>
+                <span className="hidden lg:inline">{t(item.labelKey)}</span>
               </Button>
             </Link>
           ))}
@@ -61,15 +64,18 @@ export function TopNav() {
           {/* Local storage indicator */}
           <div className="hidden md:flex items-center gap-2 text-xs text-muted-foreground mr-4">
             <div className="h-2 w-2 rounded-full bg-green-500" />
-            <span>Local Storage</span>
+            <span>{t("localStorage")}</span>
           </div>
 
           <Link href="https://github.com/zafrem/Desk-tools/issues" target="_blank" rel="noopener noreferrer">
-            <Button variant="ghost" size="icon" title="Report an issue on GitHub">
+            <Button variant="ghost" size="icon" title={t("github")}>
               <Github className="h-5 w-5" />
-              <span className="sr-only">GitHub</span>
+              <span className="sr-only">{t("github")}</span>
             </Button>
           </Link>
+
+          {/* Language switcher */}
+          <LanguageSwitcher />
 
           {/* Theme toggle */}
           <ThemeToggle />
@@ -79,7 +85,7 @@ export function TopNav() {
             variant="ghost"
             size="icon"
             onClick={toggle}
-            title={isOpen ? "Close sidebar" : "Open sidebar"}
+            title={isOpen ? t("closeSidebar") : t("openSidebar")}
             className="hidden lg:flex"
           >
             {isOpen ? (
@@ -87,7 +93,7 @@ export function TopNav() {
             ) : (
               <PanelRightOpen className="h-5 w-5" />
             )}
-            <span className="sr-only">Toggle sidebar</span>
+            <span className="sr-only">{t("toggleSidebar")}</span>
           </Button>
         </div>
       </div>
@@ -104,7 +110,7 @@ export function TopNav() {
               >
                 <Button variant="ghost" className="w-full justify-start gap-2">
                   <item.icon className="h-4 w-4" />
-                  {item.label}
+                  {t(item.labelKey)}
                 </Button>
               </Link>
             ))}
