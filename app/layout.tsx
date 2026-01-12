@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { TopNav } from "@/components/top-nav";
-import { ToolSidebar } from "@/components/tool-sidebar";
+import { AppShell } from "@/components/app-shell";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -26,17 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative min-h-screen">
-            <TopNav />
-            <div className="flex">
-              {/* Main content area */}
-              <main className="flex-1 mr-80">
-                {children}
-              </main>
-              {/* Right sidebar */}
-              <ToolSidebar />
-            </div>
-          </div>
+          <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
     </html>

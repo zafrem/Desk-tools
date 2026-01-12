@@ -424,4 +424,13 @@ export const TOOLS_REGISTRY: Tool[] = [
     path: "/tools/canonical-url-checker",
     icon: "Link2",
   },
+  {
+    id: "pomodoro-timer",
+    name: "Pomodoro Timer",
+    description: "Focus timer with work and break intervals",
+    tags: ["timer", "focus", "productivity", "pomodoro", "time"],
+    category: "other",
+    path: "/tools/pomodoro-timer",
+    icon: "Timer",
+  },
 ];
