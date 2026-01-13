@@ -433,4 +433,13 @@ export const TOOLS_REGISTRY: Tool[] = [
     path: "/tools/pomodoro-timer",
     icon: "Timer",
   },
+  {
+    id: "encoding-converter",
+    name: "Encoding Converter",
+    description: "Fix broken text (mojibake) by converting between character encodings",
+    tags: ["encoding", "utf8", "charset", "mojibake", "unicode", "text", "language"],
+    category: "converter",
+    path: "/tools/encoding-converter",
+    icon: "Languages",
+  },
 ];
