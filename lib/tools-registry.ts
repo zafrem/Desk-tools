@@ -56,6 +56,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "Image",
   },
   {
+    id: "background-remover",
+    name: "Background Remover",
+    description: "Remove backgrounds from PNG and GIF images by color",
+    tags: ["image", "transparent", "png", "gif", "background", "remove", "alpha"],
+    category: "designer",
+    path: "/tools/background-remover",
+    icon: "Eraser",
+  },
+  {
     id: "ip-subnet-calculator",
     name: "IP Subnet Calculator",
     description: "Calculate IPv4/IPv6 subnet masks, ranges, and CIDR",
