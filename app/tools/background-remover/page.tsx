@@ -34,14 +34,13 @@ export default function BackgroundRemoverPage() {
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [eyedropperActive, setEyedropperActive] = React.useState(false);
   const [fileName, setFileName] = React.useState<string>("image");
+  const [isDragging, setIsDragging] = React.useState(false);
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const originalCanvasRef = React.useRef<HTMLCanvasElement>(null);
-  const processedCanvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleFile = (file: File) => {
+    if (!file || !file.type.startsWith("image/")) return;
 
     const name = file.name.replace(/\.[^/.]+$/, "");
     setFileName(name);
@@ -75,6 +74,38 @@ export default function BackgroundRemoverPage() {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) handleFile(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files?.[0];
+    if (file) handleFile(file);
   };
 
   const drawOriginalImage = (src: string) => {
@@ -114,8 +145,7 @@ export default function BackgroundRemoverPage() {
 
   const processPng = async (rgb: RGB) => {
     const canvas = originalCanvasRef.current;
-    const processedCanvas = processedCanvasRef.current;
-    if (!canvas || !processedCanvas) return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -123,15 +153,23 @@ export default function BackgroundRemoverPage() {
     // Get image data from original canvas
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    // Process the image
-    const processed = removeBackgroundColor(imageData, rgb, tolerance);
+    // Create a copy of image data to process
+    const processedData = new ImageData(
+      new Uint8ClampedArray(imageData.data),
+      imageData.width,
+      imageData.height
+    );
 
-    // Draw to processed canvas
+    // Process the image
+    removeBackgroundColor(processedData, rgb, tolerance);
+
+    // Draw to a new canvas and export
+    const processedCanvas = document.createElement("canvas");
     processedCanvas.width = canvas.width;
     processedCanvas.height = canvas.height;
     const processedCtx = processedCanvas.getContext("2d");
     if (processedCtx) {
-      processedCtx.putImageData(processed, 0, 0);
+      processedCtx.putImageData(processedData, 0, 0);
       setProcessedImage(processedCanvas.toDataURL("image/png"));
     }
   };
@@ -244,8 +282,16 @@ export default function BackgroundRemoverPage() {
         <div className="space-y-6">
           {/* File Upload */}
           <div
-            className="border-2 border-dashed rounded-lg p-6 text-center hover:bg-muted/50 transition-colors cursor-pointer flex flex-col items-center justify-center gap-3 min-h-[160px]"
+            className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer flex flex-col items-center justify-center gap-3 min-h-[160px] ${
+              isDragging
+                ? "border-primary bg-primary/10"
+                : "hover:bg-muted/50"
+            }`}
             onClick={() => fileInputRef.current?.click()}
+            onDragOver={handleDragOver}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
           >
             <input
               type="file"
@@ -259,15 +305,21 @@ export default function BackgroundRemoverPage() {
                 <p className="font-medium text-foreground mb-1">
                   {fileName}.{isGif ? "gif" : "png"}
                 </p>
-                <p>Click to change file</p>
+                <p>Click or drag to change file</p>
               </div>
             ) : (
               <>
                 <Upload className="h-8 w-8 text-muted-foreground" />
                 <div className="text-sm text-muted-foreground">
-                  Click to upload
-                  <br />
-                  (PNG, GIF, JPG)
+                  {isDragging ? (
+                    "Drop image here"
+                  ) : (
+                    <>
+                      Click or drag to upload
+                      <br />
+                      (PNG, GIF, JPG)
+                    </>
+                  )}
                 </div>
               </>
             )}
@@ -396,20 +448,13 @@ export default function BackgroundRemoverPage() {
                         <span className="text-sm">Processing{isGif ? " frames" : ""}...</span>
                       </div>
                     ) : processedImage ? (
-                      isGif ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={processedImage}
-                          alt="Processed"
-                          className="max-w-full max-h-[400px] object-contain"
-                        />
-                      ) : (
-                        <canvas
-                          ref={processedCanvasRef}
-                          className="max-w-full max-h-[400px] object-contain"
-                          style={{ imageRendering: "pixelated" }}
-                        />
-                      )
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={processedImage}
+                        alt="Processed"
+                        className="max-w-full max-h-[400px] object-contain"
+                        style={{ imageRendering: "pixelated" }}
+                      />
                     ) : (
                       <div className="text-sm text-muted-foreground p-4 text-center">
                         Click &quot;Remove Background&quot; to see the result
@@ -429,8 +474,6 @@ export default function BackgroundRemoverPage() {
         </div>
       </div>
 
-      {/* Hidden canvas for GIF processing */}
-      {isGif && <canvas ref={originalCanvasRef} className="hidden" />}
     </ToolLayout>
   );
 }
