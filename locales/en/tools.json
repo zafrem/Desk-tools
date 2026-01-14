@@ -23,6 +23,10 @@
     "name": "Icon Generator",
     "description": "Generate favicons and app icons from an image"
   },
+  "background-remover": {
+    "name": "Background Remover",
+    "description": "Remove backgrounds from PNG and GIF images by color"
+  },
   "ip-subnet-calculator": {
     "name": "IP Subnet Calculator",
     "description": "Calculate IPv4/IPv6 subnet masks, ranges, and CIDR"
