@@ -344,6 +344,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "Image",
   },
   {
+    id: "pixel-art-editor",
+    name: "Pixel Art Editor",
+    description: "Create pixel art icons and sprites",
+    tags: ["pixel", "art", "icon", "editor", "draw", "sprite"],
+    category: "designer",
+    path: "/tools/pixel-art-editor",
+    icon: "Grid",
+  },
+  {
     id: "qr-code-gen",
     name: "QR Code Gen",
     description: "Generate QR codes",

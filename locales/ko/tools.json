@@ -151,6 +151,10 @@
     "name": "이미지 필터",
     "description": "이미지에 밝기, 대비 및 기타 필터 적용"
   },
+  "pixel-art-editor": {
+    "name": "픽셀 아트 에디터",
+    "description": "픽셀 아트 아이콘 및 스프라이트 생성"
+  },
   "qr-code-gen": {
     "name": "QR 코드 생성",
     "description": "QR 코드 생성"
