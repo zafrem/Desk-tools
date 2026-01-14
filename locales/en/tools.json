@@ -147,6 +147,10 @@
     "name": "Design Tools",
     "description": "Color picker, palette, and image tools"
   },
+  "image-filters": {
+    "name": "Image Filters",
+    "description": "Apply brightness, contrast, and other filters to images"
+  },
   "qr-code-gen": {
     "name": "QR Code Gen",
     "description": "Generate QR codes"

@@ -335,6 +335,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "Palette",
   },
   {
+    id: "image-filters",
+    name: "Image Filters",
+    description: "Apply brightness, contrast, and other filters to images",
+    tags: ["image", "filter", "edit", "photo", "canvas"],
+    category: "designer",
+    path: "/tools/image-filters",
+    icon: "Image",
+  },
+  {
     id: "qr-code-gen",
     name: "QR Code Gen",
     description: "Generate QR codes",

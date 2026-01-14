@@ -147,6 +147,10 @@
     "name": "디자인 도구",
     "description": "색상 선택기, 팔레트, 이미지 도구"
   },
+  "image-filters": {
+    "name": "이미지 필터",
+    "description": "이미지에 밝기, 대비 및 기타 필터 적용"
+  },
   "qr-code-gen": {
     "name": "QR 코드 생성",
     "description": "QR 코드 생성"
