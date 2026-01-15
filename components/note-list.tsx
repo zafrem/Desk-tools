@@ -76,7 +76,7 @@ export function NoteList({
                   size="sm"
                   onClick={(e) => {
                     e.stopPropagation();
-                    note.id && onDelete(note.id);
+                    if (note.id) onDelete(note.id);
                   }}
                   className="h-8 w-8 p-0 text-destructive hover:text-destructive"
                 >

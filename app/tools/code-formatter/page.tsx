@@ -31,10 +31,10 @@ export default function CodeFormatterPage() {
   // Format options
   const [printWidth, setPrintWidth] = React.useState(80);
   const [tabWidth, setTabWidth] = React.useState(2);
-  const [useTabs, setUseTabs] = React.useState(false);
+  const [useTabs] = React.useState(false);
   const [semi, setSemi] = React.useState(true);
   const [singleQuote, setSingleQuote] = React.useState(false);
-  const [trailingComma, setTrailingComma] = React.useState<"none" | "es5" | "all">("es5");
+  const [trailingComma] = React.useState<"none" | "es5" | "all">("es5");
 
   const handleFormat = async () => {
     setIsFormatting(true);

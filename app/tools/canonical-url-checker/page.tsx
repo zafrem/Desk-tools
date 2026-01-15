@@ -31,7 +31,7 @@ export default function CanonicalUrlChecker() {
       const response = await fetch(url);
       const text = await response.text();
       parseHtml(text, url);
-    } catch (err) {
+    } catch {
       setResult({
         found: false,
         error: "Could not fetch URL. This is likely due to CORS restrictions on the target website. The browser blocks requests to other domains that don't explicitly allow it. Please verify the URL or try the 'Paste HTML' method.",
@@ -87,7 +87,7 @@ export default function CanonicalUrlChecker() {
           error: "No <link rel=\"canonical\"> tag found in the provided HTML.",
         });
       }
-    } catch (e) {
+    } catch {
       setResult({
         found: false,
         error: "Failed to parse HTML content.",

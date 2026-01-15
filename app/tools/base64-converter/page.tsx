@@ -17,7 +17,7 @@ export default function Base64ConverterPage() {
       setError("");
       const encoded = btoa(input);
       setOutput(encoded);
-    } catch (err) {
+    } catch {
       setError("Failed to encode. Check your input for invalid characters.");
       setOutput("");
     }
@@ -28,7 +28,7 @@ export default function Base64ConverterPage() {
       setError("");
       const decoded = atob(input);
       setOutput(decoded);
-    } catch (err) {
+    } catch {
       setError("Failed to decode. Invalid Base64 string.");
       setOutput("");
     }

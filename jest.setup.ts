@@ -44,7 +44,7 @@ HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
   })),
   fillRect: jest.fn(),
   clearRect: jest.fn(),
-}));
+})) as any;
 
 HTMLCanvasElement.prototype.toDataURL = jest.fn(() => "data:image/png;base64,");
 
