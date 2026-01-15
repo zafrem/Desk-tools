@@ -19,19 +19,21 @@ All data is stored locally in your browser (using IndexedDB), ensuring your work
 - **🎨 Whiteboard**: Sketch out ideas, diagrams, or wireframes and export them as images.
 - **📖 Definition of Terms**: Organize and share project terminology with import/export capabilities.
 - **🔖 Bookmarks**: Organize your frequently used links into groups with drag-and-drop support.
-- 🔍 **Instant Search**: Find any of the 47 specialized tools instantly using tag-based fuzzy search.
+- 🔍 **Instant Search**: Find any of the 52 specialized tools instantly using tag-based fuzzy search.
 
-## 🛠️ Specialized Tools (47)
+## 🛠️ Specialized Tools (52)
 
 | Category | Tools |
 | --- | --- |
-| **Developer** | SQL Formatter, Command Palette, Regex Tester, JSON Explorer, JSON to Code, Cron Expression |
-| **Security** | Encryption Tool (AES/RSA), JWT Decoder, Password Generator, Hash Generator |
+| **Developer** | JSON Explorer, Cron Expression, Regex Tester, Text Diff, Command Palette |
+| **Security** | JWT Decoder, Hash Generator, Encryption Tool (AES), Password Generator |
 | **Encoder** | Text Encoder, Base64 Converter, URL Encoder, HTML Entities |
-| **Converter** | File Format Converter (JSON/YAML/CSV/XML), JSON ↔ CSV, Timestamp Converter, Unit Converter |
-| **Designer** | Design Tools (Color Picker/Palette), Icon Generator, QR Code Generator |
-| **SEO** | Meta Tag Checker, Open Graph Generator, Robots.txt Generator, Sitemap Generator, Slug Generator, Keyword Density, Reading Time Calc |
-| **Calculator** | Loan Calculator, Compound Interest Calculator, Salary/Tax Calculator, Date/D-Day Calc |
+| **Converter** | File Format Converter (JSON/XML/CSV), JSON ↔ CSV, Binary ↔ HEX, Timestamp Converter, Markup Converter (Wiki), Encoding Converter |
+| **Designer** | Design Tools (Color/Palette), Icon Generator, Background Remover, Image Filters, Pixel Art Editor |
+| **Generator** | JSON to Code, JSON Schema Gen, Short URL Gen, UUID Generator, QR Code Gen, Slug Generator, Robots.txt Generator, Sitemap Generator, Open Graph Generator, Schema Markup Gen |
+| **Calculator** | Chmod Calculator, IP Subnet Calculator, Unit Converter, Date/D-Day Calc, Salary/Tax Calc, Loan Calculator, Compound Interest Calc, Keyword Density, Meta Tag Checker, Reading Time Calc, Word Counter, Canonical URL Checker |
+| **Formatter** | Code Formatter, Text Case, SQL Formatter, Markdown Preview |
+| **Other** | PDF Editor/Tools, Pomodoro Timer |
 
 ## 💻 Tech Stack
 
