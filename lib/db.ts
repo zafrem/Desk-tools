@@ -59,6 +59,16 @@ export interface UserPreference {
   updatedAt: Date;
 }
 
+export interface DailyTask {
+  id?: number;
+  title: string;
+  description?: string;
+  lastCompletedAt?: Date;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Database class
 class DeskToolsDatabase extends Dexie {
   ganttTasks!: EntityTable<GanttTask, 'id'>;
@@ -66,6 +76,7 @@ class DeskToolsDatabase extends Dexie {
   terms!: EntityTable<Term, 'id'>;
   bookmarks!: EntityTable<Bookmark, 'id'>;
   commands!: EntityTable<Command, 'id'>;
+  dailyTasks!: EntityTable<DailyTask, 'id'>;
   preferences!: EntityTable<UserPreference, 'id'>;
 
   constructor() {
@@ -78,6 +89,10 @@ class DeskToolsDatabase extends Dexie {
       bookmarks: "++id, title, group, order, createdAt",
       commands: "++id, title, *tags, createdAt",
       preferences: "++id, &key, updatedAt",
+    });
+
+    this.version(2).stores({
+      dailyTasks: "++id, title, lastCompletedAt, order, createdAt"
     });
   }
 }
