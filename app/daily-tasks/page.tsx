@@ -6,6 +6,7 @@ import { db, DailyTask } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Plus, Trash2, Edit2, Calendar } from "lucide-react";
@@ -18,6 +19,13 @@ export default function DailyTasksPage() {
   const [taskTitle, setTaskTitle] = useState("");
 
   const tasks = useLiveQuery(() => db.dailyTasks.orderBy("order").toArray(), []);
+
+  const stats = {
+    total: tasks?.length || 0,
+    completed: tasks?.filter(t => t.lastCompletedAt && isSameDay(new Date(t.lastCompletedAt), new Date())).length || 0
+  };
+  
+  const percentage = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
 
   const handleOpenDialog = (task?: DailyTask) => {
     if (task) {
@@ -77,6 +85,14 @@ export default function DailyTasksPage() {
         <Button onClick={() => handleOpenDialog()}>
           <Plus className="h-4 w-4 mr-2" /> Add Task
         </Button>
+      </div>
+
+      <div className="mb-6 space-y-2">
+        <div className="flex justify-between text-sm text-muted-foreground">
+          <span>{percentage}% Completed</span>
+          <span>{stats.completed} / {stats.total} tasks</span>
+        </div>
+        <Progress value={percentage} className="h-3" />
       </div>
 
       <div className="space-y-2">
