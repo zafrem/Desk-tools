@@ -323,11 +323,25 @@ export default function DesignToolsPage() {
                      const sRgb = hslToRgb(hsl.h, hsl.s, lightness);
                      const sHex = rgbToHex(sRgb.r, sRgb.g, sRgb.b);
                      return (
-                       <div key={lightness} className="space-y-1 text-center group cursor-pointer" onClick={() => {
+                       <div 
+                         key={lightness} 
+                         className="space-y-1 text-center group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm" 
+                         onClick={() => {
                            setColor(sHex);
                            setRgb(sRgb);
                            setHsl({ h: hsl.h, s: hsl.s, l: lightness });
-                       }}>
+                         }}
+                         onKeyDown={(e) => {
+                           if (e.key === "Enter" || e.key === " ") {
+                             e.preventDefault();
+                             setColor(sHex);
+                             setRgb(sRgb);
+                             setHsl({ h: hsl.h, s: hsl.s, l: lightness });
+                           }
+                         }}
+                         role="button"
+                         tabIndex={0}
+                       >
                          <div 
                             className="w-full aspect-square rounded-md border shadow-sm group-hover:scale-105 transition-transform"
                             style={{ backgroundColor: sHex }}
@@ -450,8 +464,18 @@ export default function DesignToolsPage() {
         <TabsContent value="extract" className="space-y-6 mt-6">
             <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-6">
-                     <div className="border-2 border-dashed rounded-lg p-12 text-center hover:bg-muted/50 transition-colors cursor-pointer"
-                          onClick={() => fileInputRef.current?.click()}>
+                     <div 
+                        className="border-2 border-dashed rounded-lg p-12 text-center hover:bg-muted/50 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        onClick={() => fileInputRef.current?.click()}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            fileInputRef.current?.click();
+                          }
+                        }}
+                        role="button"
+                        tabIndex={0}
+                      >
                         <input 
                             type="file" 
                             accept="image/*" 

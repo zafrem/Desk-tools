@@ -210,6 +210,14 @@ export default function ImageFiltersPage() {
                  : "hover:bg-muted/50"
              }`}
              onClick={() => fileInputRef.current?.click()}
+             onKeyDown={(e) => {
+               if (e.key === "Enter" || e.key === " ") {
+                 e.preventDefault();
+                 fileInputRef.current?.click();
+               }
+             }}
+             role="button"
+             tabIndex={0}
              onDragOver={handleDragOver}
              onDragEnter={handleDragEnter}
              onDragLeave={handleDragLeave}
