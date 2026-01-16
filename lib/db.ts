@@ -69,6 +69,16 @@ export interface DailyTask {
   updatedAt: Date;
 }
 
+export interface WeeklyScheduleItem {
+  id?: number;
+  dayOfWeek: number; // 0=Monday, 6=Sunday
+  timeSlot: string; // "HH:mm"
+  task: string;
+  completed: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Database class
 class DeskToolsDatabase extends Dexie {
   ganttTasks!: EntityTable<GanttTask, 'id'>;
@@ -78,6 +88,7 @@ class DeskToolsDatabase extends Dexie {
   commands!: EntityTable<Command, 'id'>;
   dailyTasks!: EntityTable<DailyTask, 'id'>;
   preferences!: EntityTable<UserPreference, 'id'>;
+  weeklySchedule!: EntityTable<WeeklyScheduleItem, 'id'>;
 
   constructor() {
     super("DeskToolsDB");
@@ -93,6 +104,10 @@ class DeskToolsDatabase extends Dexie {
 
     this.version(2).stores({
       dailyTasks: "++id, title, lastCompletedAt, order, createdAt"
+    });
+
+    this.version(3).stores({
+      weeklySchedule: "++id, [dayOfWeek+timeSlot], completed, createdAt"
     });
   }
 }

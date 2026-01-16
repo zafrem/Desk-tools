@@ -469,4 +469,13 @@ export const TOOLS_REGISTRY: Tool[] = [
     path: "/tools/encoding-converter",
     icon: "Languages",
   },
+  {
+    id: "weekly-scheduler",
+    name: "Weekly Scheduler",
+    description: "Weekly planner with alarms and task tracking",
+    tags: ["calendar", "schedule", "planner", "time", "week"],
+    category: "other",
+    path: "/tools/weekly-scheduler",
+    icon: "CalendarClock",
+  },
 ];
