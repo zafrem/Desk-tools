@@ -11,6 +11,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { db } from "@/lib/db";
 import { useLiveQuery } from "dexie-react-hooks";
@@ -37,6 +44,7 @@ export default function WeeklySchedulerPage() {
     time: string;
   } | null>(null);
   const [taskInput, setTaskInput] = useState("");
+  const [taskDuration, setTaskDuration] = useState("0.5");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
   const [alarmEnabled, setAlarmEnabled] = useState(true);
@@ -117,6 +125,7 @@ export default function WeeklySchedulerPage() {
       (i) => i.dayOfWeek === day && i.timeSlot === time
     );
     setTaskInput(existing?.task || "");
+    setTaskDuration("0.5"); // Reset duration
     setIsDialogOpen(true);
   };
 
@@ -124,7 +133,7 @@ export default function WeeklySchedulerPage() {
     if (!selectedCell) return;
 
     if (!taskInput.trim()) {
-      // Delete if empty
+      // Delete if empty (only the selected cell)
       const existing = schedule?.find(
         (i) => i.dayOfWeek === selectedCell.day && i.timeSlot === selectedCell.time
       );
@@ -132,25 +141,36 @@ export default function WeeklySchedulerPage() {
         await db.weeklySchedule.delete(existing.id);
       }
     } else {
-      // Upsert
-      const existing = schedule?.find(
-        (i) => i.dayOfWeek === selectedCell.day && i.timeSlot === selectedCell.time
-      );
+      // Upsert with duration
+      const slotsCount = parseFloat(taskDuration) * 2;
+      const startIndex = TIME_SLOTS.indexOf(selectedCell.time);
 
-      if (existing?.id) {
-        await db.weeklySchedule.update(existing.id, {
-          task: taskInput,
-          updatedAt: new Date(),
-        });
-      } else {
-        await db.weeklySchedule.add({
-          dayOfWeek: selectedCell.day,
-          timeSlot: selectedCell.time,
-          task: taskInput,
-          completed: false,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        });
+      if (startIndex === -1) return;
+
+      for (let i = 0; i < slotsCount; i++) {
+        const targetIndex = startIndex + i;
+        if (targetIndex >= TIME_SLOTS.length) break;
+
+        const targetTime = TIME_SLOTS[targetIndex];
+        const existing = schedule?.find(
+          (item) => item.dayOfWeek === selectedCell.day && item.timeSlot === targetTime
+        );
+
+        if (existing?.id) {
+          await db.weeklySchedule.update(existing.id, {
+            task: taskInput,
+            updatedAt: new Date(),
+          });
+        } else {
+          await db.weeklySchedule.add({
+            dayOfWeek: selectedCell.day,
+            timeSlot: targetTime,
+            task: taskInput,
+            completed: false,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          });
+        }
       }
     }
     setIsDialogOpen(false);
@@ -296,7 +316,7 @@ export default function WeeklySchedulerPage() {
               {selectedCell && `${DAYS[selectedCell.day]} at ${selectedCell.time}`}
             </DialogTitle>
           </DialogHeader>
-          <div className="py-4">
+          <div className="py-4 space-y-4">
             <Input
               value={taskInput}
               onChange={(e) => setTaskInput(e.target.value)}
@@ -304,6 +324,17 @@ export default function WeeklySchedulerPage() {
               onKeyDown={(e) => e.key === "Enter" && handleSaveTask()}
               autoFocus
             />
+            <Select value={taskDuration} onValueChange={setTaskDuration}>
+              <SelectTrigger>
+                <SelectValue placeholder="Duration" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="0.5">30 mins</SelectItem>
+                <SelectItem value="1">1 hour</SelectItem>
+                <SelectItem value="1.5">1.5 hours</SelectItem>
+                <SelectItem value="2">2 hours</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <DialogFooter className="gap-2 sm:justify-between">
             <Button
