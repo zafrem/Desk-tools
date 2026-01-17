@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github, ExternalLink, PanelRightClose, PanelRightOpen, Menu, X, ListTodo, CalendarClock } from "lucide-react";
+import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github, ExternalLink, PanelRightClose, PanelRightOpen, Menu, X, ListTodo, CalendarClock, Download, Upload } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/sidebar-context";
 import { useTranslation } from "react-i18next";
+import { db } from "@/lib/db";
 
 const navItems = [
   { href: "/kanban", icon: LayoutDashboard, labelKey: "kanban" },
@@ -23,6 +24,60 @@ export function TopNav() {
   const { isOpen, toggle } = useSidebar();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation("navigation");
+
+  const handleExportAll = async () => {
+    try {
+      const exportData = await db.transaction('r', db.tables, async () => {
+        const data: Record<string, unknown[]> = {};
+        for (const table of db.tables) {
+          data[table.name] = await table.toArray();
+        }
+        return data;
+      });
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `desk-tools-backup-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Export failed:", error);
+      alert("Export failed");
+    }
+  };
+
+  const handleImportAll = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json";
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+        
+        await db.transaction('rw', db.tables, async () => {
+           for (const tableName of Object.keys(data)) {
+              const table = db.table(tableName);
+              if (table) {
+                 await table.bulkPut(data[tableName]); 
+              }
+           }
+        });
+        alert("Import successful! Please refresh the page.");
+        window.location.reload();
+      } catch (error) {
+         console.error("Import failed:", error);
+         alert("Import failed");
+      }
+    };
+    input.click();
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -67,6 +122,17 @@ export function TopNav() {
           <div className="hidden md:flex items-center gap-2 text-xs text-muted-foreground mr-4">
             <div className="h-2 w-2 rounded-full bg-green-500" />
             <span>{t("localStorage")}</span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-1">
+            <Button variant="ghost" size="icon" title="Export All Data" onClick={handleExportAll}>
+              <Download className="h-5 w-5" />
+              <span className="sr-only">Export All Data</span>
+            </Button>
+            <Button variant="ghost" size="icon" title="Import All Data" onClick={handleImportAll}>
+              <Upload className="h-5 w-5" />
+              <span className="sr-only">Import All Data</span>
+            </Button>
           </div>
 
           <Link href="https://github.com/zafrem/Desk-tools/issues" target="_blank" rel="noopener noreferrer">
