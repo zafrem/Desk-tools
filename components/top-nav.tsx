@@ -81,7 +81,7 @@ export function TopNav() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-screen-2xl items-center px-4">
+      <div className="container flex h-14 max-w-screen-2xl items-center px-6 md:px-8">
         {/* Mobile menu button */}
         <Button
           variant="ghost"
@@ -101,20 +101,20 @@ export function TopNav() {
           </Link>
         </div>
 
+        {/* Spacer to push everything to the right */}
+        <div className="flex-1" />
+
         {/* Core Navigation - Hidden on mobile */}
-        <nav className="hidden md:flex items-center gap-2 lg:gap-4 text-sm font-medium">
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium mr-4">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href}>
-              <Button variant="ghost" className="gap-2 px-3">
+              <Button variant="ghost" className="gap-2 px-2 lg:px-3">
                 <item.icon className="h-4 w-4" />
                 <span className="hidden xl:inline">{t(item.labelKey)}</span>
               </Button>
             </Link>
           ))}
         </nav>
-
-        {/* Spacer to push controls to the right */}
-        <div className="flex-1" />
 
         {/* Right side controls */}
         <div className="flex items-center gap-1 sm:gap-2">
