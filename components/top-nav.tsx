@@ -94,10 +94,10 @@ export function TopNav() {
         </Button>
 
         {/* Logo/Brand */}
-        <div className="mr-4 flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Database className="h-6 w-6 md:ml-2" />
-            <span className="font-bold text-xl hidden sm:inline"> {t("brand")}</span>
+        <div className="mr-2 flex">
+          <Link href="/" className="mr-4 flex items-center space-x-2">
+            <Database className="h-5 w-5 md:ml-1" />
+            <span className="font-bold text-lg hidden sm:inline whitespace-nowrap"> {t("brand")}</span>
           </Link>
         </div>
 
@@ -119,8 +119,8 @@ export function TopNav() {
         {/* Right side controls */}
         <div className="flex items-center gap-1 sm:gap-2">
           {/* Local storage indicator */}
-          <div className="hidden md:flex items-center gap-2 text-xs text-muted-foreground mr-4">
-            <div className="h-2 w-2 rounded-full bg-green-500" />
+          <div className="hidden md:flex items-center gap-1.5 text-[11px] text-muted-foreground mr-2 whitespace-nowrap">
+            <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
             <span>{t("localStorage")}</span>
           </div>
 
