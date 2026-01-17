@@ -38,11 +38,15 @@ for (let h = START_HOUR; h <= END_HOUR; h++) {
   }
 }
 
+const CELL_HEIGHT = 48; // px
+
 export default function WeeklySchedulerPage() {
   const [selectedCell, setSelectedCell] = useState<{
     day: number;
     time: string;
+    existingId?: number;
   } | null>(null);
+  
   const [taskInput, setTaskInput] = useState("");
   const [taskDuration, setTaskDuration] = useState("0.5");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -60,7 +64,6 @@ export default function WeeklySchedulerPage() {
       const now = new Date();
       const currentDayIndex = (now.getDay() + 6) % 7; // Convert 0=Sun to 0=Mon
       
-      // Find tasks for current day
       const dayTasks = schedule.filter(item => item.dayOfWeek === currentDayIndex);
       
       dayTasks.forEach(task => {
@@ -70,19 +73,18 @@ export default function WeeklySchedulerPage() {
         
         const diff = (taskDate.getTime() - now.getTime()) / 1000 / 60; // diff in minutes
         
-        // Check if diff is approximately 5 minutes (allow slight window for interval execution)
+        // Check if diff is approximately 5 minutes
         if (diff >= 4.9 && diff <= 5.1 && !task.completed) {
            playAlarm(task.task);
         }
       });
     };
 
-    const interval = setInterval(checkAlarm, 60000); // Check every minute
+    const interval = setInterval(checkAlarm, 60000); 
     return () => clearInterval(interval);
   }, [schedule, alarmEnabled]);
 
   const playAlarm = (taskName: string) => {
-    // Browser notification
     if ("Notification" in window && Notification.permission === "granted") {
       new Notification("Upcoming Task", {
         body: `5 minutes until: ${taskName}`,
@@ -99,78 +101,72 @@ export default function WeeklySchedulerPage() {
       });
     }
 
-    // Audio Beep
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    
     osc.connect(gain);
     gain.connect(ctx.destination);
-    
     osc.type = "sine";
     osc.frequency.setValueAtTime(440, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.5);
-    
     gain.gain.setValueAtTime(0.5, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
-    
     osc.start();
     osc.stop(ctx.currentTime + 0.5);
   };
 
-  const handleCellClick = (day: number, time: string) => {
-    setSelectedCell({ day, time });
-    const existing = schedule?.find(
-      (i) => i.dayOfWeek === day && i.timeSlot === time
-    );
-    setTaskInput(existing?.task || "");
-    setTaskDuration("0.5"); // Reset duration
+  const handleCellClick = (day: number, time: string, existingId?: number, currentDuration = 30, currentTask = "") => {
+    setSelectedCell({ day, time, existingId });
+    setTaskInput(currentTask);
+    setTaskDuration((currentDuration / 60).toString());
     setIsDialogOpen(true);
   };
 
   const handleSaveTask = async () => {
     if (!selectedCell) return;
 
-    if (!taskInput.trim()) {
-      // Delete if empty (only the selected cell)
-      const existing = schedule?.find(
-        (i) => i.dayOfWeek === selectedCell.day && i.timeSlot === selectedCell.time
-      );
-      if (existing?.id) {
-        await db.weeklySchedule.delete(existing.id);
-      }
-    } else {
-      // Upsert with duration
-      const slotsCount = parseFloat(taskDuration) * 2;
+    // Delete existing task if we are editing (to replace it)
+    if (selectedCell.existingId) {
+        await db.weeklySchedule.delete(selectedCell.existingId);
+    }
+
+    if (taskInput.trim()) {
+      const durationMins = parseFloat(taskDuration) * 60;
+      const slotsCount = durationMins / 30;
       const startIndex = TIME_SLOTS.indexOf(selectedCell.time);
 
-      if (startIndex === -1) return;
+      if (startIndex !== -1) {
+          // Identify all slots this task will cover
+          const affectedSlots: string[] = [];
+          for (let i = 0; i < slotsCount; i++) {
+              if (startIndex + i < TIME_SLOTS.length) {
+                  affectedSlots.push(TIME_SLOTS[startIndex + i]);
+              }
+          }
 
-      for (let i = 0; i < slotsCount; i++) {
-        const targetIndex = startIndex + i;
-        if (targetIndex >= TIME_SLOTS.length) break;
+          // Delete ANY other tasks that start in these slots (Collision handling)
+          if (schedule) {
+              const collisions = schedule.filter(t => 
+                  t.dayOfWeek === selectedCell.day && 
+                  affectedSlots.includes(t.timeSlot) && 
+                  t.id !== selectedCell.existingId
+              );
+              if (collisions.length > 0) {
+                  await db.weeklySchedule.bulkDelete(collisions.map(c => c.id!));
+              }
+          }
 
-        const targetTime = TIME_SLOTS[targetIndex];
-        const existing = schedule?.find(
-          (item) => item.dayOfWeek === selectedCell.day && item.timeSlot === targetTime
-        );
-
-        if (existing?.id) {
-          await db.weeklySchedule.update(existing.id, {
-            task: taskInput,
-            updatedAt: new Date(),
-          });
-        } else {
+          // Add new task
           await db.weeklySchedule.add({
             dayOfWeek: selectedCell.day,
-            timeSlot: targetTime,
+            timeSlot: selectedCell.time,
             task: taskInput,
+            duration: durationMins,
             completed: false,
             createdAt: new Date(),
             updatedAt: new Date(),
           });
-        }
       }
     }
     setIsDialogOpen(false);
@@ -181,29 +177,91 @@ export default function WeeklySchedulerPage() {
   };
 
   const handleDelete = async () => {
-     if (!selectedCell) return;
-     const existing = schedule?.find(
-        (i) => i.dayOfWeek === selectedCell.day && i.timeSlot === selectedCell.time
-      );
-      if (existing?.id) {
-        await db.weeklySchedule.delete(existing.id);
-      }
-      setIsDialogOpen(false);
+     if (selectedCell?.existingId) {
+        await db.weeklySchedule.delete(selectedCell.existingId);
+     }
+     setIsDialogOpen(false);
   };
 
   const resetWeek = async () => {
-    // Clear all completed status or delete all? 
-    // User said: "When the week is up, I want it to reset."
-    // Usually means unchecking everything to start fresh next week.
     if (!schedule) return;
-    
     const updates = schedule.map(item => ({
         key: item.id,
         changes: { completed: false }
     }));
-    
     await Promise.all(updates.map(u => db.weeklySchedule.update(u.key!, u.changes)));
     setIsResetDialogOpen(false);
+  };
+
+  const renderDayColumn = (dayIndex: number) => {
+      const dayTasks = schedule?.filter(t => t.dayOfWeek === dayIndex) || [];
+      const cells = [];
+      let skipSlots = 0;
+
+      for (let i = 0; i < TIME_SLOTS.length; i++) {
+          if (skipSlots > 0) {
+              skipSlots--;
+              continue;
+          }
+
+          const time = TIME_SLOTS[i];
+          const task = dayTasks.find(t => t.timeSlot === time);
+
+          if (task) {
+              const duration = task.duration || 30;
+              const span = Math.ceil(duration / 30);
+              const height = span * CELL_HEIGHT;
+              
+              cells.push(
+                  <div
+                      key={`${dayIndex}-${time}`}
+                      className={cn(
+                          "relative group transition-colors cursor-pointer border-b border-r px-1 py-1 overflow-hidden",
+                          task.completed ? "bg-green-500/10" : "bg-primary/10 hover:bg-primary/20",
+                          (new Date().getDay() + 6) % 7 === dayIndex && !task ? "bg-primary/5" : ""
+                      )}
+                      style={{ height: `${height}px` }}
+                      onClick={() => handleCellClick(dayIndex, time, task.id, duration, task.task)}
+                  >
+                      <div className="flex items-start gap-1.5 h-full">
+                          <div onClick={(e) => e.stopPropagation()}>
+                            <Checkbox
+                              checked={task.completed}
+                              onCheckedChange={() =>
+                                task.id && toggleComplete(task.id, task.completed)
+                              }
+                              className="mt-1 h-3.5 w-3.5"
+                            />
+                          </div>
+                          <span
+                            className={cn(
+                              "text-xs leading-tight break-words line-clamp-[8] font-medium",
+                              task.completed && "line-through text-muted-foreground"
+                            )}
+                          >
+                            {task.task}
+                          </span>
+                      </div>
+                  </div>
+              );
+              skipSlots = span - 1;
+          } else {
+              cells.push(
+                  <div
+                      key={`${dayIndex}-${time}`}
+                      className={cn(
+                          "group transition-colors cursor-pointer border-b border-r flex items-center justify-center",
+                           (new Date().getDay() + 6) % 7 === dayIndex ? "bg-primary/5" : "hover:bg-muted/50"
+                      )}
+                      style={{ height: `${CELL_HEIGHT}px` }}
+                      onClick={() => handleCellClick(dayIndex, time)}
+                  >
+                        <Plus className="h-3 w-3 text-muted-foreground/20 group-hover:text-muted-foreground/50 opacity-0 group-hover:opacity-100" />
+                  </div>
+              );
+          }
+      }
+      return cells;
   };
 
   return (
@@ -237,73 +295,37 @@ export default function WeeklySchedulerPage() {
       </div>
 
       <div className="overflow-x-auto pb-6">
-        <div className="min-w-[800px] border rounded-lg">
-          {/* Header */}
-          <div className="grid grid-cols-[60px_repeat(7,1fr)] bg-muted/50 divide-x border-b">
-            <div className="p-2 text-center text-xs font-medium text-muted-foreground sticky left-0 bg-background/95 backdrop-blur z-10">
-              Time
-            </div>
-            {DAYS.map((day, i) => (
-              <div key={day} className={`p-2 text-center text-sm font-semibold ${
-                 (new Date().getDay() + 6) % 7 === i ? "bg-primary/5 text-primary" : ""
-              }`}>
-                {day}
-              </div>
-            ))}
-          </div>
-
-          {/* Grid */}
-          <div className="divide-y">
-            {TIME_SLOTS.map((time) => (
-              <div key={time} className="grid grid-cols-[60px_repeat(7,1fr)] divide-x hover:bg-muted/5 transition-colors">
-                <div className="p-2 text-xs text-muted-foreground text-center flex items-center justify-center sticky left-0 bg-background/95 backdrop-blur z-10 font-mono">
-                  {time}
-                </div>
-                {DAYS.map((_, dayIndex) => {
-                  const item = schedule?.find(
-                    (i) => i.dayOfWeek === dayIndex && i.timeSlot === time
-                  );
-
-                  return (
-                    <div
-                      key={`${dayIndex}-${time}`}
-                      className={cn(
-                        "p-1 min-h-[48px] relative group transition-colors cursor-pointer",
-                        item?.completed ? "bg-green-500/10" : "",
-                        (new Date().getDay() + 6) % 7 === dayIndex ? "bg-primary/5" : ""
-                      )}
-                      onClick={() => handleCellClick(dayIndex, time)}
+        <div className="min-w-[800px] border rounded-lg bg-background">
+          <div className="flex">
+             {/* Time Column */}
+             <div className="flex-none w-[60px] border-r bg-muted/30">
+                <div className="h-10 border-b bg-muted/50 sticky top-0 z-10"></div> {/* Header spacer */}
+                {TIME_SLOTS.map((time) => (
+                    <div 
+                        key={time} 
+                        className="flex items-center justify-center text-xs text-muted-foreground font-mono border-b bg-muted/30"
+                        style={{ height: `${CELL_HEIGHT}px` }}
                     >
-                      {item ? (
-                        <div className="h-full flex items-start gap-1.5 p-1 rounded-sm hover:bg-black/5 dark:hover:bg-white/5">
-                          <div onClick={(e) => e.stopPropagation()}>
-                            <Checkbox
-                              checked={item.completed}
-                              onCheckedChange={() =>
-                                item.id && toggleComplete(item.id, item.completed)
-                              }
-                              className="mt-0.5 h-3.5 w-3.5"
-                            />
-                          </div>
-                          <span
-                            className={cn(
-                              "text-xs leading-tight break-words line-clamp-2",
-                              item.completed && "line-through text-muted-foreground"
-                            )}
-                          >
-                            {item.task}
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="w-full h-full opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                            <Plus className="h-3 w-3 text-muted-foreground/50" />
-                        </div>
-                      )}
+                        {time}
                     </div>
-                  );
-                })}
-              </div>
-            ))}
+                ))}
+             </div>
+
+             {/* Days Columns */}
+             <div className="flex-1 flex">
+                {DAYS.map((day, dayIndex) => (
+                    <div key={day} className="flex-1 min-w-[120px] flex flex-col">
+                        <div className={`h-10 border-b flex items-center justify-center text-sm font-semibold sticky top-0 z-10 bg-background ${
+                             (new Date().getDay() + 6) % 7 === dayIndex ? "text-primary bg-primary/5" : ""
+                        }`}>
+                            {day}
+                        </div>
+                        <div className="flex-1">
+                            {renderDayColumn(dayIndex)}
+                        </div>
+                    </div>
+                ))}
+             </div>
           </div>
         </div>
       </div>
@@ -342,6 +364,7 @@ export default function WeeklySchedulerPage() {
                 size="sm"
                 onClick={handleDelete}
                 type="button"
+                disabled={!selectedCell?.existingId}
             >
                 <Trash2 className="h-4 w-4 mr-2" />
                 Delete

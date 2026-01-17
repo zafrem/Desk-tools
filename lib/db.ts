@@ -74,6 +74,7 @@ export interface WeeklyScheduleItem {
   dayOfWeek: number; // 0=Monday, 6=Sunday
   timeSlot: string; // "HH:mm"
   task: string;
+  duration?: number; // minutes, default 30
   completed: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -108,6 +109,10 @@ class DeskToolsDatabase extends Dexie {
 
     this.version(3).stores({
       weeklySchedule: "++id, [dayOfWeek+timeSlot], completed, createdAt"
+    });
+
+    this.version(4).stores({
+      weeklySchedule: "++id, [dayOfWeek+timeSlot], completed, duration, createdAt"
     });
   }
 }
