@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -188,32 +187,35 @@ export default function WeeklySchedulerPage() {
   };
 
   return (
-    <ToolLayout
-      title="Weekly Scheduler"
-      description="Plan your week from 7am to 11pm. Set tasks and get notified 5 minutes before."
-      extraActions={
-        <div className="flex gap-2">
-            <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setAlarmEnabled(!alarmEnabled)}
-                className={cn(alarmEnabled ? "text-primary" : "text-muted-foreground")}
-                title={alarmEnabled ? "Alarms Enabled" : "Alarms Disabled"}
-            >
-                <Bell className={cn("h-4 w-4 mr-2", alarmEnabled && "fill-current")} />
-                {alarmEnabled ? "On" : "Off"}
-            </Button>
-            <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => setIsResetDialogOpen(true)}
-            >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset Week
-            </Button>
-        </div>
-      }
-    >
+    <div className="container mx-auto p-8 max-w-7xl">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2">Weekly Scheduler</h1>
+        <p className="text-muted-foreground">
+          Plan your week from 7am to 11pm. Set tasks and get notified 5 minutes before.
+        </p>
+      </div>
+
+      <div className="flex gap-2 mb-6">
+        <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setAlarmEnabled(!alarmEnabled)}
+            className={cn(alarmEnabled ? "text-primary" : "text-muted-foreground")}
+            title={alarmEnabled ? "Alarms Enabled" : "Alarms Disabled"}
+        >
+            <Bell className={cn("h-4 w-4 mr-2", alarmEnabled && "fill-current")} />
+            {alarmEnabled ? "On" : "Off"}
+        </Button>
+        <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => setIsResetDialogOpen(true)}
+        >
+            <RotateCcw className="h-4 w-4 mr-2" />
+            Reset Week
+        </Button>
+      </div>
+
       <div className="overflow-x-auto pb-6">
         <div className="min-w-[800px] border rounded-lg">
           {/* Header */}
@@ -342,6 +344,6 @@ export default function WeeklySchedulerPage() {
         </DialogContent>
       </Dialog>
 
-    </ToolLayout>
+    </div>
   );
 }

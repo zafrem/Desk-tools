@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github, ExternalLink, PanelRightClose, PanelRightOpen, Menu, X, ListTodo } from "lucide-react";
+import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github, ExternalLink, PanelRightClose, PanelRightOpen, Menu, X, ListTodo, CalendarClock } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ const navItems = [
   { href: "/notepad", icon: StickyNote, labelKey: "notepad" },
   { href: "/daily-tasks", icon: ListTodo, labelKey: "dailyTasks" },
   { href: "/whiteboard", icon: PenTool, labelKey: "whiteboard" },
+  { href: "/weekly-scheduler", icon: CalendarClock, labelKey: "weeklyScheduler" },
   { href: "/terms", icon: BookA, labelKey: "terms" },
   { href: "/bookmarks", icon: ExternalLink, labelKey: "bookmarks" },
 ];
