@@ -81,7 +81,7 @@ export function TopNav() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-screen-2xl items-center">
+      <div className="container flex h-14 max-w-screen-2xl items-center px-4">
         {/* Mobile menu button */}
         <Button
           variant="ghost"
@@ -102,22 +102,22 @@ export function TopNav() {
         </div>
 
         {/* Core Navigation - Hidden on mobile */}
-        <nav className="hidden md:flex items-center gap-4 lg:gap-6 text-sm font-medium flex-1">
+        <nav className="hidden md:flex items-center gap-2 lg:gap-4 text-sm font-medium">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href}>
-              <Button variant="ghost" className="gap-2">
+              <Button variant="ghost" className="gap-2 px-3">
                 <item.icon className="h-4 w-4" />
-                <span className="hidden lg:inline">{t(item.labelKey)}</span>
+                <span className="hidden xl:inline">{t(item.labelKey)}</span>
               </Button>
             </Link>
           ))}
         </nav>
 
-        {/* Spacer for mobile */}
-        <div className="flex-1 md:hidden" />
+        {/* Spacer to push controls to the right */}
+        <div className="flex-1" />
 
         {/* Right side controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Local storage indicator */}
           <div className="hidden md:flex items-center gap-2 text-xs text-muted-foreground mr-4">
             <div className="h-2 w-2 rounded-full bg-green-500" />
