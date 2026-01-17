@@ -78,9 +78,9 @@ export default function DailyTasksPage() {
         <div>
           <h1 className="text-3xl font-bold mb-2 flex items-center gap-2">
             <Calendar className="h-8 w-8" />
-            Daily Tasks
+            Tasks
           </h1>
-          <p className="text-muted-foreground">Track your recurring daily goals.</p>
+          <p className="text-muted-foreground">Track your recurring daily goals. Resets daily.</p>
         </div>
         <Button onClick={() => handleOpenDialog()}>
           <Plus className="h-4 w-4 mr-2" /> Add Task

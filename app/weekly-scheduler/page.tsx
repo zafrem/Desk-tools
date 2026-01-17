@@ -189,9 +189,9 @@ export default function WeeklySchedulerPage() {
   return (
     <div className="container mx-auto p-8 max-w-7xl">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">Weekly Scheduler</h1>
+        <h1 className="text-3xl font-bold mb-2">Schedule</h1>
         <p className="text-muted-foreground">
-          Plan your week from 7am to 11pm. Set tasks and get notified 5 minutes before.
+          Plan your week from 7am to 11pm. Resets weekly.
         </p>
       </div>
 

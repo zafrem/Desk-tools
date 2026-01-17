@@ -1,10 +1,10 @@
 {
   "brand": "Desk-tools",
-  "kanban": "Kanban Board",
+  "kanban": "Kanban",
   "notepad": "Notepad",
-  "dailyTasks": "Daily Tasks",
+  "dailyTasks": "Tasks",
   "whiteboard": "Whiteboard",
-  "weeklyScheduler": "Weekly Scheduler",
+  "weeklyScheduler": "Schedule",
   "terms": "Terms",
   "bookmarks": "Bookmarks",
   "localStorage": "Local Storage",

@@ -121,7 +121,7 @@ export default function KanbanPage() {
   return (
     <div className="container mx-auto p-8 max-w-7xl">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">Kanban Board</h1>
+        <h1 className="text-3xl font-bold mb-2">Kanban</h1>
         <p className="text-muted-foreground">
           Manage your project tasks with a simple drag-and-drop workflow. All data is stored locally.
         </p>
