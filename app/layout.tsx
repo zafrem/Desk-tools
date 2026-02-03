@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_KR, Noto_Sans_SC, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/components/i18n-provider";
 import { AppShell } from "@/components/app-shell";
+import { ServiceWorkerRegistration } from "@/components/service-worker-registration";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const notoKR = Noto_Sans_KR({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-noto-kr" });
@@ -13,6 +14,23 @@ const notoJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "700"], variab
 export const metadata: Metadata = {
   title: "Desk-tools - Local-First Utility Platform",
   description: "High-performance, privacy-focused developer tools running entirely in your browser",
+  manifest: "./manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Desk-tools",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -31,6 +49,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AppShell>{children}</AppShell>
+            <ServiceWorkerRegistration />
           </ThemeProvider>
         </I18nProvider>
       </body>
