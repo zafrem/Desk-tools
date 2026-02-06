@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import NextImage from "next/image";
 import { ToolLayout } from "@/components/tool-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -492,7 +493,14 @@ export default function DesignToolsPage() {
 
                      {imagePreview && (
                          <div className="rounded-lg border overflow-hidden bg-muted/20">
-                             <img src={imagePreview} alt="Preview" className="w-full h-auto object-contain max-h-[400px]" />
+                             <NextImage 
+                                src={imagePreview} 
+                                alt="Preview" 
+                                width={800} 
+                                height={400} 
+                                className="w-full h-auto object-contain max-h-[400px]" 
+                                unoptimized
+                             />
                          </div>
                      )}
                 </div>

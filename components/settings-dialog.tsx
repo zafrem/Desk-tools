@@ -93,7 +93,7 @@ export function SettingsDialog() {
       console.error("LLM connection error:", error);
       if (error instanceof TypeError && error.message === "Failed to fetch") {
         setTestStatus("cors");
-        if (provider === "ollama") setShowCorsGuide(true);
+        if (provider === "ollama") setShowSetupGuide(true);
       } else {
         setTestStatus("error");
       }
@@ -200,7 +200,7 @@ export function SettingsDialog() {
                           <p className="font-medium text-[10px]">macOS:</p>
                           <div className="flex items-center gap-1">
                             <code className="flex-1 bg-muted px-1.5 py-1 rounded font-mono text-[10px] break-all">
-                              launchctl setenv OLLAMA_ORIGINS "*"
+                              {'launchctl setenv OLLAMA_ORIGINS "*"'}
                             </code>
                             <Button
                               variant="ghost"
@@ -216,7 +216,7 @@ export function SettingsDialog() {
                         <div className="space-y-1">
                           <p className="font-medium text-[10px]">Linux (systemd):</p>
                           <code className="block bg-muted px-1.5 py-1 rounded font-mono text-[10px]">
-                            Environment="OLLAMA_ORIGINS=*"
+                            {'Environment="OLLAMA_ORIGINS=*"'}
                           </code>
                         </div>
 
@@ -306,7 +306,7 @@ export function SettingsDialog() {
                       <p className="text-muted-foreground">{t("vllmGuide.step2.description")}</p>
                       <div className="flex items-center gap-1.5 mt-1">
                         <code className="flex-1 bg-background border rounded px-2 py-1.5 font-mono text-[10px] break-all">
-                          vllm serve "CohereLabs/c4ai-command-r-plus"
+                          {'vllm serve "CohereLabs/c4ai-command-r-plus"'}
                         </code>
                         <Button
                           variant="ghost"
@@ -384,7 +384,7 @@ export function SettingsDialog() {
                       <p className="text-muted-foreground">{t("sglangGuide.step2.description")}</p>
                       <div className="flex items-center gap-1.5 mt-1">
                         <code className="flex-1 bg-background border rounded px-2 py-1.5 font-mono text-[10px] break-all">
-                          python3 -m sglang.launch_server --model-path "CohereLabs/c4ai-command-r-plus" --host 0.0.0.0 --port 30000
+                          {'python3 -m sglang.launch_server --model-path "CohereLabs/c4ai-command-r-plus" --host 0.0.0.0 --port 30000'}
                         </code>
                         <Button
                           variant="ghost"
