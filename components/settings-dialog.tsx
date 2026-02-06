@@ -158,8 +158,8 @@ export function SettingsDialog() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="ollama">Ollama</SelectItem>
-                <SelectItem value="vllm">vLLM (OpenAI Compatible)</SelectItem>
-                <SelectItem value="sglang">SGLang (OpenAI Compatible)</SelectItem>
+                <SelectItem value="vllm">vLLM (OpenAI Compatible) [Beta]</SelectItem>
+                <SelectItem value="sglang">SGLang (OpenAI Compatible) [Beta]</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -257,9 +257,12 @@ export function SettingsDialog() {
             {provider === "vllm" && (
               <div className="space-y-4 animate-in fade-in duration-300">
                 <div className="space-y-1">
-                  <h5 className="text-sm font-medium">vLLM Setup</h5>
+                  <h5 className="text-sm font-medium flex items-center gap-2">
+                    vLLM Setup
+                    <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Beta</span>
+                  </h5>
                   <p className="text-xs text-muted-foreground">
-                    Ensure your server is running with OpenAI-compatible API enabled.
+                    Support for vLLM is currently in beta and may not work as expected.
                   </p>
                 </div>
 
@@ -335,9 +338,12 @@ export function SettingsDialog() {
             {provider === "sglang" && (
               <div className="space-y-4 animate-in fade-in duration-300">
                 <div className="space-y-1">
-                  <h5 className="text-sm font-medium">SGLang Setup</h5>
+                  <h5 className="text-sm font-medium flex items-center gap-2">
+                    SGLang Setup
+                    <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Beta</span>
+                  </h5>
                   <p className="text-xs text-muted-foreground">
-                    Ensure your server is running with OpenAI-compatible API enabled.
+                    Support for SGLang is currently in beta and may not work as expected.
                   </p>
                 </div>
 
