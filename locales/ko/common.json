@@ -13,7 +13,8 @@
     "create": "생성",
     "update": "수정",
     "add": "추가",
-    "close": "닫기"
+    "close": "닫기",
+    "test": "테스트"
   },
   "labels": {
     "input": "입력",
@@ -24,7 +25,11 @@
     "description": "설명",
     "status": "상태",
     "category": "카테고리",
-    "required": "필수"
+    "required": "필수",
+    "settings": "설정",
+    "ollamaUrl": "기본 URL",
+    "ollamaModel": "모델명",
+    "selectModel": "모델 선택"
   },
   "messages": {
     "confirmDelete": "정말 삭제하시겠습니까?",
@@ -32,7 +37,9 @@
     "importError": "가져오기에 실패했습니다. 파일 형식을 확인해주세요.",
     "copySuccess": "클립보드에 복사되었습니다",
     "invalidFormat": "잘못된 파일 형식입니다",
-    "noData": "데이터가 없습니다"
+    "noData": "데이터가 없습니다",
+    "connectedSuccess": "성공적으로 연결되었습니다",
+    "connectionFailed": "연결에 실패했습니다"
   },
   "status": {
     "todo": "할 일",

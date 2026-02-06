@@ -190,5 +190,14 @@
   "pomodoro-timer": {
     "name": "ポモドーロタイマー",
     "description": "作業と休憩の間隔がある集中タイマー"
+  },
+  "ai-chat": {
+    "name": "AIチャット",
+    "description": "ローカルのOllama LLMとチャット",
+    "connectionRequired": "接続が必要",
+    "connectionMessage": "AIツールを使用するには、設定でOllamaのベースURLとモデルを構成してください。",
+    "newChat": "新しいチャット",
+    "startConversation": "ローカルAIと新しい会話を開始する",
+    "inputPlaceholder": "メッセージを入力..."
   }
 }

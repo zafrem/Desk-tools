@@ -13,7 +13,8 @@
     "create": "作成",
     "update": "更新",
     "add": "追加",
-    "close": "閉じる"
+    "close": "閉じる",
+    "test": "テスト"
   },
   "labels": {
     "input": "入力",
@@ -24,7 +25,11 @@
     "description": "説明",
     "status": "ステータス",
     "category": "カテゴリ",
-    "required": "必須"
+    "required": "必須",
+    "settings": "設定",
+    "ollamaUrl": "ベースURL",
+    "ollamaModel": "モデル名",
+    "selectModel": "モデルを選択"
   },
   "messages": {
     "confirmDelete": "本当に削除しますか？",
@@ -32,7 +37,9 @@
     "importError": "インポートに失敗しました。ファイル形式を確認してください。",
     "copySuccess": "クリップボードにコピーしました",
     "invalidFormat": "無効なファイル形式です",
-    "noData": "データが見つかりません"
+    "noData": "データが見つかりません",
+    "connectedSuccess": "正常に接続されました",
+    "connectionFailed": "接続に失敗しました"
   },
   "status": {
     "todo": "未着手",

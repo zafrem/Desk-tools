@@ -14,6 +14,13 @@
   "closeSidebar": "サイドバーを閉じる",
   "openSidebar": "ツールサイドバーを開く",
   "tools": "ツール",
+  "aiModules": "AIモジュール",
+  "generalTools": "一般ツール",
+  "recentChats": "最近のチャット",
+  "newChat": "新しいチャット",
+  "untitledChat": "無題のチャット",
+  "noRecentChats": "最近のチャットはありません",
   "github": "GitHub",
-  "changeLanguage": "言語を変更"
+  "changeLanguage": "言語を変更",
+  "settings": "設定"
 }

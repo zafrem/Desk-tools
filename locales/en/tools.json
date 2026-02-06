@@ -202,5 +202,18 @@
   "pomodoro-timer": {
     "name": "Pomodoro Timer",
     "description": "Focus timer with work and break intervals"
+  },
+  "encoding-converter": {
+    "name": "Encoding Converter",
+    "description": "Fix broken text (mojibake) by converting between character encodings"
+  },
+  "ai-chat": {
+    "name": "AI Chat",
+    "description": "Chat with your local Ollama LLM",
+    "connectionRequired": "Connection Required",
+    "connectionMessage": "Please configure your Ollama Base URL and Model in the settings to use AI tools.",
+    "newChat": "New Chat",
+    "startConversation": "Start a new conversation with your local AI",
+    "inputPlaceholder": "Type your message..."
   }
 }

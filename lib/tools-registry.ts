@@ -469,4 +469,13 @@ export const TOOLS_REGISTRY: Tool[] = [
     path: "/tools/encoding-converter",
     icon: "Languages",
   },
+  {
+    id: "ai-chat",
+    name: "AI Chat",
+    description: "Chat with your local Ollama LLM",
+    tags: ["ai", "chat", "llm", "ollama"],
+    category: "ai",
+    path: "/tools/ai-chat",
+    icon: "MessageSquare",
+  },
 ];

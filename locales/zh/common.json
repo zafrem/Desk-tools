@@ -13,7 +13,8 @@
     "create": "创建",
     "update": "更新",
     "add": "添加",
-    "close": "关闭"
+    "close": "关闭",
+    "test": "测试"
   },
   "labels": {
     "input": "输入",
@@ -24,7 +25,11 @@
     "description": "描述",
     "status": "状态",
     "category": "分类",
-    "required": "必填"
+    "required": "必填",
+    "settings": "设置",
+    "ollamaUrl": "基本 URL",
+    "ollamaModel": "模型名称",
+    "selectModel": "选择模型"
   },
   "messages": {
     "confirmDelete": "确定要删除吗？",
@@ -32,7 +37,9 @@
     "importError": "导入失败。请检查文件格式。",
     "copySuccess": "已复制到剪贴板",
     "invalidFormat": "文件格式无效",
-    "noData": "没有找到数据"
+    "noData": "没有找到数据",
+    "connectedSuccess": "连接成功",
+    "connectionFailed": "连接失败"
   },
   "status": {
     "todo": "待办",

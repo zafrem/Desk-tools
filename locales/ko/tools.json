@@ -206,5 +206,14 @@
   "encoding-converter": {
     "name": "인코딩 변환기",
     "description": "문자 인코딩 변환을 통해 깨진 텍스트(모지바케) 복구"
+  },
+  "ai-chat": {
+    "name": "AI 채팅",
+    "description": "로컬 Ollama LLM과 채팅",
+    "connectionRequired": "연결 필요",
+    "connectionMessage": "AI 도구를 사용하려면 설정에서 Ollama 기본 URL과 모델을 구성하십시오.",
+    "newChat": "새 채팅",
+    "startConversation": "로컬 AI와 새로운 대화를 시작하세요",
+    "inputPlaceholder": "메시지를 입력하세요..."
   }
 }

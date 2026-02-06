@@ -14,6 +14,13 @@
   "closeSidebar": "关闭侧边栏",
   "openSidebar": "打开工具侧边栏",
   "tools": "工具",
+  "aiModules": "AI 模块",
+  "generalTools": "通用工具",
+  "recentChats": "最近聊天",
+  "newChat": "新聊天",
+  "untitledChat": "无标题聊天",
+  "noRecentChats": "没有最近的聊天",
   "github": "GitHub",
-  "changeLanguage": "切换语言"
+  "changeLanguage": "切换语言",
+  "settings": "设置"
 }

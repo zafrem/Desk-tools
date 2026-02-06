@@ -190,5 +190,14 @@
   "pomodoro-timer": {
     "name": "番茄钟",
     "description": "带有工作和休息间隔的专注计时器"
+  },
+  "ai-chat": {
+    "name": "AI聊天",
+    "description": "与本地Ollama LLM聊天",
+    "connectionRequired": "需要连接",
+    "connectionMessage": "请在设置中配置您的 Ollama 基本 URL 和模型以使用 AI 工具。",
+    "newChat": "新聊天",
+    "startConversation": "与您的本地 AI 开启新对话",
+    "inputPlaceholder": "输入消息..."
   }
 }

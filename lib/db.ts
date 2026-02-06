@@ -80,6 +80,21 @@ export interface WeeklyScheduleItem {
   updatedAt: Date;
 }
 
+export interface ChatMessage {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  timestamp: Date;
+}
+
+export interface ChatSession {
+  id?: number;
+  title: string;
+  messages: ChatMessage[];
+  model: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Database class
 class DeskToolsDatabase extends Dexie {
   ganttTasks!: EntityTable<GanttTask, 'id'>;
@@ -90,6 +105,7 @@ class DeskToolsDatabase extends Dexie {
   dailyTasks!: EntityTable<DailyTask, 'id'>;
   preferences!: EntityTable<UserPreference, 'id'>;
   weeklySchedule!: EntityTable<WeeklyScheduleItem, 'id'>;
+  chatSessions!: EntityTable<ChatSession, 'id'>;
 
   constructor() {
     super("DeskToolsDB");
@@ -113,6 +129,10 @@ class DeskToolsDatabase extends Dexie {
 
     this.version(4).stores({
       weeklySchedule: "++id, [dayOfWeek+timeSlot], completed, duration, createdAt"
+    });
+
+    this.version(5).stores({
+      chatSessions: "++id, title, model, createdAt, updatedAt"
     });
   }
 }

@@ -14,6 +14,13 @@
   "closeSidebar": "사이드바 닫기",
   "openSidebar": "도구 사이드바 열기",
   "tools": "도구",
+  "aiModules": "AI 모듈",
+  "generalTools": "일반 도구",
+  "recentChats": "최근 채팅",
+  "newChat": "새 채팅",
+  "untitledChat": "제목 없는 채팅",
+  "noRecentChats": "최근 채팅 내역이 없습니다",
   "github": "GitHub",
-  "changeLanguage": "언어 변경"
+  "changeLanguage": "언어 변경",
+  "settings": "설정"
 }

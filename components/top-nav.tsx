@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Database, LayoutDashboard, StickyNote, PenTool, BookA, Github, ExternalLink, PanelRightClose, PanelRightOpen, Menu, X, ListTodo, CalendarClock, Download, Upload } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { SettingsDialog } from "@/components/settings-dialog";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/sidebar-context";
 import { useTranslation } from "react-i18next";
@@ -147,6 +148,9 @@ export function TopNav() {
 
           {/* Theme toggle */}
           <ThemeToggle />
+
+          {/* Settings dialog */}
+          <SettingsDialog />
 
           {/* Sidebar toggle */}
           <Button

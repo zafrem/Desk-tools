@@ -15,6 +15,13 @@
   "closeSidebar": "Close sidebar",
   "openSidebar": "Open tools sidebar",
   "tools": "Tools",
+  "aiModules": "AI Modules",
+  "generalTools": "General Tools",
+  "recentChats": "Recent Chats",
+  "newChat": "New Chat",
+  "untitledChat": "Untitled Chat",
+  "noRecentChats": "No recent chats",
   "github": "GitHub",
-  "changeLanguage": "Change language"
+  "changeLanguage": "Change language",
+  "settings": "Settings"
 }
