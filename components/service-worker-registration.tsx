@@ -4,7 +4,8 @@ import { useEffect } from "react";
 
 export function ServiceWorkerRegistration() {
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
+    // Only register service worker in production
+    if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
       const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
       navigator.serviceWorker
         .register(`${basePath}/sw.js`)

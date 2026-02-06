@@ -45,5 +45,54 @@
     "todo": "To Do",
     "inProgress": "In Progress",
     "done": "Done"
+  },
+  "setupGuide": {
+    "title": "Ollama Setup & Usage Guide",
+    "step1": {
+      "title": "1. Platform Installation",
+      "description": "Install Ollama and configure CORS to allow requests from the browser.",
+      "corsTitle": "Required: Allow Origin in Ollama",
+      "corsDesc": "Ollama blocks requests from external origins by default. Set the OLLAMA_ORIGINS environment variable, then restart Ollama."
+    },
+    "step2": {
+      "title": "2. Model List (Configuration)",
+      "description": "Link Ollama to Desk-tools and select your desired model.",
+      "test": "Enter the Base URL (usually http://localhost:11434) and click 'Test'.",
+      "select": "Once connected, select a model from the dropdown and click 'Save'."
+    },
+    "step3": {
+      "title": "3. Model Operation",
+      "description": "After saving, find 'AI Chat' in the 'AI Modules' sidebar to start using the local LLM."
+    }
+  },
+  "vllmGuide": {
+    "title": "vLLM Setup & Usage Guide",
+    "step1": {
+      "title": "1. Installation",
+      "description": "Install vLLM via pip to get started."
+    },
+    "step2": {
+      "title": "2. Start Server",
+      "description": "Launch the OpenAI-compatible API server with your desired model."
+    },
+    "step3": {
+      "title": "3. Configuration",
+      "description": "Enter the Base URL (default: http://localhost:8000) and click 'Test' to fetch available models."
+    }
+  },
+  "sglangGuide": {
+    "title": "SGLang Setup & Usage Guide",
+    "step1": {
+      "title": "1. Installation",
+      "description": "Install SGLang via pip to get started."
+    },
+    "step2": {
+      "title": "2. Start Server",
+      "description": "Launch the SGLang server with your desired model and port."
+    },
+    "step3": {
+      "title": "3. Configuration",
+      "description": "Enter the Base URL (default: http://localhost:30000) and click 'Test' to fetch available models."
+    }
   }
 }

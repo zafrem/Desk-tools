@@ -33,12 +33,17 @@ function AIChatContent() {
 
   // Load configuration
   const config = useLiveQuery(async () => {
+    const provider = await db.preferences.where("key").equals("llm_provider").first();
     const baseUrl = await db.preferences.where("key").equals("ollama_base_url").first();
     const model = await db.preferences.where("key").equals("ollama_model").first();
+    const apiKey = await db.preferences.where("key").equals("llm_api_key").first();
     const connected = await db.preferences.where("key").equals("ollama_connected").first();
+    
     return {
+      provider: (provider?.value || "ollama") as "ollama" | "vllm" | "sglang",
       baseUrl: baseUrl?.value || "http://localhost:11434",
       model: model?.value || "llama3",
+      apiKey: apiKey?.value || "",
       isConnected: connected?.value === "true"
     };
   }, []);
@@ -94,13 +99,26 @@ function AIChatContent() {
         }
       }
 
-      // 2. Call Ollama API (Streaming)
+      // 2. Call API based on provider
       const messagesForApi = session?.messages 
         ? [...session.messages, userMessage] 
         : [userMessage];
 
-      const response = await fetch(`${config.baseUrl}/api/chat`, {
+      const isOllama = config.provider === "ollama";
+      const apiUrl = isOllama 
+        ? `${config.baseUrl}/api/chat`
+        : `${config.baseUrl}/v1/chat/completions`;
+
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (config.apiKey) {
+        headers["Authorization"] = `Bearer ${config.apiKey}`;
+      }
+
+      const response = await fetch(apiUrl, {
         method: "POST",
+        headers,
         body: JSON.stringify({
           model: config.model,
           messages: messagesForApi.map(m => ({ role: m.role, content: m.content })),
@@ -108,29 +126,50 @@ function AIChatContent() {
         }),
       });
 
-      if (!response.ok) throw new Error("Ollama error");
+      if (!response.ok) throw new Error(`${config.provider} error`);
 
       const reader = response.body?.getReader();
       let accumulatedResponse = "";
 
       if (reader) {
+        const decoder = new TextDecoder();
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
 
-          const chunk = new TextDecoder().decode(value);
+          const chunk = decoder.decode(value);
           const lines = chunk.split("\n");
           
           for (const line of lines) {
-            if (!line.trim()) continue;
-            try {
-              const json = JSON.parse(line);
-              if (json.message?.content) {
-                accumulatedResponse += json.message.content;
-                setCurrentResponse(accumulatedResponse);
+            const trimmedLine = line.trim();
+            if (!trimmedLine) continue;
+
+            if (isOllama) {
+              try {
+                const json = JSON.parse(trimmedLine);
+                if (json.message?.content) {
+                  accumulatedResponse += json.message.content;
+                  setCurrentResponse(accumulatedResponse);
+                }
+              } catch (err) {
+                console.error("Error parsing Ollama chunk", err);
               }
-            } catch (err) {
-              console.error("Error parsing JSON chunk", err);
+            } else {
+              // OpenAI format: data: {"id": "...", "choices": [{"delta": {"content": "..."}}]}
+              if (trimmedLine.startsWith("data: ")) {
+                const dataStr = trimmedLine.slice(6);
+                if (dataStr === "[DONE]") continue;
+                try {
+                  const json = JSON.parse(dataStr);
+                  const content = json.choices?.[0]?.delta?.content;
+                  if (content) {
+                    accumulatedResponse += content;
+                    setCurrentResponse(accumulatedResponse);
+                  }
+                } catch (err) {
+                  console.error("Error parsing OpenAI-compatible chunk", err);
+                }
+              }
             }
           }
         }
@@ -157,6 +196,7 @@ function AIChatContent() {
       setCurrentResponse("");
     }
   };
+
 
   const deleteSession = async () => {
     if (sessionId) {

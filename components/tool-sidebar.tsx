@@ -20,7 +20,7 @@ export function ToolSidebar() {
   const { t } = useTranslation("navigation");
   const { t: tTools } = useTranslation("tools");
 
-  const isOllamaConfigured = useLiveQuery(async () => {
+  const isLLMConfigured = useLiveQuery(async () => {
     const connected = await db.preferences.where("key").equals("ollama_connected").first();
     const baseUrl = await db.preferences.where("key").equals("ollama_base_url").first();
     const model = await db.preferences.where("key").equals("ollama_model").first();
@@ -35,10 +35,10 @@ export function ToolSidebar() {
   const { aiTools, generalTools } = React.useMemo(() => {
     const allTools = searchTools(searchQuery);
     return {
-      aiTools: isOllamaConfigured ? allTools.filter(tool => tool.category === "ai") : [],
+      aiTools: isLLMConfigured ? allTools.filter(tool => tool.category === "ai") : [],
       generalTools: allTools.filter(tool => tool.category !== "ai")
     };
-  }, [searchQuery, isOllamaConfigured]);
+  }, [searchQuery, isLLMConfigured]);
 
   // Close sidebar on mobile when clicking a link
   const handleLinkClick = () => {
@@ -142,7 +142,7 @@ export function ToolSidebar() {
         <div className="flex-1 overflow-y-auto">
           <div className="p-2 space-y-6">
             {/* AI Modules Section */}
-            {isOllamaConfigured && (
+            {isLLMConfigured && (
               <div className="space-y-4">
                 <div className="space-y-1">
                   <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
@@ -196,7 +196,7 @@ export function ToolSidebar() {
 
             {/* General Tools Section */}
             <div className="space-y-1">
-              {isOllamaConfigured && (
+              {isLLMConfigured && (
                 <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   {t("generalTools")}
                 </h3>

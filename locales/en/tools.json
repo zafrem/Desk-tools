@@ -209,9 +209,9 @@
   },
   "ai-chat": {
     "name": "AI Chat",
-    "description": "Chat with your local Ollama LLM",
+    "description": "Chat with your local LLM (Ollama, vLLM, SGLang)",
     "connectionRequired": "Connection Required",
-    "connectionMessage": "Please configure your Ollama Base URL and Model in the settings to use AI tools.",
+    "connectionMessage": "Please configure your LLM Provider, Base URL and Model in the settings to use AI tools.",
     "newChat": "New Chat",
     "startConversation": "Start a new conversation with your local AI",
     "inputPlaceholder": "Type your message..."

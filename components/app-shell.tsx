@@ -1,9 +1,13 @@
 "use client";
 
 import * as React from "react";
+import dynamic from "next/dynamic";
 import { SidebarProvider, useSidebar } from "@/components/sidebar-context";
 import { TopNav } from "@/components/top-nav";
-import { ToolSidebar } from "@/components/tool-sidebar";
+
+const ToolSidebar = dynamic(() => import("@/components/tool-sidebar").then(mod => mod.ToolSidebar), {
+  ssr: false,
+});
 
 function AppShellInner({ children }: { children: React.ReactNode }) {
   const { isOpen } = useSidebar();
