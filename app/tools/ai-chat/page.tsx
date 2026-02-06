@@ -13,6 +13,14 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 export default function AIChatPage() {
+  return (
+    <React.Suspense fallback={null}>
+      <AIChatContent />
+    </React.Suspense>
+  );
+}
+
+function AIChatContent() {
   const { t } = useTranslation("tools");
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -37,7 +45,7 @@ export default function AIChatPage() {
 
   // Load current session
   const session = useLiveQuery(
-    () => (sessionId ? db.chatSessions.get(Number(sessionId)) : Promise.resolve(undefined)),
+    async () => (sessionId ? await db.chatSessions.get(Number(sessionId)) : undefined),
     [sessionId]
   );
 
@@ -73,7 +81,7 @@ export default function AIChatPage() {
           model: config.model,
           createdAt: new Date(),
           updatedAt: new Date(),
-        });
+        }) as number;
         router.push(`/tools/ai-chat?id=${activeId}`);
       } else {
         activeId = targetSessionId;
