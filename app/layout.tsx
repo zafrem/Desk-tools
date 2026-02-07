@@ -16,9 +16,11 @@ export const metadata: Metadata = {
   description: "High-performance, privacy-focused developer tools running entirely in your browser",
   manifest: "/manifest.json",
   icons: {
-    icon: "/apple-icon.png",
-    shortcut: "/apple-icon.png",
-    apple: "/apple-icon.png",
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
   appleWebApp: {
     capable: true,
