@@ -14,9 +14,10 @@ const notoJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "700"], variab
 export const metadata: Metadata = {
   title: "Desk-tools - Local-First Utility Platform",
   description: "High-performance, privacy-focused developer tools running entirely in your browser",
-  manifest: "./manifest.json",
+  manifest: "/manifest.json",
   icons: {
     icon: "/apple-icon.png",
+    shortcut: "/apple-icon.png",
     apple: "/apple-icon.png",
   },
   appleWebApp: {
