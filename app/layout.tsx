@@ -11,16 +11,19 @@ const notoKR = Noto_Sans_KR({ subsets: ["latin"], weight: ["400", "700"], variab
 const notoSC = Noto_Sans_SC({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-noto-sc" });
 const notoJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-noto-jp" });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
   title: "Desk-tools - Local-First Utility Platform",
   description: "High-performance, privacy-focused developer tools running entirely in your browser",
-  manifest: "./manifest.json",
+  manifest: `${basePath}/manifest.json`,
   icons: {
     icon: [
-      { url: "./favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "./icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: `${basePath}/favicon-32x32.png`, sizes: "32x32", type: "image/png" },
+      { url: `${basePath}/icon-192.png`, sizes: "192x192", type: "image/png" },
     ],
-    apple: "./apple-touch-icon.png",
+    shortcut: `${basePath}/favicon.ico`,
+    apple: `${basePath}/apple-touch-icon.png`,
   },
   appleWebApp: {
     capable: true,
