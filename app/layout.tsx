@@ -14,13 +14,13 @@ const notoJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "700"], variab
 export const metadata: Metadata = {
   title: "Desk-tools - Local-First Utility Platform",
   description: "High-performance, privacy-focused developer tools running entirely in your browser",
-  manifest: "/manifest.json",
+  manifest: "./manifest.json",
   icons: {
     icon: [
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "./favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "./icon-192.png", sizes: "192x192", type: "image/png" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: "./apple-touch-icon.png",
   },
   appleWebApp: {
     capable: true,
