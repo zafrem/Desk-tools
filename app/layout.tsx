@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   title: "Desk-tools - Local-First Utility Platform",
   description: "High-performance, privacy-focused developer tools running entirely in your browser",
   manifest: "./manifest.json",
+  icons: {
+    icon: "/apple-icon.png",
+    apple: "/apple-icon.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
