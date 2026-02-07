@@ -20,15 +20,6 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "Desk-tools",
   },
-  icons: {
-    icon: [
-      { url: "./icon.png", type: "image/png", sizes: "32x32" },
-      { url: "./apple-icon.png", type: "image/png", sizes: "180x180" },
-    ],
-    apple: [
-      { url: "./apple-icon.png", sizes: "180x180", type: "image/png" },
-    ],
-  },
   formatDetection: {
     telephone: false,
   },
