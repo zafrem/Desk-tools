@@ -6,6 +6,10 @@ A high-performance, local-first utility platform designed for multi-tasking indi
 
 ![Main Page](./images/Init-page.jpg)
 
+## The purpose behind the development
+
+"I'm not actually a professional developer. But after working with various systems, I kept getting the itch to build my own little tools. They didn't start as big, formal projects—they just kind of evolved bit by bit. Since I didn't have a team of designers or engineers to lean on, I just did everything myself. That’s how Desk-tools came to life."
+
 ## 🌟 Overview
 
 Desk-tools is a comprehensive suite of utilities built for "hybrid professionals"—developers, designers, planners, and marketers who need a fast, privacy-focused workspace.
