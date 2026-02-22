@@ -53,38 +53,61 @@ export function ToolSidebar() {
       : null;
 
     return (
-      <Link
-        key={tool.id}
-        href={tool.path}
-        onClick={handleLinkClick}
-        className="flex items-start gap-3 rounded-lg px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-      >
-        <div className="mt-0.5">
-          {IconComponent ? (
-            <IconComponent className="h-4 w-4" />
-          ) : (
-            <div className="h-4 w-4" />
-          )}
-        </div>
-        <div className="flex-1 space-y-1">
-          <div className="font-medium leading-none">
-            {tTools(`${tool.id}.name`, { defaultValue: tool.name })}
+      <div key={tool.id} className="space-y-1">
+        <Link
+          href={tool.path}
+          onClick={handleLinkClick}
+          className="flex items-start gap-3 rounded-lg px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+        >
+          <div className="mt-0.5">
+            {IconComponent ? (
+              <IconComponent className="h-4 w-4" />
+            ) : (
+              <div className="h-4 w-4" />
+            )}
           </div>
-          <div className="text-xs text-muted-foreground line-clamp-2">
-            {tTools(`${tool.id}.description`, { defaultValue: tool.description })}
+          <div className="flex-1 space-y-1">
+            <div className="font-medium leading-none">
+              {tTools(`${tool.id}.name`, { defaultValue: tool.name })}
+            </div>
+            <div className="text-xs text-muted-foreground line-clamp-2">
+              {tTools(`${tool.id}.description`, { defaultValue: tool.description })}
+            </div>
+            <div className="flex flex-wrap gap-1 mt-1">
+              {tool.tags.slice(0, 3).map((tag: string) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center rounded-md bg-secondary px-1.5 py-0.5 text-xs font-medium text-secondary-foreground"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-1 mt-1">
-            {tool.tags.slice(0, 3).map((tag: string) => (
-              <span
-                key={tag}
-                className="inline-flex items-center rounded-md bg-secondary px-1.5 py-0.5 text-xs font-medium text-secondary-foreground"
-              >
-                {tag}
-              </span>
-            ))}
+        </Link>
+        
+        {tool.subTools && tool.subTools.length > 0 && (
+          <div className="pl-10 space-y-1 mt-1">
+            {tool.subTools.map((subTool) => {
+              const SubIcon = subTool.icon 
+                ? (LucideIcons[subTool.icon as keyof typeof LucideIcons] as React.ComponentType<{ className?: string }>)
+                : null;
+              
+              return (
+                <Link
+                  key={subTool.id}
+                  href={subTool.path}
+                  onClick={handleLinkClick}
+                  className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md hover:bg-accent hover:text-accent-foreground transition-colors text-muted-foreground"
+                >
+                  {SubIcon && <SubIcon className="h-3 w-3" />}
+                  <span className="truncate">{subTool.name}</span>
+                </Link>
+              );
+            })}
           </div>
-        </div>
-      </Link>
+        )}
+      </div>
     );
   };
 

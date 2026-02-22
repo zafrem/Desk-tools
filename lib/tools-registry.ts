@@ -470,6 +470,20 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "Languages",
   },
   {
+    id: "iframe-viewer",
+    name: "Iframe Viewer",
+    description: "Preview external websites within an iframe",
+    tags: ["preview", "url", "embed", "web"],
+    category: "other",
+    path: "/tools/iframe-viewer",
+    icon: "Square",
+    subTools: [
+      { id: "wiki", name: "Wikipedia", path: "/tools/iframe-viewer?url=https://www.wikipedia.org", icon: "Book" },
+      { id: "mdn", name: "MDN Web Docs", path: "/tools/iframe-viewer?url=https://developer.mozilla.org", icon: "FileCode" },
+      { id: "example", name: "Example.com", path: "/tools/iframe-viewer?url=https://example.com", icon: "Globe" },
+    ]
+  },
+  {
     id: "ai-chat",
     name: "AI Chat",
     description: "Chat with your local Ollama LLM",

@@ -1,4 +1,4 @@
-# Desk-tools 🛠️
+# Desk-tools
 
 A high-performance, local-first utility platform designed for multi-tasking individuals at startups.
 
@@ -8,63 +8,132 @@ A high-performance, local-first utility platform designed for multi-tasking indi
 
 ## The purpose behind the development
 
-"I'm not actually a professional developer. But after working with various systems, I kept getting the itch to build my own little tools. They didn't start as big, formal projects—they just kind of evolved bit by bit. Since I didn't have a team of designers or engineers to lean on, I just did everything myself. That’s how Desk-tools came to life."
+"I'm not actually a professional developer. But after working with various systems, I kept getting the itch to build my own little tools. They didn't start as big, formal projects—they just kind of evolved bit by bit. Since I didn't have a team of designers or engineers to lean on, I just did everything myself. That's how Desk-tools came to life."
 
-## 🌟 Overview
+## Overview
 
-Desk-tools is a comprehensive suite of utilities built for "hybrid professionals"—developers, designers, planners, and marketers who need a fast, privacy-focused workspace.
+Desk-tools is a comprehensive suite of 53+ utilities built for "hybrid professionals"—developers, designers, planners, and marketers who need a fast, privacy-focused workspace.
 
-Built with **Next.js 15**, it runs entirely in your browser. All data is stored locally using **IndexedDB**, ensuring your work stays private and never leaves your machine.
+Built with **Next.js 15** and **React 19**, it runs entirely in your browser. All data is stored locally using **IndexedDB** (via Dexie.js), ensuring your work stays private and never leaves your machine.
 
-## 🔒 Privacy & Local-First
+### Privacy & Local-First
 
-- **Zero Server-Side Storage**: Your notes, tasks, and settings are stored only in your browser.
-- **Offline Capable**: Once loaded, most tools work without an internet connection.
-- **Privacy by Design**: No tracking, no data collection, no account required.
+- **Zero Server-Side Storage** — Your notes, tasks, and settings are stored only in your browser via IndexedDB.
+- **Offline Capable** — Once loaded, all tools work without an internet connection (PWA with service worker).
+- **Privacy by Design** — No tracking, no data collection, no account required.
 
-## 🚀 Key Features
+### Multi-Language Support
 
-- **📊 Kanban & Gantt**: Manage projects with a flexible board and timeline view.
-- **📝 Notepad**: Persistent note-taking with markdown support and tagging.
-- **🎨 Whiteboard**: Sketch out ideas, diagrams, or wireframes.
-- **🤖 AI Integration**: Connect to your local **Ollama** instance for private LLM-powered assistance.
-- **📅 Daily & Weekly Planning**: Stay on track with task lists and recurring schedules.
-- **🔖 Bookmarks**: Organize and manage your frequent links in one place.
-- **📖 Terminology Management**: Maintain a consistent project vocabulary.
-- 🔍 **Instant Search**: Find any specialized tool instantly with fuzzy search.
+Available in **English**, **Korean**, **Chinese (Simplified)**, and **Japanese** with automatic browser language detection.
 
-## 🤖 AI Features (Powered by Ollama)
+## Key Features
 
-If you have [Ollama](https://ollama.com/) running locally, Desk-tools can integrate with it to provide:
-- **AI Chat**: Interact with your local models directly in the workspace.
-- **Smart Tools**: Enhanced capabilities for code and text processing.
-- **Private & Free**: No API keys needed, and your data stays on your local machine.
+### Productivity Apps
 
-## 🛠️ Specialized Tools (53+)
+| App | Description |
+| --- | --- |
+| **Kanban Board** | Drag-and-drop project management with flexible columns |
+| **Notepad** | Persistent note-taking with markdown support and tagging |
+| **Daily Tasks** | Recurring daily checklists with completion tracking |
+| **Whiteboard** | Freeform drawing canvas for sketches, diagrams, and wireframes |
+| **Weekly Scheduler** | Time-slot-based weekly planner |
+| **Terms Dictionary** | Categorized term/definition management for consistent vocabulary |
+| **Bookmarks** | Grouped URL bookmarks with drag-and-drop ordering |
+
+### AI Integration (Ollama)
+
+Connect to a local [Ollama](https://ollama.com/) instance for private LLM-powered assistance:
+- Chat with local models directly in the workspace
+- Multiple chat sessions with history
+- No API keys needed — your data stays on your machine
+
+### Instant Search
+
+Find any tool instantly with Fuse.js fuzzy search across names, descriptions, tags, and categories.
+
+### Data Portability
+
+Export and import all your data (notes, tasks, bookmarks, etc.) as JSON from the top navigation bar.
+
+## Specialized Tools (53+)
 
 | Category | Tools |
 | --- | --- |
-| **Developer** | JSON Explorer, Cron Expression, Regex Tester, Text Diff, Command Palette |
-| **Security** | JWT Decoder, Hash Generator, Encryption Tool (AES), Password Generator |
 | **Encoder** | Text Encoder, Base64 Converter, URL Encoder, HTML Entities |
-| **Converter** | File Format Converter (JSON/XML/CSV), JSON ↔ CSV, Binary ↔ HEX, Timestamp Converter, Markup Converter (Wiki), Encoding Converter |
-| **Designer** | Design Tools (Color/Palette/Placeholders), Icon Generator, Background Remover, Image Filters, Pixel Art Editor |
-| **Generator** | JSON to Code, JSON Schema Gen, Short URL Gen, UUID Generator, QR Code Gen, Slug Generator, Robots.txt Generator, Sitemap Generator, Open Graph Generator, Schema Markup Gen |
-| **Calculator** | Chmod Calculator, IP Subnet Calculator, Unit Converter, Date/D-Day Calc, Salary/Tax Calc, Loan Calculator, Compound Interest Calc, Keyword Density, Meta Tag Checker, Reading Time Calc, Word Counter, Canonical URL Checker |
-| **Formatter** | Code Formatter, Text Case, SQL Formatter, Markdown Preview |
-| **AI** | AI Chat (requires Ollama) |
+| **Converter** | File Format (JSON/XML/CSV/YAML/TOML), JSON-CSV, Binary-HEX, Timestamp, Markup (Markdown/Wiki), Encoding (mojibake fix) |
+| **Formatter** | Code Formatter (Prettier, 12+ languages), Text Case Converter, SQL Formatter, Markdown Preview |
+| **Generator** | JSON to Code, JSON Schema, Short URL, UUID, Password, QR Code, Slug, Robots.txt, Open Graph, Schema Markup, Sitemap |
+| **Calculator** | Chmod, IP Subnet (IPv4/IPv6), Unit Converter, Date/D-Day, Salary/Tax, Loan, Compound Interest, Keyword Density, Meta Tag Checker, Reading Time, Word Counter, Canonical URL |
+| **Designer** | Design Tools (Color Picker/Palette), Icon Generator, Background Remover, Image Filters, Pixel Art Editor |
+| **Security** | JWT Decoder, Hash Generator (MD5/SHA), Encryption (AES-GCM/RSA-OAEP) |
+| **Developer** | JSON Explorer (tree view), Cron Expression Builder, Regex Tester, Text Diff, Command Palette |
+| **AI** | AI Chat (requires local Ollama) |
 | **Other** | PDF Tools, Pomodoro Timer |
 
-## 💻 Tech Stack
+## Tech Stack
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router, Static Export)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI**: [React 19](https://react.dev/), [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/)
-- **Database**: [Dexie.js](https://dexie.org/) (IndexedDB)
-- **AI**: [Ollama](https://ollama.com/) (Local integration)
-- **Utilities**: `date-fns`, `crypto-js`, `papaparse`, `fuse.js`
+| Layer | Technology |
+| --- | --- |
+| **Framework** | [Next.js 15](https://nextjs.org/) (App Router, Static Export) |
+| **Language** | [TypeScript 5](https://www.typescriptlang.org/) |
+| **UI** | [React 19](https://react.dev/), [Tailwind CSS 3](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/) (Radix UI), [Lucide React](https://lucide.dev/) |
+| **Database** | [Dexie.js](https://dexie.org/) (IndexedDB) — 9 tables |
+| **Search** | [Fuse.js](https://www.fusejs.io/) (client-side fuzzy search) |
+| **i18n** | [i18next](https://www.i18next.com/) + react-i18next (EN, KO, ZH, JA) |
+| **Drag & Drop** | [@dnd-kit](https://dndkit.com/) |
+| **Drawing** | [Konva.js](https://konvajs.org/) + react-konva |
+| **Charts** | [Recharts](https://recharts.org/) |
+| **Code Formatting** | [Prettier](https://prettier.io/) (JS, TS, HTML, CSS, SQL, YAML, GraphQL, Python, PHP, Java) |
+| **Crypto** | Web Crypto API (AES-GCM, RSA-OAEP) + [crypto-js](https://github.com/brix/crypto-js) (hashing) |
+| **PDF** | [pdf-lib](https://pdf-lib.js.org/) |
+| **AI** | [Ollama](https://ollama.com/) (local LLM integration) |
+| **Testing** | [Jest 29](https://jestjs.io/) + [Testing Library](https://testing-library.com/) |
+| **Deployment** | GitHub Actions + GitHub Pages |
 
-## 🛠️ Local Development
+## Architecture
+
+```
+Browser (Client-Side Only)
+├── Next.js 15 App (Static Export)
+│   ├── App Router Pages
+│   │   ├── / (Home)
+│   │   ├── /kanban, /notepad, /daily-tasks, ...
+│   │   └── /tools/[tool-id] (53 tool pages)
+│   ├── Components
+│   │   ├── AppShell (TopNav + ToolSidebar + Content)
+│   │   ├── ToolLayout (tool page wrapper)
+│   │   └── ui/ (shadcn/ui primitives)
+│   └── Providers
+│       ├── I18nProvider (i18next)
+│       ├── ThemeProvider (next-themes)
+│       └── SidebarProvider (context)
+├── IndexedDB (Dexie.js)
+│   └── 9 tables (ganttTasks, notes, terms, bookmarks, commands, preferences, dailyTasks, weeklySchedule, chatSessions)
+├── Service Worker (offline / PWA)
+└── Web Crypto API (AES-GCM, RSA-OAEP)
+```
+
+### Adding a New Tool
+
+1. Add an entry to `lib/tools-registry.ts` with a unique `id`, `category`, and `path`
+2. Create `app/tools/[tool-id]/page.tsx` as a client component (`"use client"`)
+3. Wrap content with `<ToolLayout title="..." description="...">`
+4. Add helper functions to `lib/` if needed
+
+```tsx
+"use client";
+import { ToolLayout } from "@/components/tool-layout";
+
+export default function MyToolPage() {
+  return (
+    <ToolLayout title="Tool Name" description="Tool description">
+      {/* Tool UI here */}
+    </ToolLayout>
+  );
+}
+```
+
+## Local Development
 
 1. **Clone the repository**:
    ```bash
@@ -88,13 +157,34 @@ If you have [Ollama](https://ollama.com/) running locally, Desk-tools can integr
    npm run build
    ```
 
-## 🌐 Deployment
+5. **Preview static build locally**:
+   ```bash
+   npx serve@latest out
+   ```
 
-This project is configured for **GitHub Pages**. Any changes pushed to the `main` branch will automatically be deployed via GitHub Actions.
+## Testing
 
-## 🤝 Feedback & Requests
+```bash
+npm test              # Run all tests
+npm run test:watch    # Run tests in watch mode
+npm run test:coverage # Run tests with coverage report
+npm run test:ci       # CI mode with coverage (lcov + html)
+```
+
+Tests are located in the `__tests__/` directory and cover utility functions, components, and tool registry validation. Coverage reports are generated for SonarQube integration.
+
+## Deployment
+
+This project is configured for **GitHub Pages** with automatic deployment. Any push to the `main` branch triggers the GitHub Actions workflow which:
+
+1. Installs dependencies (`npm ci`)
+2. Builds the static export with `NEXT_PUBLIC_BASE_PATH=/Desk-tools`
+3. Deploys the `/out` directory to GitHub Pages
+
+## Feedback & Requests
 
 I am committed to constantly evolving this platform. If you have a tool request or found a bug, please [open an issue on GitHub](https://github.com/zafrem/Desk-tools/issues).
 
 ---
+
 Created by [zafrem](https://github.com/zafrem)
