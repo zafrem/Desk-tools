@@ -143,3 +143,4 @@ vite.config.ts.timestamp-*
 .venv
 CLAUDE.md
 GEMINI.md
+ROO_CLINE.md

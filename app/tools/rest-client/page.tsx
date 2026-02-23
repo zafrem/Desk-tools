@@ -10,11 +10,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Play, Copy, Terminal, Trash2, Plus, ShieldCheck } from "lucide-react";
+import { Play, Copy, Trash2, Plus, ShieldCheck } from "lucide-react";
 
 interface Header {
   key: string;
   value: string;
+}
+
+interface ResponseState {
+  status: number;
+  statusText: string;
+  time: string;
+  headers: [string, string][];
+  data: unknown;
 }
 
 export default function RestClientPage() {
@@ -22,7 +30,7 @@ export default function RestClientPage() {
   const [url, setUrl] = useState("https://jsonplaceholder.typicode.com/todos/1");
   const [headers, setHeaders] = useState<Header[]>([{ key: "Content-Type", value: "application/json" }]);
   const [body, setBody] = useState("");
-  const [response, setResponse] = useState<any>(null);
+  const [response, setResponse] = useState<ResponseState | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [useProxy, setUseProxy] = useState(false);
@@ -78,8 +86,8 @@ export default function RestClientPage() {
         headers: Array.from(res.headers.entries()),
         data: data || "No JSON response body",
       });
-    } catch (err: any) {
-      setError(err.message || "Failed to fetch. This might be due to CORS or an invalid URL.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to fetch. This might be due to CORS or an invalid URL.");
     } finally {
       setLoading(false);
     }
@@ -195,7 +203,7 @@ export default function RestClientPage() {
           <div className="p-4 bg-destructive/10 text-destructive rounded-lg text-sm border border-destructive/20">
             <strong>Error:</strong> {error}
             <p className="mt-1 text-xs opacity-80">
-              Note: Browsers block cross-origin requests (CORS). If the server doesn't allow your domain, the request will fail even if it works in Terminal. Try enabling the "Use CORS Proxy" option above.
+              Note: Browsers block cross-origin requests (CORS). If the server doesn&apos;t allow your domain, the request will fail even if it works in Terminal. Try enabling the &quot;Use CORS Proxy&quot; option above.
             </p>
           </div>
         )}

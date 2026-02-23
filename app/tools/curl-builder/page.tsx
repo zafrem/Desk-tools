@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Copy, Terminal, Trash2, Plus, Code } from "lucide-react";
+import { Copy, Terminal, Trash2, Plus } from "lucide-react";
 
 interface KV {
   key: string;
@@ -38,7 +38,7 @@ export default function CurlBuilderPage() {
   };
 
   const curlCommand = useMemo(() => {
-    let parts = ["curl"];
+    const parts = ["curl"];
     
     // Method
     if (method !== "GET") {
@@ -73,14 +73,12 @@ export default function CurlBuilderPage() {
     if (options.followRedirects) parts.push("-L");
     if (options.compressed) parts.push("--compressed");
 
-    return parts.join(" 
-  ");
+    return parts.join(" \\\n  ");
   }, [method, url, headers, body, auth, options]);
 
   const copyToClipboard = () => {
     // Single line version for copying
-    const singleLine = curlCommand.replace(/ 
-  /g, " ");
+    const singleLine = curlCommand.replace(/ \\\n  /g, " ");
     navigator.clipboard.writeText(singleLine);
   };
 
