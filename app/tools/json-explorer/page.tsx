@@ -104,7 +104,7 @@ function XMLTreeNode({ data, onCopyPath }: { data: any; onCopyPath: (path: strin
             <span key={key} className="ml-2">
               <span className="text-purple-500">{key}</span>
               <span className="text-muted-foreground">=</span>
-              <span className="text-orange-500">"{String(value)}"</span>
+              <span className="text-orange-500">&quot;{String(value)}&quot;</span>
             </span>
           ))}
           
