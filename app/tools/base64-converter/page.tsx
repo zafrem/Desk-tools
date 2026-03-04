@@ -31,7 +31,7 @@ export default function Base64ConverterPage() {
     try {
       setError("");
       // Strip data URL prefix if present (e.g., "data:image/png;base64,")
-      const base64Match = input.match(/^data:.*?;base64,(.*)$/s);
+      const base64Match = input.match(/^data:[\s\S]*?;base64,([\s\S]*)$/);
       const cleanInput = (base64Match ? base64Match[1] : input).trim().replace(/\s/g, "");
       
       const decoded = atob(cleanInput);
