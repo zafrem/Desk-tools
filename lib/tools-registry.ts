@@ -57,9 +57,9 @@ export const TOOLS_REGISTRY: Tool[] = [
   },
   {
     id: "json-explorer",
-    name: "JSON Explorer",
-    description: "Visualize JSON data as a tree",
-    tags: ["json", "tree", "view", "parse"],
+    name: "Data Explorer",
+    description: "Visualize JSON or XML data as an interactive tree",
+    tags: ["json", "xml", "tree", "view", "parse"],
     category: "developer",
     path: "/tools/json-explorer",
     icon: "FileJson",

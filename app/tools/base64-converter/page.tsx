@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Copy, ArrowLeftRight, Download } from "lucide-react";
+import { detectFileExtension } from "@/lib/utils";
 
 export default function Base64ConverterPage() {
   const [input, setInput] = React.useState("");
@@ -29,7 +30,11 @@ export default function Base64ConverterPage() {
   const handleDecode = () => {
     try {
       setError("");
-      const decoded = atob(input);
+      // Strip data URL prefix if present (e.g., "data:image/png;base64,")
+      const base64Match = input.match(/^data:.*?;base64,(.*)$/s);
+      const cleanInput = (base64Match ? base64Match[1] : input).trim().replace(/\s/g, "");
+      
+      const decoded = atob(cleanInput);
       setOutput(decoded);
       setLastOperation("decode");
     } catch {
@@ -43,9 +48,6 @@ export default function Base64ConverterPage() {
     setInput(output);
     setOutput(input);
     setError("");
-    // If we swap, the new input is what was just output.
-    // The new output is what was just input.
-    // It's ambiguous what the "last operation" corresponds to for the new output, so reset it or keep it simple.
     setLastOperation(null);
   };
 
@@ -77,7 +79,8 @@ export default function Base64ConverterPage() {
       if (lastOperation === "encode") {
         a.download = "encoded.txt";
       } else if (lastOperation === "decode") {
-        a.download = "decoded.bin";
+        const ext = detectFileExtension(byteArray);
+        a.download = `decoded.${ext}`;
       } else {
         a.download = "output.txt";
       }

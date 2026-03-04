@@ -16,8 +16,8 @@
     "description": "Format and beautify your code"
   },
   "json-explorer": {
-    "name": "JSON Explorer",
-    "description": "Visualize JSON data as a tree"
+    "name": "Data Explorer",
+    "description": "Visualize JSON or XML data as an interactive tree"
   },
   "icon-generator": {
     "name": "Icon Generator",

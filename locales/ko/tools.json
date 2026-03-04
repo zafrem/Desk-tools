@@ -16,8 +16,8 @@
     "description": "코드 정리 및 포맷팅"
   },
   "json-explorer": {
-    "name": "JSON 탐색기",
-    "description": "JSON 데이터를 트리로 시각화"
+    "name": "데이터 탐색기",
+    "description": "JSON 또는 XML 데이터를 대화형 트리로 시각화"
   },
   "icon-generator": {
     "name": "아이콘 생성기",
