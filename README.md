@@ -12,7 +12,7 @@ A high-performance, local-first utility platform designed for multi-tasking indi
 
 ## Overview
 
-Desk-tools is a comprehensive suite of 53+ utilities built for "hybrid professionals"—developers, designers, planners, and marketers who need a fast, privacy-focused workspace.
+Desk-tools is a comprehensive suite of 56+ utilities built for "hybrid professionals"—developers, designers, planners, and marketers who need a fast, privacy-focused workspace.
 
 Built with **Next.js 15** and **React 19**, it runs entirely in your browser. All data is stored locally using **IndexedDB** (via Dexie.js), ensuring your work stays private and never leaves your machine.
 
@@ -55,20 +55,20 @@ Find any tool instantly with Fuse.js fuzzy search across names, descriptions, ta
 
 Export and import all your data (notes, tasks, bookmarks, etc.) as JSON from the top navigation bar.
 
-## Specialized Tools (53+)
+## Specialized Tools (56+)
 
 | Category | Tools |
 | --- | --- |
 | **Encoder** | Text Encoder, Base64 Converter, URL Encoder, HTML Entities |
-| **Converter** | File Format (JSON/XML/CSV/YAML/TOML), JSON-CSV, Binary-HEX, Timestamp, Markup (Markdown/Wiki), Encoding (mojibake fix) |
+| **Converter** | File Format (JSON/XML/CSV/YAML/TOML), JSON-CSV, Binary-HEX, Timestamp, Markup (Markdown/Wiki), Encoding Converter (mojibake fix) |
 | **Formatter** | Code Formatter (Prettier, 12+ languages), Text Case Converter, SQL Formatter, Markdown Preview |
 | **Generator** | JSON to Code, JSON Schema, Short URL, UUID, Password, QR Code, Slug, Robots.txt, Open Graph, Schema Markup, Sitemap |
 | **Calculator** | Chmod, IP Subnet (IPv4/IPv6), Unit Converter, Date/D-Day, Salary/Tax, Loan, Compound Interest, Keyword Density, Meta Tag Checker, Reading Time, Word Counter, Canonical URL |
 | **Designer** | Design Tools (Color Picker/Palette), Icon Generator, Background Remover, Image Filters, Pixel Art Editor |
 | **Security** | JWT Decoder, Hash Generator (MD5/SHA), Encryption (AES-GCM/RSA-OAEP) |
-| **Developer** | JSON Explorer (tree view), Cron Expression Builder, Regex Tester, Text Diff, Command Palette |
+| **Developer** | JSON Explorer (tree view), Cron Expression Builder, Regex Tester, Text Diff, Command Palette, REST API Client, CURL Builder |
 | **AI** | AI Chat (requires local Ollama) |
-| **Other** | PDF Tools, Pomodoro Timer |
+| **Other** | PDF Tools, Pomodoro Timer, Iframe Viewer |
 
 ## Tech Stack
 
@@ -98,7 +98,7 @@ Browser (Client-Side Only)
 │   ├── App Router Pages
 │   │   ├── / (Home)
 │   │   ├── /kanban, /notepad, /daily-tasks, ...
-│   │   └── /tools/[tool-id] (53 tool pages)
+│   │   └── /tools/[tool-id] (56 tool pages)
 │   ├── Components
 │   │   ├── AppShell (TopNav + ToolSidebar + Content)
 │   │   ├── ToolLayout (tool page wrapper)
