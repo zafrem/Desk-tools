@@ -1,259 +1,260 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/bookmarks/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/bookmarks/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/daily-tasks/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/daily-tasks/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/kanban/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/kanban/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/notepad/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/notepad/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/terms/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/terms/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/weekly-scheduler/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/weekly-scheduler/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/whiteboard/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/whiteboard/</loc>
     <priority>0.7</priority>
   </url>
+  <!-- Tools -->
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/ai-chat/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/text-encoder/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/background-remover/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/file-format-converter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/base64-converter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/chmod-calculator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/binary-hex-converter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/code-formatter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/canonical-url-checker/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/rest-client/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/chmod-calculator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/curl-builder/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/code-formatter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/json-explorer/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/command-palette/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/icon-generator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/compound-interest-calculator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/background-remover/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/cron-expression/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/ip-subnet-calculator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/curl-builder/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/json-csv-converter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/date-dday-calc/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/json-to-code/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/design-tools/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/json-schema-gen/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/encoding-converter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/base64-converter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/encryption-tool/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/binary-hex-converter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/file-format-converter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/url-encoder/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/hash-generator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/short-url-gen/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/html-entities/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/jwt-decoder/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/icon-generator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/html-entities/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/iframe-viewer/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/text-case/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/image-filters/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/hash-generator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/ip-subnet-calculator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/encryption-tool/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/json-csv-converter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/uuid-generator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/json-explorer/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/password-gen/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/json-schema-gen/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/timestamp-conv/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/json-to-code/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/cron-expression/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/jwt-decoder/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/regex-tester/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/keyword-density/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/sql-formatter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/loan-calculator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/text-diff/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/markdown-preview/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/markdown-preview/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/markup-converter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/markup-converter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/meta-tag-checker/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/pdf-tools/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/open-graph-generator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/unit-converter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/password-gen/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/date-dday-calc/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/pdf-tools/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/salary-tax-calc/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/pixel-art-editor/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/loan-calculator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/pomodoro-timer/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/command-palette/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/qr-code-gen/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/compound-interest-calculator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/reading-time-calc/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/design-tools/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/regex-tester/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/image-filters/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/rest-client/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/pixel-art-editor/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/robots-txt-generator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/qr-code-gen/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/salary-tax-calc/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/keyword-density/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/schema-markup-generator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/meta-tag-checker/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/short-url-gen/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/reading-time-calc/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/sitemap-generator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/word-counter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/slug-generator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/slug-generator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/sql-formatter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/robots-txt-generator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/text-case/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/sitemap-generator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/text-diff/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/open-graph-generator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/text-encoder/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/schema-markup-generator/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/timestamp-conv/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/canonical-url-checker/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/unit-converter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/pomodoro-timer/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/url-encoder/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/encoding-converter/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/uuid-generator/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/iframe-viewer/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://milkiss.github.io/Desk-tools/tools/word-counter/</loc>
+    <loc>https://zafrem.github.io/Desk-tools/tools/ai-chat/</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

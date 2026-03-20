@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://milkiss.github.io/Desk-tools/sitemap.xml
+Sitemap: https://zafrem.github.io/Desk-tools/sitemap.xml
