@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_KR, Noto_Sans_SC, Noto_Sans_JP } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/components/i18n-provider";
@@ -52,18 +51,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-QCQYZTY5YR"
-          strategy="afterInteractive"
+        {/* eslint-disable-next-line @next/next/no-sync-scripts, @next/next/next-script-for-ga */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QCQYZTY5YR"></script>
+        {/* eslint-disable-next-line @next/next/next-script-for-ga */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-QCQYZTY5YR');
+            `,
+          }}
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-QCQYZTY5YR');
-          `}
-        </Script>
       </head>
       <body className={`${inter.className} ${inter.variable} ${notoKR.variable} ${notoSC.variable} ${notoJP.variable} font-sans`}>
         <I18nProvider>
