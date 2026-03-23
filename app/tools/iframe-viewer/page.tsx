@@ -101,21 +101,20 @@ function IframeViewerContent() {
         </div>
 
         <Card 
-          className="flex-1 min-h-[700px] bg-muted/20 flex flex-col items-center overflow-auto"
+          className="flex-1 min-h-[700px] bg-muted/20 flex flex-col items-center overflow-auto p-4"
         >
           <div 
-            className="bg-white shadow-lg border relative flex-1 w-full"
+            className="bg-white shadow-lg border relative flex flex-col w-full"
             style={{
               maxWidth: customWidth ? (customWidth.includes("%") ? customWidth : `${customWidth}px`) : "100%",
-              height: customHeight ? (customHeight.includes("%") ? customHeight : `${customHeight}px`) : "100%",
-              minHeight: !customHeight ? "700px" : undefined,
-              flexShrink: 0 // Prevent shrinking if height is set
+              height: customHeight ? (customHeight.includes("%") ? customHeight : `${customHeight}px`) : "700px",
+              flexShrink: 0
             }}
           >
             <iframe
               ref={iframeRef}
               src={currentUrl}
-              className="w-full h-full border-0 block"
+              className="flex-1 w-full border-0 block"
               title="External Content"
               sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
             />
