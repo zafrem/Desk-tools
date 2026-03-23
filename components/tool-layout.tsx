@@ -1,17 +1,22 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface ToolLayoutProps {
   title: string;
   description: string;
   children: React.ReactNode;
   extraActions?: React.ReactNode;
+  fullWidth?: boolean;
 }
 
-export function ToolLayout({ title, description, children, extraActions }: ToolLayoutProps) {
+export function ToolLayout({ title, description, children, extraActions, fullWidth }: ToolLayoutProps) {
   return (
-    <div className="container mx-auto p-8 max-w-5xl">
+    <div className={cn(
+      "container mx-auto p-4 md:p-8",
+      fullWidth ? "max-w-full" : "max-w-5xl"
+    )}>
       <div className="mb-6">
         <Link href="/">
           <Button variant="ghost" className="gap-2 mb-4">

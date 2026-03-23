@@ -56,6 +56,7 @@ function IframeViewerContent() {
     <ToolLayout
       title="Iframe Viewer"
       description="Preview external websites within an iframe. Note: Many sites block embedding (X-Frame-Options)."
+      fullWidth
       extraActions={
         <div className="text-sm font-mono bg-muted px-3 py-1 rounded-md border shadow-sm">
           {dimensions.width} x {dimensions.height}
@@ -80,14 +81,14 @@ function IframeViewerContent() {
             <Input
               value={customWidth}
               onChange={(e) => setCustomWidth(e.target.value)}
-              placeholder="Width (e.g. 100% or 800)"
+              placeholder="Width"
               className="w-24 h-9 text-xs"
             />
             <span className="text-muted-foreground text-xs">x</span>
             <Input
               value={customHeight}
               onChange={(e) => setCustomHeight(e.target.value)}
-              placeholder="Height (e.g. 500)"
+              placeholder="Height"
               className="w-24 h-9 text-xs"
             />
             <Button variant="outline" size="sm" asChild>
@@ -100,14 +101,14 @@ function IframeViewerContent() {
         </div>
 
         <Card 
-          className="flex-1 min-h-[500px] overflow-auto bg-muted/20 p-4 flex items-start justify-center"
+          className="flex-1 min-h-[700px] overflow-auto bg-muted/20 flex items-start justify-center"
         >
           <div 
             className="bg-white shadow-lg border relative"
             style={{
               width: customWidth ? (customWidth.includes("%") ? customWidth : `${customWidth}px`) : "100%",
               height: customHeight ? (customHeight.includes("%") ? customHeight : `${customHeight}px`) : "100%",
-              minHeight: !customHeight ? "500px" : undefined
+              minHeight: !customHeight ? "700px" : undefined
             }}
           >
             <iframe
