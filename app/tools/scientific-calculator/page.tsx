@@ -4,10 +4,8 @@ import * as React from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { History, Delete, DeleteIcon, Eraser, RotateCcw } from "lucide-react";
+import { History, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-type Operation = "+" | "-" | "*" | "/" | "^" | null;
 
 export default function ScientificCalculatorPage() {
   const [display, setDisplay] = React.useState("0");
@@ -134,7 +132,7 @@ export default function ScientificCalculatorPage() {
     <Button
       variant={variant}
       onClick={onClick}
-      className={cn("h-12 text-lg font-medium", className)}
+      className={cn("h-12 sm:h-14 text-lg font-medium shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]", className)}
     >
       {label}
     </Button>
@@ -146,67 +144,70 @@ export default function ScientificCalculatorPage() {
       description="Advanced calculations including trigonometry, logs, and powers."
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-4">
-          <Card className="bg-muted/30">
-            <CardContent className="p-4 space-y-2">
+        <div className="lg:col-span-2 space-y-6">
+          <Card className="bg-muted/30 border-2">
+            <CardContent className="p-6 space-y-2">
               <div className="text-right text-sm text-muted-foreground h-6 font-mono overflow-hidden">
                 {equation}
               </div>
-              <div className="text-right text-4xl font-bold font-mono overflow-hidden whitespace-nowrap">
+              <div className="text-right text-4xl sm:text-5xl font-bold font-mono overflow-hidden whitespace-nowrap tracking-tighter">
                 {display}
               </div>
             </CardContent>
           </Card>
 
-          <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-            {/* Scientific Row 1 */}
-            <CalcButton label="sin" onClick={() => handleMathFunc("sin")} variant="secondary" className="text-sm" />
-            <CalcButton label="cos" onClick={() => handleMathFunc("cos")} variant="secondary" className="text-sm" />
-            <CalcButton label="tan" onClick={() => handleMathFunc("tan")} variant="secondary" className="text-sm" />
-            <CalcButton label="asin" onClick={() => handleMathFunc("asin")} variant="secondary" className="text-sm" />
-            <CalcButton label="acos" onClick={() => handleMathFunc("acos")} variant="secondary" className="text-sm hidden sm:flex" />
-            <CalcButton label="atan" onClick={() => handleMathFunc("atan")} variant="secondary" className="text-sm hidden sm:flex" />
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Scientific Functions */}
+            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-3 gap-2 flex-grow bg-muted/20 p-2 rounded-lg border">
+              <div className="col-span-4 sm:col-span-6 md:col-span-3 text-xs font-semibold text-muted-foreground px-1 mb-1">SCIENTIFIC</div>
+              <CalcButton label="sin" onClick={() => handleMathFunc("sin")} variant="secondary" className="text-sm" />
+              <CalcButton label="cos" onClick={() => handleMathFunc("cos")} variant="secondary" className="text-sm" />
+              <CalcButton label="tan" onClick={() => handleMathFunc("tan")} variant="secondary" className="text-sm" />
+              <CalcButton label="asin" onClick={() => handleMathFunc("asin")} variant="secondary" className="text-sm" />
+              <CalcButton label="acos" onClick={() => handleMathFunc("acos")} variant="secondary" className="text-sm hidden sm:flex" />
+              <CalcButton label="atan" onClick={() => handleMathFunc("atan")} variant="secondary" className="text-sm hidden sm:flex" />
 
-            {/* Scientific Row 2 */}
-            <CalcButton label="log" onClick={() => handleMathFunc("log")} variant="secondary" className="text-sm" />
-            <CalcButton label="ln" onClick={() => handleMathFunc("ln")} variant="secondary" className="text-sm" />
-            <CalcButton label="√" onClick={() => handleMathFunc("sqrt")} variant="secondary" className="text-xl" />
-            <CalcButton label="x²" onClick={() => handleMathFunc("pow2")} variant="secondary" className="text-sm" />
-            <CalcButton label="x³" onClick={() => handleMathFunc("pow3")} variant="secondary" className="text-sm hidden sm:flex" />
-            <CalcButton label="eˣ" onClick={() => handleMathFunc("exp")} variant="secondary" className="text-sm hidden sm:flex" />
+              <CalcButton label="log" onClick={() => handleMathFunc("log")} variant="secondary" className="text-sm" />
+              <CalcButton label="ln" onClick={() => handleMathFunc("ln")} variant="secondary" className="text-sm" />
+              <CalcButton label="√" onClick={() => handleMathFunc("sqrt")} variant="secondary" className="text-xl" />
+              <CalcButton label="x²" onClick={() => handleMathFunc("pow2")} variant="secondary" className="text-sm" />
+              <CalcButton label="x³" onClick={() => handleMathFunc("pow3")} variant="secondary" className="text-sm hidden sm:flex" />
+              <CalcButton label="eˣ" onClick={() => handleMathFunc("exp")} variant="secondary" className="text-sm hidden sm:flex" />
 
-            {/* Scientific Row 3 */}
-            <CalcButton label="π" onClick={() => handleMathFunc("pi")} variant="secondary" className="text-xl" />
-            <CalcButton label="e" onClick={() => handleMathFunc("e")} variant="secondary" className="text-xl" />
-            <CalcButton label="abs" onClick={() => handleMathFunc("abs")} variant="secondary" className="text-sm" />
-            <CalcButton label="^" onClick={() => handleOperator("^")} variant="secondary" className="text-xl" />
-            <CalcButton label="(" onClick={() => handleDigit("(")} variant="secondary" className="text-xl hidden sm:flex" />
-            <CalcButton label=")" onClick={() => handleDigit(")")} variant="secondary" className="text-xl hidden sm:flex" />
+              <CalcButton label="π" onClick={() => handleMathFunc("pi")} variant="secondary" className="text-xl" />
+              <CalcButton label="e" onClick={() => handleMathFunc("e")} variant="secondary" className="text-xl" />
+              <CalcButton label="abs" onClick={() => handleMathFunc("abs")} variant="secondary" className="text-sm" />
+              <CalcButton label="^" onClick={() => handleOperator("^")} variant="secondary" className="text-xl" />
+              <CalcButton label="(" onClick={() => handleDigit("(")} variant="secondary" className="text-xl hidden sm:flex" />
+              <CalcButton label=")" onClick={() => handleDigit(")")} variant="secondary" className="text-xl hidden sm:flex" />
+            </div>
 
-            {/* Standard Row 1 */}
-            <CalcButton label="C" onClick={handleClear} variant="destructive" />
-            <CalcButton label={<RotateCcw className="h-5 w-5" />} onClick={handleBackspace} variant="outline" />
-            <CalcButton label="÷" onClick={() => handleOperator("/")} variant="default" className="text-xl" />
-            <CalcButton label="×" onClick={() => handleOperator("*")} variant="default" className="text-xl" />
-            
-            {/* Standard Numbers & Ops */}
-            <CalcButton label="7" onClick={() => handleDigit("7")} />
-            <CalcButton label="8" onClick={() => handleDigit("8")} />
-            <CalcButton label="9" onClick={() => handleDigit("9")} />
-            <CalcButton label="-" onClick={() => handleOperator("-")} variant="default" className="text-2xl" />
-            
-            <CalcButton label="4" onClick={() => handleDigit("4")} />
-            <CalcButton label="5" onClick={() => handleDigit("5")} />
-            <CalcButton label="6" onClick={() => handleDigit("6")} />
-            <CalcButton label="+" onClick={() => handleOperator("+")} variant="default" className="text-2xl" />
-            
-            <CalcButton label="1" onClick={() => handleDigit("1")} />
-            <CalcButton label="2" onClick={() => handleDigit("2")} />
-            <CalcButton label="3" onClick={() => handleDigit("3")} />
-            <CalcButton label="=" onClick={calculate} variant="destructive" className="row-span-2 h-full text-2xl" />
-            
-            <CalcButton label="0" onClick={() => handleDigit("0")} className="col-span-2" />
-            <CalcButton label="." onClick={handleDecimal} />
+            {/* Standard Keypad */}
+            <div className="grid grid-cols-4 gap-2 w-full md:w-[320px] shrink-0 bg-background p-2 rounded-lg border shadow-sm">
+              <div className="col-span-4 text-xs font-semibold text-muted-foreground px-1 mb-1">KEYPAD</div>
+              <CalcButton label="C" onClick={handleClear} variant="destructive" className="font-bold" />
+              <CalcButton label={<RotateCcw className="h-5 w-5" />} onClick={handleBackspace} variant="outline" />
+              <CalcButton label="÷" onClick={() => handleOperator("/")} variant="default" className="text-2xl bg-primary/90" />
+              <CalcButton label="×" onClick={() => handleOperator("*")} variant="default" className="text-2xl bg-primary/90" />
+              
+              <CalcButton label="7" onClick={() => handleDigit("7")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="8" onClick={() => handleDigit("8")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="9" onClick={() => handleDigit("9")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="-" onClick={() => handleOperator("-")} variant="default" className="text-3xl bg-primary/90" />
+              
+              <CalcButton label="4" onClick={() => handleDigit("4")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="5" onClick={() => handleDigit("5")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="6" onClick={() => handleDigit("6")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="+" onClick={() => handleOperator("+")} variant="default" className="text-3xl bg-primary/90" />
+              
+              <CalcButton label="1" onClick={() => handleDigit("1")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="2" onClick={() => handleDigit("2")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="3" onClick={() => handleDigit("3")} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="=" onClick={calculate} variant="destructive" className="row-span-2 h-full text-3xl font-bold bg-red-600 hover:bg-red-700" />
+              
+              <CalcButton label="0" onClick={() => handleDigit("0")} className="col-span-2 bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+              <CalcButton label="." onClick={handleDecimal} className="bg-secondary/40 hover:bg-secondary/60 border-none text-2xl font-bold" />
+            </div>
           </div>
         </div>
 
