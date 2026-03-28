@@ -75,6 +75,10 @@
     "name": "暗号化ツール",
     "description": "AESで暗号化・復号化"
   },
+  "hash-analyzer": {
+    "name": "ハッシュ分析機",
+    "description": "ハッシュを分析して型を特定し、強度とエントロピーを推定します。"
+  },
   "uuid-generator": {
     "name": "UUID生成",
     "description": "一意の識別子を生成"

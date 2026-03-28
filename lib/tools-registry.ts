@@ -200,6 +200,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "Lock",
   },
   {
+    id: "hash-analyzer",
+    name: "Hash Analyzer",
+    description: "Analyze hashes to identify their type and estimate strength/entropy",
+    tags: ["hash", "analyze", "entropy", "security", "crypto", "md5", "sha"],
+    category: "security",
+    path: "/tools/hash-analyzer",
+    icon: "SearchCode",
+  },
+  {
     id: "uuid-generator",
     name: "UUID Generator",
     description: "Generate unique identifiers",

@@ -79,6 +79,10 @@
     "name": "암호화 도구",
     "description": "AES로 암호화 및 복호화"
   },
+  "hash-analyzer": {
+    "name": "해시 분석기",
+    "description": "해시를 분석하여 유형을 식별하고 강도 및 엔트로피를 추정합니다."
+  },
   "uuid-generator": {
     "name": "UUID 생성기",
     "description": "고유 식별자 생성"

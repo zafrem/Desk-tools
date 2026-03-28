@@ -75,6 +75,10 @@
     "name": "加密工具",
     "description": "使用AES加密和解密"
   },
+  "hash-analyzer": {
+    "name": "哈希分析器",
+    "description": "分析哈希值以识别其类型并估计强度和熵"
+  },
   "uuid-generator": {
     "name": "UUID生成器",
     "description": "生成唯一标识符"

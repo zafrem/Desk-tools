@@ -79,6 +79,10 @@
     "name": "Encryption Tool",
     "description": "Encrypt and decrypt with AES"
   },
+  "hash-analyzer": {
+    "name": "Hash Analyzer",
+    "description": "Analyze hashes to identify their type and estimate strength/entropy"
+  },
   "uuid-generator": {
     "name": "UUID Generator",
     "description": "Generate unique identifiers"
