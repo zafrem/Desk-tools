@@ -123,6 +123,10 @@
     "name": "PDF Editor/Tools",
     "description": "Edit and manipulate PDF files"
   },
+  "scientific-calculator": {
+    "name": "Scientific Calculator",
+    "description": "Perform advanced mathematical calculations with trigonometric, logarithmic, and exponential functions"
+  },
   "unit-converter": {
     "name": "Unit Converter",
     "description": "Convert units (weight, length, etc.)"
@@ -202,6 +206,10 @@
   "canonical-url-checker": {
     "name": "Canonical URL Checker",
     "description": "Validate and generate canonical URLs"
+  },
+  "character-map": {
+    "name": "Character Map",
+    "description": "Browse, search, and copy special characters, symbols, and emojis"
   },
   "pomodoro-timer": {
     "name": "Pomodoro Timer",

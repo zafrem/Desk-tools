@@ -299,6 +299,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "FileText",
   },
   {
+    id: "scientific-calculator",
+    name: "Scientific Calculator",
+    description: "Perform advanced mathematical calculations with trigonometric, logarithmic, and exponential functions",
+    tags: ["math", "calculator", "scientific", "trigonometry", "logarithm"],
+    category: "calculator",
+    path: "/tools/scientific-calculator",
+    icon: "Calculator",
+  },
+  {
     id: "unit-converter",
     name: "Unit Converter",
     description: "Convert units (weight, length, etc.)",
@@ -477,6 +486,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     category: "calculator",
     path: "/tools/canonical-url-checker",
     icon: "Link2",
+  },
+  {
+    id: "character-map",
+    name: "Character Map",
+    description: "Browse, search, and copy special characters, symbols, and emojis",
+    tags: ["character", "symbol", "emoji", "unicode", "font"],
+    category: "other",
+    path: "/tools/character-map",
+    icon: "Type",
   },
   {
     id: "pomodoro-timer",

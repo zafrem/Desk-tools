@@ -123,6 +123,10 @@
     "name": "PDF 편집기/도구",
     "description": "PDF 파일 편집 및 조작"
   },
+  "scientific-calculator": {
+    "name": "공학용 계산기",
+    "description": "삼각함수, 로그 및 지수 함수와 같은 고급 수학 계산 수행"
+  },
   "unit-converter": {
     "name": "단위 변환기",
     "description": "단위 변환 (무게, 길이 등)"
@@ -202,6 +206,10 @@
   "canonical-url-checker": {
     "name": "Canonical URL 검사",
     "description": "Canonical URL 검증 및 생성"
+  },
+  "character-map": {
+    "name": "문자표",
+    "description": "특수 문자, 기호, 이모지를 찾아보고 검색하고 복사"
   },
   "pomodoro-timer": {
     "name": "뽀모도로 타이머",
