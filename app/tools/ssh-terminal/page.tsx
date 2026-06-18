@@ -49,6 +49,11 @@ interface OsInfo {
 }
 
 function detectOs(): OsInfo {
+  // Runs during static prerender too, where `navigator` doesn't exist.
+  // Fall back to a sensible default; the client re-runs this with the real UA.
+  if (typeof navigator === "undefined") {
+    return { key: "linux-x64", label: "Linux", file: "ssh-proxy-linux-x64" };
+  }
   const ua = (navigator.userAgent || "").toLowerCase();
   const plat = (navigator.platform || "").toLowerCase();
   if (ua.includes("win") || plat.includes("win")) {
