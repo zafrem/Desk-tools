@@ -56,6 +56,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "Terminal",
   },
   {
+    id: "ssh-terminal",
+    name: "SSH Terminal",
+    description: "Connect to SSH servers from your browser via a local proxy",
+    tags: ["ssh", "terminal", "shell", "remote", "console", "cli"],
+    category: "developer",
+    path: "/tools/ssh-terminal",
+    icon: "Terminal",
+  },
+  {
     id: "json-explorer",
     name: "Data Explorer",
     description: "Visualize JSON or XML data as an interactive tree",
