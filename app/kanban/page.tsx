@@ -14,7 +14,7 @@ export default function KanbanPage() {
 
   // Live query from Dexie - automatically updates when data changes
   const tasks = useLiveQuery(
-    () => db.ganttTasks.orderBy("startDate").toArray(),
+    () => db.ganttTasks.toArray(),
     []
   );
 
