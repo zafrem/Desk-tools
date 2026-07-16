@@ -119,7 +119,7 @@ export default function KanbanPage() {
   };
 
   return (
-    <div className="container mx-auto p-8 max-w-7xl">
+    <div className="w-full p-4 lg:p-8">
       <div className="mb-6">
         <h1 className="text-3xl font-bold mb-2">Kanban</h1>
         <p className="text-muted-foreground">

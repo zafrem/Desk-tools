@@ -182,7 +182,7 @@ function KanbanColumn({
   return (
     <div
       ref={setNodeRef}
-      className="flex-1 min-w-[250px] flex flex-col gap-4 bg-muted/30 p-4 rounded-xl border min-h-[500px] transition-all duration-300"
+      className="flex-1 min-w-0 md:min-w-[200px] flex flex-col gap-4 bg-muted/30 p-4 rounded-xl border min-h-[500px] transition-all duration-300"
     >
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-lg">{title}</h3>
@@ -365,7 +365,7 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
       </div>
 
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
-        <div className="flex flex-col md:flex-row gap-6 h-full items-stretch w-full overflow-x-auto pb-4">
+        <div className="flex flex-col md:flex-row gap-4 h-full items-stretch w-full pb-4">
           {COLUMNS.map((col) => {
             const colTasks = sortedTasks.filter((t) => {
               if (col.id === "todo") return t.progress === 0;
