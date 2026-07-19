@@ -92,7 +92,9 @@ async function getMarkdownFiles(
   const files: VaultFile[] = [];
   console.log(`Scanning directory: ${dirHandle.name}, relativePath: ${relativePath}`);
   try {
-    for await (const entry of (dirHandle as unknown) as AsyncIterable<FileSystemHandle>) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const valuesIterable = (dirHandle as any).values() as AsyncIterable<FileSystemHandle>;
+    for await (const entry of valuesIterable) {
       console.log(`Found entry: ${entry.name}, kind: ${entry.kind}`);
       const entryPath = relativePath ? `${relativePath}/${entry.name}` : entry.name;
       if (entry.kind === "file") {

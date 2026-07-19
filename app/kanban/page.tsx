@@ -19,14 +19,18 @@ export default function KanbanPage() {
   );
 
   const handleCreateTask = async (
-    taskData: Omit<GanttTask, "id" | "createdAt" | "updatedAt">
+    taskData: Omit<GanttTask, "id" | "createdAt" | "updatedAt" | "order">
   ) => {
     const now = new Date();
+    const currentTasks = await db.ganttTasks.toArray();
     await db.ganttTasks.add({
       ...taskData,
+      order: currentTasks.length,
       createdAt: now,
       updatedAt: now,
     });
+    setIsFormOpen(false);
+    setEditingTask(undefined);
   };
 
   const handleUpdateTask = async (

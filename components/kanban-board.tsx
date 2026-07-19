@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { GanttTask } from "@/lib/db";
+import { GanttTask, db } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Edit2, Trash2, Eye, EyeOff } from "lucide-react";
@@ -15,6 +15,11 @@ import {
   DragStartEvent,
   closestCorners,
 } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { createPortal } from "react-dom";
 
@@ -32,13 +37,14 @@ const COLUMNS = [
 ];
 
 function KanbanCard({ task, onEdit, onDelete }: { task: GanttTask; onEdit: (t: GanttTask) => void; onDelete: (id: number) => void }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: task.id!.toString(),
     data: { task },
   });
 
   const style = {
     transform: CSS.Translate.toString(transform),
+    transition,
     opacity: isDragging ? 0.5 : 1,
   };
 
@@ -200,9 +206,11 @@ function KanbanColumn({
             Drop here
           </div>
         )}
-        {tasks.map((task) => (
-          <KanbanCard key={task.id} task={task} onEdit={onEdit} onDelete={onDelete} />
-        ))}
+        <SortableContext items={tasks.map(t => t.id!.toString())} strategy={verticalListSortingStrategy}>
+          {tasks.map((task) => (
+            <KanbanCard key={task.id} task={task} onEdit={onEdit} onDelete={onDelete} />
+          ))}
+        </SortableContext>
       </div>
     </div>
   );
@@ -242,27 +250,43 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
     }
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     setActiveTask(null);
 
     if (!over) return;
 
-    const taskId = parseInt(active.id as string);
-    const columnId = over.id as string;
+    const activeId = parseInt(active.id as string);
+    const overId = over.id as string;
+    
+    // Find active task and its current column
+    const activeTask = tasks.find((t) => t.id === activeId);
+    if (!activeTask) return;
 
-    const task = tasks.find((t) => t.id === taskId);
-    if (!task) return;
+    // Check if over an ID that is a column or a task
+    const isOverColumn = COLUMNS.some(c => c.id === overId);
 
-    const targetColumn = COLUMNS.find((c) => c.id === columnId);
-    if (targetColumn) {
-      let currentColumnId = "todo";
-      if (task.progress === 100) currentColumnId = "done";
-      else if (task.progress > 0) currentColumnId = "in-progress";
-
-      if (currentColumnId !== columnId) {
-        onUpdateStatus(task, targetColumn.progress);
-      }
+    if (isOverColumn) {
+       // Moving between columns
+       const targetColumn = COLUMNS.find((c) => c.id === overId);
+       if (targetColumn && activeTask.progress !== targetColumn.progress) {
+         onUpdateStatus(activeTask, targetColumn.progress);
+       }
+    } else {
+       // Reordering within a column
+       const overTask = tasks.find(t => t.id === parseInt(overId));
+       if (overTask && activeTask.id !== overTask.id) {
+           // Basic reorder logic: swap orders
+           const oldOrder = activeTask.order;
+           const newOrder = overTask.order;
+           
+           // For now, simple swap. A more robust implementation might require 
+           // shifting all tasks.
+           await db.transaction("rw", db.ganttTasks, async () => {
+               await db.ganttTasks.update(activeId, { order: newOrder });
+               await db.ganttTasks.update(overTask.id!, { order: oldOrder });
+           });
+       }
     }
   };
 

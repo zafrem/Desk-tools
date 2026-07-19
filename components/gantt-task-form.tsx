@@ -72,6 +72,7 @@ export function GanttTaskForm({
       progress,
       tags: [],
       dependencies: [],
+      order: 0, // Default order
     });
 
     onOpenChange(false);

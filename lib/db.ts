@@ -10,6 +10,7 @@ export interface GanttTask {
   progress: number; // 0-100
   dependencies?: number[];
   tags?: string[];
+  order: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -133,6 +134,10 @@ class DeskToolsDatabase extends Dexie {
 
     this.version(5).stores({
       chatSessions: "++id, title, model, createdAt, updatedAt"
+    });
+
+    this.version(6).stores({
+      ganttTasks: "++id, title, startDate, endDate, *tags, order, createdAt",
     });
   }
 }
