@@ -9,8 +9,8 @@ import { Note } from "@/lib/db";
 import { Save, X, FileDown } from "lucide-react";
 
 interface NoteEditorProps {
-  note: Note | null;
-  onSave: (note: Omit<Note, "id" | "createdAt" | "updatedAt">) => void;
+  note: { title: string; content: string } | null;
+  onSave: (note: { title: string; content: string }) => void;
   onCancel: () => void;
 }
 
@@ -37,7 +37,6 @@ export function NoteEditor({ note, onSave, onCancel }: NoteEditorProps) {
     onSave({
       title: title.trim(),
       content,
-      tags: [],
     });
 
     // Reset form
