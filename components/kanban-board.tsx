@@ -4,7 +4,7 @@ import * as React from "react";
 import { GanttTask } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2, Eye, EyeOff, ArrowUpDown } from "lucide-react";
+import { Edit2, Trash2, Eye, EyeOff } from "lucide-react";
 import { format } from "date-fns";
 import {
   DndContext,
@@ -17,13 +17,6 @@ import {
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { createPortal } from "react-dom";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 interface KanbanBoardProps {
   tasks: GanttTask[];
@@ -215,26 +208,11 @@ function KanbanColumn({
   );
 }
 
-type SortOption = "startDate" | "endDate" | "createdAt" | "title" | "none";
-
-const isValidSortOption = (value: string | null): value is SortOption => {
-  return (
-    value === "startDate" ||
-    value === "endDate" ||
-    value === "createdAt" ||
-    value === "title" ||
-    value === "none"
-  );
-};
-
 export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanBoardProps) {
   const [activeTask, setActiveTask] = React.useState<GanttTask | null>(null);
 
   // Collapse state persisted in localStorage
   const [collapsedColumns, setCollapsedColumns] = React.useState<Record<string, boolean>>({});
-
-  // Sorting state persisted in localStorage
-  const [sortBy, setSortBy] = React.useState<SortOption>("none");
 
   // Load from localStorage on mount (prevents Next.js hydration mismatch)
   React.useEffect(() => {
@@ -247,10 +225,6 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
           console.error("Error parsing collapsed columns:", e);
         }
       }
-      const savedSort = localStorage.getItem("kanban_sort_by");
-      if (isValidSortOption(savedSort)) {
-        setSortBy(savedSort);
-      }
     }
   }, []);
 
@@ -261,39 +235,6 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
       return updated;
     });
   };
-
-  const handleSortChange = (value: string) => {
-    if (isValidSortOption(value)) {
-      setSortBy(value);
-      localStorage.setItem("kanban_sort_by", value);
-    }
-  };
-
-  // Sort tasks based on selected option
-  const sortedTasks = React.useMemo(() => {
-    if (!tasks) return [];
-    const tasksCopy = [...tasks];
-
-    if (sortBy === "none") {
-      return tasksCopy; // Default DB order (insertion order / id order)
-    }
-
-    return tasksCopy.sort((a, b) => {
-      if (sortBy === "startDate") {
-        return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
-      }
-      if (sortBy === "endDate") {
-        return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
-      }
-      if (sortBy === "createdAt") {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); // Newest first
-      }
-      if (sortBy === "title") {
-        return a.title.localeCompare(b.title);
-      }
-      return 0;
-    });
-  }, [tasks, sortBy]);
 
   const handleDragStart = (event: DragStartEvent) => {
     if (event.active.data.current?.task) {
@@ -315,9 +256,6 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
 
     const targetColumn = COLUMNS.find((c) => c.id === columnId);
     if (targetColumn) {
-      // Only update if the progress value is different (roughly)
-      // Map 0 -> todo, 50 -> in-progress, 100 -> done
-      // If we drag from todo (0) to in-progress (50), we update.
       let currentColumnId = "todo";
       if (task.progress === 100) currentColumnId = "done";
       else if (task.progress > 0) currentColumnId = "in-progress";
@@ -330,44 +268,10 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
 
   return (
     <div className="space-y-6">
-      {/* Board Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-4 bg-muted/20 p-4 rounded-xl border">
-        <div className="flex items-center gap-2">
-          <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm font-medium">Sort Cards:</span>
-          <Select value={sortBy} onValueChange={handleSortChange}>
-            <SelectTrigger className="w-[220px] h-9 bg-background">
-              <SelectValue placeholder="Sort order..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="none">No Sorting (Creation Order)</SelectItem>
-              <SelectItem value="startDate">Start Date (Chronological)</SelectItem>
-              <SelectItem value="endDate">Due Date (Chronological)</SelectItem>
-              <SelectItem value="createdAt">Date Created (Newest First)</SelectItem>
-              <SelectItem value="title">Title (A-Z)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {Object.values(collapsedColumns).some(Boolean) && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              setCollapsedColumns({});
-              localStorage.setItem("kanban_collapsed_columns", JSON.stringify({}));
-            }}
-            className="text-xs h-8 text-muted-foreground hover:text-foreground"
-          >
-            Expand All Columns
-          </Button>
-        )}
-      </div>
-
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
         <div className="flex flex-col md:flex-row gap-4 h-full items-stretch w-full pb-4">
           {COLUMNS.map((col) => {
-            const colTasks = sortedTasks.filter((t) => {
+            const colTasks = tasks.filter((t) => {
               if (col.id === "todo") return t.progress === 0;
               if (col.id === "done") return t.progress === 100;
               return t.progress > 0 && t.progress < 100;
@@ -386,6 +290,7 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
             );
           })}
         </div>
+
 
         {typeof document !== "undefined" && createPortal(
           <DragOverlay>

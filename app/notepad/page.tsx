@@ -90,12 +90,15 @@ async function getMarkdownFiles(
   relativePath = ""
 ): Promise<VaultFile[]> {
   const files: VaultFile[] = [];
+  console.log(`Scanning directory: ${dirHandle.name}, relativePath: ${relativePath}`);
   try {
     for await (const entry of (dirHandle as unknown) as AsyncIterable<FileSystemHandle>) {
+      console.log(`Found entry: ${entry.name}, kind: ${entry.kind}`);
       const entryPath = relativePath ? `${relativePath}/${entry.name}` : entry.name;
       if (entry.kind === "file") {
         if (entry.name.endsWith(".md")) {
           const file = await (entry as FileSystemFileHandle).getFile();
+          console.log(`Found MD file: ${entry.name}`);
           files.push({
             id: entryPath,
             name: entry.name.slice(0, -3), // Strip .md
@@ -107,6 +110,7 @@ async function getMarkdownFiles(
       } else if (entry.kind === "directory") {
         // Ignore hidden directories like .obsidian, .git
         if (!entry.name.startsWith(".")) {
+          console.log(`Recursing into directory: ${entry.name}`);
           const subFiles = await getMarkdownFiles(entry as FileSystemDirectoryHandle, entryPath);
           files.push(...subFiles);
         }
