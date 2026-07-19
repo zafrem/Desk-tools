@@ -9,7 +9,6 @@ import { format } from "date-fns";
 import {
   DndContext,
   DragOverlay,
-  useDraggable,
   useDroppable,
   DragEndEvent,
   DragStartEvent,
@@ -35,6 +34,14 @@ const COLUMNS = [
   { id: "in-progress", title: "In Progress", progress: 50 },
   { id: "done", title: "Done", progress: 100 },
 ];
+
+// Which column a task belongs to, derived from its progress value.
+const columnIdForProgress = (progress: number) =>
+  progress === 0 ? "todo" : progress === 100 ? "done" : "in-progress";
+
+// Stable sort for a column: by manual `order`, then id as a tiebreaker.
+const byOrder = (a: GanttTask, b: GanttTask) =>
+  (a.order ?? 0) - (b.order ?? 0) || (a.id ?? 0) - (b.id ?? 0);
 
 function KanbanCard({ task, onEdit, onDelete }: { task: GanttTask; onEdit: (t: GanttTask) => void; onDelete: (id: number) => void }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
@@ -216,7 +223,7 @@ function KanbanColumn({
   );
 }
 
-export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanBoardProps) {
+export function KanbanBoard({ tasks, onEdit, onDelete }: KanbanBoardProps) {
   const [activeTask, setActiveTask] = React.useState<GanttTask | null>(null);
 
   // Collapse state persisted in localStorage
@@ -254,40 +261,54 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
     const { active, over } = event;
     setActiveTask(null);
 
-    if (!over) return;
+    if (!over || active.id === over.id) return;
 
     const activeId = parseInt(active.id as string);
+    const moving = tasks.find((t) => t.id === activeId);
+    if (!moving) return;
+
     const overId = over.id as string;
-    
-    // Find active task and its current column
-    const activeTask = tasks.find((t) => t.id === activeId);
-    if (!activeTask) return;
+    const isOverColumn = COLUMNS.some((c) => c.id === overId);
 
-    // Check if over an ID that is a column or a task
-    const isOverColumn = COLUMNS.some(c => c.id === overId);
-
+    // Resolve the destination column and, if dropped onto a card, that card.
+    let destColId: string;
+    let overTask: GanttTask | undefined;
     if (isOverColumn) {
-       // Moving between columns
-       const targetColumn = COLUMNS.find((c) => c.id === overId);
-       if (targetColumn && activeTask.progress !== targetColumn.progress) {
-         onUpdateStatus(activeTask, targetColumn.progress);
-       }
+      destColId = overId;
     } else {
-       // Reordering within a column
-       const overTask = tasks.find(t => t.id === parseInt(overId));
-       if (overTask && activeTask.id !== overTask.id) {
-           // Basic reorder logic: swap orders
-           const oldOrder = activeTask.order;
-           const newOrder = overTask.order;
-           
-           // For now, simple swap. A more robust implementation might require 
-           // shifting all tasks.
-           await db.transaction("rw", db.ganttTasks, async () => {
-               await db.ganttTasks.update(activeId, { order: newOrder });
-               await db.ganttTasks.update(overTask.id!, { order: oldOrder });
-           });
-       }
+      overTask = tasks.find((t) => t.id === parseInt(overId));
+      if (!overTask) return;
+      destColId = columnIdForProgress(overTask.progress);
     }
+
+    const destProgress = COLUMNS.find((c) => c.id === destColId)!.progress;
+
+    // The destination column, ordered, without the card being moved.
+    const destTasks = tasks
+      .filter((t) => columnIdForProgress(t.progress) === destColId && t.id !== activeId)
+      .sort(byOrder);
+
+    // Drop before the card we landed on; otherwise append to the end.
+    const insertIndex = overTask
+      ? Math.max(0, destTasks.findIndex((t) => t.id === overTask!.id))
+      : destTasks.length;
+
+    const ordered = [...destTasks];
+    ordered.splice(insertIndex, 0, moving);
+
+    // Persist the new vertical order (and the new column, if it changed)
+    // for the whole destination column in a single transaction.
+    await db.transaction("rw", db.ganttTasks, async () => {
+      for (let i = 0; i < ordered.length; i++) {
+        const t = ordered[i];
+        const patch: Partial<GanttTask> = { order: i };
+        if (t.id === activeId && destProgress !== moving.progress) {
+          patch.progress = destProgress;
+          patch.updatedAt = new Date();
+        }
+        await db.ganttTasks.update(t.id!, patch);
+      }
+    });
   };
 
   return (
@@ -295,11 +316,9 @@ export function KanbanBoard({ tasks, onEdit, onDelete, onUpdateStatus }: KanbanB
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
         <div className="flex flex-col md:flex-row gap-4 h-full items-stretch w-full pb-4">
           {COLUMNS.map((col) => {
-            const colTasks = tasks.filter((t) => {
-              if (col.id === "todo") return t.progress === 0;
-              if (col.id === "done") return t.progress === 100;
-              return t.progress > 0 && t.progress < 100;
-            });
+            const colTasks = tasks
+              .filter((t) => columnIdForProgress(t.progress) === col.id)
+              .sort(byOrder);
             return (
               <KanbanColumn
                 key={col.id}
