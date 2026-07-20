@@ -23,6 +23,7 @@ const MAGIC_NUMBERS: Record<string, { name: string; ext: string; mime: string; i
 export default function BlobDecoderPage() {
   const [textInput, setTextInput] = React.useState("");
   const [fileBytes, setFileBytes] = React.useState<Uint8Array | null>(null);
+  const [fileName, setFileName] = React.useState<string>("");
   
   // Detection outcomes
   const [detectedType, setDetectedType] = React.useState<{ name: string; ext: string; mime: string; isText: boolean } | null>(null);
@@ -95,7 +96,7 @@ export default function BlobDecoderPage() {
         setPreviewUrl(null);
       } else {
         // Generate blob preview URL for images/binaries
-        const blob = new Blob([bytes], { type: typeInfo.mime });
+        const blob = new Blob([bytes.buffer as ArrayBuffer], { type: typeInfo.mime });
         const url = URL.createObjectURL(blob);
         setPreviewUrl(url);
         setOutputText(`[Binary Data - ${typeInfo.name}]`);
@@ -172,7 +173,7 @@ export default function BlobDecoderPage() {
 
   const handleDownloadDecoded = () => {
     if (!fileBytes || !detectedType) return;
-    const blob = new Blob([fileBytes], { type: detectedType.mime });
+    const blob = new Blob([fileBytes.buffer as ArrayBuffer], { type: detectedType.mime });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
