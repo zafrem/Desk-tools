@@ -17,17 +17,35 @@ export const safeDecode = (fn: () => string, fallback = "[Decoding Error]"): str
   }
 };
 
-// Base64
-export const toBase64 = (str: string) => safeEncode(() => btoa(str));
-export const fromBase64 = (str: string) => safeDecode(() => atob(str));
+// Base64 (UTF-8 support)
+export const toBase64 = (str: string) => 
+  safeEncode(() => {
+    const bytes = new TextEncoder().encode(str);
+    let binary = "";
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  });
 
-// Base32
+export const fromBase64 = (str: string) => 
+  safeDecode(() => {
+    const binary = atob(str);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return new TextDecoder().decode(bytes);
+  });
+
+// Base32 (UTF-8 support)
 const BASE32_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 export const toBase32 = (str: string): string => {
   return safeEncode(() => {
+    const bytes = new TextEncoder().encode(str);
     let bits = "";
-    for (let i = 0; i < str.length; i++) {
-      bits += str.charCodeAt(i).toString(2).padStart(8, "0");
+    for (let i = 0; i < bytes.length; i++) {
+      bits += bytes[i].toString(2).padStart(8, "0");
     }
     let result = "";
     for (let i = 0; i < bits.length; i += 5) {
@@ -47,14 +65,14 @@ export const fromBase32 = (str: string): string => {
       if (val === -1) throw new Error("Invalid Base32");
       bits += val.toString(2).padStart(5, "0");
     }
-    let result = "";
+    const byteList = [];
     for (let i = 0; i < bits.length; i += 8) {
       const byte = bits.substr(i, 8);
       if (byte.length === 8) {
-        result += String.fromCharCode(parseInt(byte, 2));
+        byteList.push(parseInt(byte, 2));
       }
     }
-    return result;
+    return new TextDecoder().decode(new Uint8Array(byteList));
   });
 };
 
@@ -83,36 +101,42 @@ export const fromHTMLEscape = (str: string) =>
       .replace(/&amp;/g, "&")
   );
 
-// HTML Entity
+// HTML Entity (UTF-8 / Surrogate Pair support)
 export const toHTMLEntity = (str: string) =>
-  safeEncode(() => str.split("").map((c) => `&#${c.charCodeAt(0)};`).join(""));
+  safeEncode(() => Array.from(str).map((c) => `&#${c.codePointAt(0)};`).join(""));
 
-// Hex String
+// Hex String (UTF-8 support)
 export const toHexString = (str: string) =>
-  safeEncode(() => str.split("").map((c) => c.charCodeAt(0).toString(16).padStart(2, "0")).join(" "));
+  safeEncode(() => {
+    const bytes = new TextEncoder().encode(str);
+    return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join(" ");
+  });
 
 export const fromHexString = (str: string) =>
   safeDecode(() => {
     const hex = str.replace(/\s/g, "");
-    let result = "";
+    const bytes = new Uint8Array(hex.length / 2);
     for (let i = 0; i < hex.length; i += 2) {
-      result += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+      bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
     }
-    return result;
+    return new TextDecoder().decode(bytes);
   });
 
-// Binary String
+// Binary String (UTF-8 support)
 export const toBinaryString = (str: string) =>
-  safeEncode(() => str.split("").map((c) => c.charCodeAt(0).toString(2).padStart(8, "0")).join(" "));
+  safeEncode(() => {
+    const bytes = new TextEncoder().encode(str);
+    return Array.from(bytes).map((b) => b.toString(2).padStart(8, "0")).join(" ");
+  });
 
 export const fromBinaryString = (str: string) =>
   safeDecode(() => {
     const binary = str.replace(/\s/g, "");
-    let result = "";
+    const bytes = new Uint8Array(binary.length / 8);
     for (let i = 0; i < binary.length; i += 8) {
-      result += String.fromCharCode(parseInt(binary.substr(i, 8), 2));
+      bytes[i / 8] = parseInt(binary.substr(i, 8), 2);
     }
-    return result;
+    return new TextDecoder().decode(bytes);
   });
 
 // String cases
@@ -147,7 +171,7 @@ export const toInitials = (str: string) =>
     .split(/\s+/)
     .map((word) => word.charAt(0).toUpperCase())
     .join("");
-export const toReverse = (str: string) => str.split("").reverse().join("");
+export const toReverse = (str: string) => Array.from(str).reverse().join("");
 
 // Ciphers
 export const toROT13 = (str: string) =>
