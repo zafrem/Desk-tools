@@ -137,6 +137,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "Binary",
   },
   {
+    id: "blob-decoder",
+    name: "Blob Decoder",
+    description: "Upload and decode raw files/blobs using magic numbers",
+    tags: ["blob", "decoding", "binary"],
+    category: "encoder",
+    path: "/tools/blob-decoder",
+    icon: "FileCode",
+  },
+  {
     id: "binary-hex-converter",
     name: "Binary ↔ HEX",
     description: "Convert between binary and hexadecimal",
