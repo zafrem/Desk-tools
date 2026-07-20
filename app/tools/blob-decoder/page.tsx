@@ -3,11 +3,11 @@
 import * as React from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Upload, FileCode, CheckCircle2, AlertCircle, Eye, Download } from "lucide-react";
+import { Upload, CheckCircle2, AlertCircle, Eye, Download } from "lucide-react";
 
 // Magic numbers and MIME types
 const MAGIC_NUMBERS: Record<string, { name: string; ext: string; mime: string; isText: boolean }> = {
@@ -23,7 +23,6 @@ const MAGIC_NUMBERS: Record<string, { name: string; ext: string; mime: string; i
 export default function BlobDecoderPage() {
   const [textInput, setTextInput] = React.useState("");
   const [fileBytes, setFileBytes] = React.useState<Uint8Array | null>(null);
-  const [fileName, setFileName] = React.useState<string>("");
   
   // Detection outcomes
   const [detectedType, setDetectedType] = React.useState<{ name: string; ext: string; mime: string; isText: boolean } | null>(null);
