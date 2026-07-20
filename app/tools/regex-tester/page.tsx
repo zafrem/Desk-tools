@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 
 import { PII_PATTERNS } from "@/lib/pii-patterns";
+import { detectFileType, detectEncoding } from "@/lib/file-utils";
 import {
   Select,
   SelectContent,
@@ -19,23 +20,13 @@ import {
 import { Upload, FileCode, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Magic numbers for common file types
-const MAGIC_NUMBERS: Record<string, { ext: string; mime: string }> = {
-  "89504E47": { ext: "png", mime: "image/png" },
-  "FFD8FF": { ext: "jpg", mime: "image/jpeg" },
-  "25504446": { ext: "pdf", mime: "application/pdf" },
-  "47494638": { ext: "gif", mime: "image/gif" },
-  "504B0304": { ext: "zip", mime: "application/zip" },
-  "7B": { ext: "json", mime: "application/json" }, // {
-  "3C": { ext: "xml/html", mime: "text/html" }, // <
-};
-
 export default function RegexTesterPage() {
   const [pattern, setPattern] = React.useState("[a-zA-Z]+");
   const [flags, setFlags] = React.useState("g");
   const [text, setText] = React.useState("Hello world! This is a simple regex test.");
   const [highlighted, setHighlighted] = React.useState<React.ReactNode>(text);
   const [detectedType, setDetectedType] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
 
   const handlePatternChange = (label: string) => {
     const pii = PII_PATTERNS.find(p => p.label === label);
@@ -49,29 +40,25 @@ export default function RegexTesterPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Check magic numbers
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const arr = new Uint8Array(event.target?.result as ArrayBuffer).subarray(0, 4);
-      let header = "";
-      for (let i = 0; i < arr.length; i++) {
-        header += arr[i].toString(16).toUpperCase().padStart(2, "0");
-      }
+    // Detect File Type
+    const fileInfo = await detectFileType(file);
+    if (fileInfo) {
+      setDetectedType(fileInfo.ext);
+    } else {
+      setDetectedType("unknown");
+    }
 
-      let type = "unknown";
-      for (const [magic, info] of Object.entries(MAGIC_NUMBERS)) {
-        if (header.startsWith(magic)) {
-          type = info.ext;
-          break;
-        }
-      }
-      setDetectedType(type);
+    // Detect Encoding
+    const encoding = await detectEncoding(file);
+    console.log(`Detected encoding: ${encoding}`);
 
-      // Convert to text for regex testing
-      const textContent = await file.text();
-      setText(textContent);
-    };
-    reader.readAsArrayBuffer(file.slice(0, 4));
+    // Convert to text with inferred encoding
+    const buffer = await file.arrayBuffer();
+    const decoder = new TextDecoder(encoding);
+    const textContent = decoder.decode(buffer);
+    
+    setText(textContent);
+    setError(""); // Assuming setError exists
   };
 
   const handleCreateFileFromText = () => {

@@ -19,6 +19,7 @@ import {
   FORMAT_INFO,
   type Format,
 } from "@/lib/format-converters";
+import { detectFileType } from "@/lib/file-utils";
 
 export default function FileFormatConverterPage() {
   const [fromFormat, setFromFormat] = React.useState<Format>("json");
@@ -56,18 +57,20 @@ export default function FileFormatConverterPage() {
     setOutput("");
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const text = event.target?.result as string;
-      setInput(text);
-      setError("");
-      setOutput("");
-    };
-    reader.readAsText(file);
+    const fileInfo = await detectFileType(file);
+    if (fileInfo && !fileInfo.isText) {
+        alert(`Detected file type: ${fileInfo.mime}. This converter only supports text formats.`);
+        return;
+    }
+
+    const text = await file.text();
+    setInput(text);
+    setError("");
+    setOutput("");
   };
 
   const handleCopy = async () => {
