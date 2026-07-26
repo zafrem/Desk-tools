@@ -48,12 +48,14 @@ export default function ScreenComparatorPage() {
   const [presetLeft, setPresetLeft] = React.useState<PresetKey>("desktop");
   const [widthLeft, setWidthLeft] = React.useState(1440);
   const [heightLeft, setHeightLeft] = React.useState(900);
+  const [scaleLeft, setScaleLeft] = React.useState(0.75); // Added scale (zoom)
   const [isPortraitLeft, setIsPortraitLeft] = React.useState(false);
 
   // Right Viewport States
   const [presetRight, setPresetRight] = React.useState<PresetKey>("mobile");
   const [widthRight, setWidthRight] = React.useState(375);
   const [heightRight, setHeightRight] = React.useState(812);
+  const [scaleRight, setScaleRight] = React.useState(1.0); // Added scale (zoom)
   const [isPortraitRight, setIsPortraitRight] = React.useState(true);
 
   // Reference hooks to force iframe reloads
@@ -205,7 +207,7 @@ export default function ScreenComparatorPage() {
                   />
                 </div>
 
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-4 flex-wrap">
                   <Select value={presetLeft} onValueChange={(v) => applyPresetLeft(v as PresetKey)}>
                     <SelectTrigger className="w-[180px] h-8 text-xs bg-background">
                       <SelectValue />
@@ -242,6 +244,21 @@ export default function ScreenComparatorPage() {
                       {isPortraitLeft ? "Landscape" : "Portrait"}
                     </Button>
                   )}
+
+                  {/* Zoom/Scale Slider Left */}
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground shrink-0 min-w-[120px]">
+                    <span>Scale:</span>
+                    <input
+                      type="range"
+                      min="0.25"
+                      max="1"
+                      step="0.05"
+                      value={scaleLeft}
+                      onChange={(e) => setScaleLeft(Number(e.target.value))}
+                      className="w-20 h-1.5 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                    />
+                    <span className="font-bold min-w-[32px] text-right">{Math.round(scaleLeft * 100)}%</span>
+                  </div>
                 </div>
               </div>
 
@@ -264,7 +281,7 @@ export default function ScreenComparatorPage() {
                   />
                 </div>
 
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-4 flex-wrap">
                   <Select value={presetRight} onValueChange={(v) => applyPresetRight(v as PresetKey)}>
                     <SelectTrigger className="w-[180px] h-8 text-xs bg-background">
                       <SelectValue />
@@ -301,6 +318,21 @@ export default function ScreenComparatorPage() {
                       {isPortraitRight ? "Landscape" : "Portrait"}
                     </Button>
                   )}
+
+                  {/* Zoom/Scale Slider Right */}
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground shrink-0 min-w-[120px]">
+                    <span>Scale:</span>
+                    <input
+                      type="range"
+                      min="0.25"
+                      max="1"
+                      step="0.05"
+                      value={scaleRight}
+                      onChange={(e) => setScaleRight(Number(e.target.value))}
+                      className="w-20 h-1.5 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                    />
+                    <span className="font-bold min-w-[32px] text-right">{Math.round(scaleRight * 100)}%</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -311,41 +343,61 @@ export default function ScreenComparatorPage() {
         <div
           className={`flex ${
             isVerticalSplit ? "flex-col items-center space-y-8" : "flex-col lg:flex-row items-center lg:items-start lg:justify-center gap-8"
-          } overflow-auto p-4 bg-muted/5 rounded-xl border border-dashed min-h-[500px]`}
+          } overflow-auto p-4 bg-muted/5 rounded-xl border border-dashed min-h-[500px] w-full`}
         >
           {/* Left Screen Wrapper */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center max-w-full">
             <span className="text-xs text-muted-foreground font-semibold mb-2 uppercase tracking-widest bg-muted/60 border px-3 py-1 rounded-full">
               Left Screen ({widthLeft}x{heightLeft})
             </span>
             <div
-              className="border rounded-xl shadow-lg bg-background overflow-hidden relative"
-              style={{ width: `${widthLeft}px`, height: `${heightLeft}px` }}
+              className="border rounded-xl shadow-lg bg-background overflow-auto relative max-w-full"
+              style={{ width: `${widthLeft * scaleLeft}px`, height: `${heightLeft * scaleLeft}px` }}
             >
-              <iframe
-                ref={iframeLeftRef}
-                src={urlLeft}
-                className="w-full h-full border-none"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-              />
+              <div
+                style={{
+                  width: `${widthLeft}px`,
+                  height: `${heightLeft}px`,
+                  transform: `scale(${scaleLeft})`,
+                  transformOrigin: "top left",
+                }}
+                className="absolute inset-0"
+              >
+                <iframe
+                  ref={iframeLeftRef}
+                  src={urlLeft}
+                  className="w-full h-full border-none"
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                />
+              </div>
             </div>
           </div>
 
           {/* Right Screen Wrapper */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center max-w-full">
             <span className="text-xs text-muted-foreground font-semibold mb-2 uppercase tracking-widest bg-muted/60 border px-3 py-1 rounded-full">
               Right Screen ({widthRight}x{heightRight})
             </span>
             <div
-              className="border rounded-xl shadow-lg bg-background overflow-hidden relative"
-              style={{ width: `${widthRight}px`, height: `${heightRight}px` }}
+              className="border rounded-xl shadow-lg bg-background overflow-auto relative max-w-full"
+              style={{ width: `${widthRight * scaleRight}px`, height: `${heightRight * scaleRight}px` }}
             >
-              <iframe
-                ref={iframeRightRef}
-                src={urlRight}
-                className="w-full h-full border-none"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-              />
+              <div
+                style={{
+                  width: `${widthRight}px`,
+                  height: `${heightRight}px`,
+                  transform: `scale(${scaleRight})`,
+                  transformOrigin: "top left",
+                }}
+                className="absolute inset-0"
+              >
+                <iframe
+                  ref={iframeRightRef}
+                  src={urlRight}
+                  className="w-full h-full border-none"
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                />
+              </div>
             </div>
           </div>
         </div>
