@@ -146,6 +146,15 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "FileCode",
   },
   {
+    id: "screen-comparator",
+    name: "Screen Comparator",
+    description: "Compare two web screens side-by-side with adjustable viewport sizes",
+    tags: ["iframe", "comparator", "responsive", "design"],
+    category: "designer",
+    path: "/tools/screen-comparator",
+    icon: "LayoutGrid",
+  },
+  {
     id: "binary-hex-converter",
     name: "Binary ↔ HEX",
     description: "Convert between binary and hexadecimal",
