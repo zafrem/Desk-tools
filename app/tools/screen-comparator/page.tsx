@@ -135,7 +135,7 @@ export default function ScreenComparatorPage() {
       title="Screen Comparator"
       description="Load and compare two URL screens side-by-side or stacked. Fully test responsive web layouts and environments."
     >
-      <div className="space-y-6">
+      <div className="w-full space-y-6">
         {/* Iframe Restriction Alert Info Box */}
         <div className="rounded-lg border bg-yellow-500/5 border-yellow-500/20 p-4 flex gap-3 text-sm text-yellow-600 dark:text-yellow-400">
           <Info className="h-5 w-5 shrink-0 mt-0.5" />
