@@ -342,7 +342,7 @@ export default function ScreenComparatorPage() {
         {/* Dynamic Display Screens */}
         <div
           className={`flex ${
-            isVerticalSplit ? "flex-col items-center space-y-8" : "flex-col lg:flex-row items-center lg:items-start lg:justify-center gap-8"
+            isVerticalSplit ? "flex-col items-center space-y-8" : "flex-col lg:flex-row items-center lg:items-start lg:justify-start gap-8"
           } overflow-auto p-4 bg-muted/5 rounded-xl border border-dashed min-h-[500px] w-full`}
         >
           {/* Left Screen Wrapper */}
