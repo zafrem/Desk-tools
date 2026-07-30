@@ -274,10 +274,9 @@ export default function ScreenComparatorPage() {
                   <Input
                     type="url"
                     value={urlRight}
-                    disabled={isSynced}
                     onChange={(e) => handleUrlRightChange(e.target.value)}
                     placeholder="https://example.com"
-                    className="h-9 bg-background disabled:opacity-60"
+                    className="h-9 bg-background"
                   />
                 </div>
 
