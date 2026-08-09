@@ -226,58 +226,58 @@ export default function LadderPage() {
 
   // Animation Update loop
   React.useEffect(() => {
-    if (!animationState) return;
+  if (!animationState) return;
 
-    let animFrame: number;
-    const speed = 12; // Pixels per frame
+  let animFrame: number;
+  const speed = 12; // Pixels per frame
 
-    const step = () => {
-      setAnimationState((curr) => {
-        if (!curr) return null;
+  const step = () => {
+    setAnimationState((curr) => {
+      if (!curr) return null;
 
-        const { pathPoints, currentPointIndex, currentPos } = curr;
-        const targetPoint = pathPoints[currentPointIndex + 1];
+      const { pathPoints, currentPointIndex, currentPos } = curr;
+      const targetPoint = pathPoints[currentPointIndex + 1];
 
-        if (!targetPoint) {
-          // Animation finished!
-          const trace = calculatePath(curr.playerIndex);
-          setRevealedResults((prev) => ({ ...prev, [trace.resultIndex]: true }));
-          setCompletedMatches((prev) => ({ ...prev, [curr.playerIndex]: trace.resultIndex }));
-          setActiveTraces((prev) => ({ ...prev, [curr.playerIndex]: trace }));
-          return null;
-        }
+      if (!targetPoint) {
+        // Animation finished!
+        const trace = calculatePath(curr.playerIndex);
+        setRevealedResults((prev) => ({ ...prev, [trace.resultIndex]: true }));
+        setCompletedMatches((prev) => ({ ...prev, [curr.playerIndex]: trace.resultIndex }));
+        setActiveTraces((prev) => ({ ...prev, [curr.playerIndex]: trace }));
+        return null;
+      }
 
-        // Calculate vector to next point
-        const dx = targetPoint.x - currentPos.x;
-        const dy = targetPoint.y - currentPos.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+      // Calculate vector to next point
+      const dx = targetPoint.x - currentPos.x;
+      const dy = targetPoint.y - currentPos.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance <= speed) {
-          // Snapped to next node point
-          return {
-            ...curr,
-            currentPointIndex: currentPointIndex + 1,
-            currentPos: targetPoint,
-          };
-        } else {
-          // Move towards target
-          const ratio = speed / distance;
-          return {
-            ...curr,
-            currentPos: {
-              x: currentPos.x + dx * ratio,
-              y: currentPos.y + dy * ratio,
-            },
-          };
-        }
-      });
-
-      animFrame = requestAnimationFrame(step);
-    };
+      if (distance <= speed) {
+        // Snapped to next node point
+        return {
+          ...curr,
+          currentPointIndex: currentPointIndex + 1,
+          currentPos: targetPoint,
+        };
+      } else {
+        // Move towards target
+        const ratio = speed / distance;
+        return {
+          ...curr,
+          currentPos: {
+            x: currentPos.x + dx * ratio,
+            y: currentPos.y + dy * ratio,
+          },
+        };
+      }
+    });
 
     animFrame = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animFrame);
-  }, [animationState]);
+  };
+
+  animFrame = requestAnimationFrame(step);
+  return () => cancelAnimationFrame(animFrame);
+  }, [animationState, calculatePath]);
 
   // Reveal all paths instantly
   const revealAllPaths = () => {
@@ -594,9 +594,9 @@ export default function LadderPage() {
                   <CheckCircle2 className="h-4 w-4" /> Match Results Summary
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {Object.entries(completedMatches).map(([playerIdxStr, resultIdxStr]) => {
+                  {Object.entries(completedMatches).map(([playerIdxStr, resultIdx]) => {
                     const pIdx = parseInt(playerIdxStr);
-                    const rIdx = parseInt(resultIdxStr);
+                    const rIdx = typeof resultIdx === 'string' ? parseInt(resultIdx) : resultIdx;
                     return (
                       <div
                         key={pIdx}
