@@ -12,7 +12,7 @@ A high-performance, local-first utility platform designed for multi-tasking indi
 
 ## Overview
 
-Desk-tools is a comprehensive suite of 56+ utilities built for "hybrid professionals"—developers, designers, planners, and marketers who need a fast, privacy-focused workspace.
+Desk-tools is a comprehensive suite of 64+ utilities built for "hybrid professionals"—developers, designers, planners, and marketers who need a fast, privacy-focused workspace.
 
 Built with **Next.js 15** and **React 19**, it runs entirely in your browser. All data is stored locally using **IndexedDB** (via Dexie.js), ensuring your work stays private and never leaves your machine.
 
@@ -80,7 +80,7 @@ Find any tool instantly with Fuse.js fuzzy search across names, descriptions, ta
 
 Export and import all your data (notes, tasks, bookmarks, etc.) as JSON from the top navigation bar.
 
-## Specialized Tools (56+)
+## Specialized Tools (64+)
 
 | Category | Tools |
 | --- | --- |
