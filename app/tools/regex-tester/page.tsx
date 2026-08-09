@@ -26,7 +26,6 @@ export default function RegexTesterPage() {
   const [text, setText] = React.useState("Hello world! This is a simple regex test.");
   const [highlighted, setHighlighted] = React.useState<React.ReactNode>(text);
   const [detectedType, setDetectedType] = React.useState<string | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
 
   const handlePatternChange = (label: string) => {
     const pii = PII_PATTERNS.find(p => p.label === label);
@@ -58,7 +57,6 @@ export default function RegexTesterPage() {
     const textContent = decoder.decode(buffer);
     
     setText(textContent);
-    setError(""); // Assuming setError exists
   };
 
   const handleCreateFileFromText = () => {

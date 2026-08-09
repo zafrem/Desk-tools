@@ -23,7 +23,6 @@ const MAGIC_NUMBERS: Record<string, { name: string; ext: string; mime: string; i
 export default function BlobDecoderPage() {
   const [textInput, setTextInput] = React.useState("");
   const [fileBytes, setFileBytes] = React.useState<Uint8Array | null>(null);
-  const [fileName, setFileName] = React.useState<string>("");
   
   // Detection outcomes
   const [detectedType, setDetectedType] = React.useState<{ name: string; ext: string; mime: string; isText: boolean } | null>(null);
@@ -118,7 +117,6 @@ export default function BlobDecoderPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setFileName(file.name);
     setTextInput(""); // Clear text input to prioritize file
 
     const buffer = await file.arrayBuffer();
@@ -137,8 +135,6 @@ export default function BlobDecoderPage() {
       setPreviewUrl(null);
       return;
     }
-
-    setFileName("Text Input Area");
 
     // Attempt to decode as hex first
     const hexBytes = hexToBytes(val);

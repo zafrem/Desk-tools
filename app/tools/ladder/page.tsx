@@ -172,7 +172,7 @@ export default function LadderPage() {
   // Trace the exact path algorithm for a starting column
   const calculatePath = (playerIdx: number): TracedPath => {
     let currentCol = playerIdx;
-    let currentY = 20;
+    const currentY = 20;
     const points = [{ x: getLineX(currentCol), y: currentY }];
 
     // Filter and sort all connected rungs
