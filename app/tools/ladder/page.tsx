@@ -175,12 +175,17 @@ export default function LadderPage() {
     const currentY = 20;
     const points = [{ x: getLineX(currentCol), y: currentY }];
 
-    // Filter and sort all connected rungs
-    const connectedRungs = rungs
-      .filter((r) => r.col === currentCol || r.col === currentCol - 1)
-      .sort((a, b) => a.y - b.y);
+    // Walk every rung top-to-bottom. The set of rungs that matters changes as
+    // we cross into new columns, so we must re-check each rung against the
+    // column we are *currently* on — not the starting column.
+    const sortedRungs = [...rungs].sort((a, b) => a.y - b.y);
 
-    for (const rung of connectedRungs) {
+    for (const rung of sortedRungs) {
+      // A rung at column `c` connects line `c` and line `c + 1`.
+      // It touches us only if we're currently on either of those lines.
+      const touchesCurrent = rung.col === currentCol || rung.col === currentCol - 1;
+      if (!touchesCurrent) continue;
+
       // Move vertically to the level of this rung
       points.push({ x: getLineX(currentCol), y: rung.y });
 
