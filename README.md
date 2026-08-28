@@ -8,11 +8,13 @@ A high-performance, local-first utility platform designed for multi-tasking indi
 
 ## The purpose behind the development
 
-"I'm not actually a professional developer. But after working with various systems, I kept getting the itch to build my own little tools. They didn't start as big, formal projects—they just kind of evolved bit by bit. Since I didn't have a team of designers or engineers to lean on, I just did everything myself. That's how Desk-tools came to life."
+"This was made to be at least some help to people who have to handle frontend and backend development, design, and planning all by themselves. With the rise of Vibe Coding these days, it feels like there are more and more people like that—including myself. When you're a one-person team, you're the frontend dev, the backend dev, the designer, and the planner all in the same afternoon, constantly switching between a dozen scattered, ad-covered websites just to get small things done. So I gathered everything I kept reaching for into one place. That's how Desk-tools came to life."
 
 ## Overview
 
-Desk-tools is a comprehensive suite of 64+ utilities built for "hybrid professionals"—developers, designers, planners, and marketers who need a fast, privacy-focused workspace.
+Desk-tools is a comprehensive suite of 64+ utilities built for **solo builders who have to wear every hat**—the frontend dev, the backend dev, the designer, and the planner, all at once. As Vibe Coding lowers the barrier to shipping whole products alone, more of us are doing exactly that, and this is meant to be a fast, private workspace for it.
+
+Instead of bouncing between a dozen different sites for a JSON formatter, a color palette, a regex tester, and a kanban board, everything lives in one place—organized around the hats a solo builder wears.
 
 Built with **Next.js 15** and **React 19**, it runs entirely in your browser. All data is stored locally using **IndexedDB** (via Dexie.js), ensuring your work stays private and never leaves your machine.
 
@@ -93,6 +95,7 @@ Export and import all your data (notes, tasks, bookmarks, etc.) as JSON from the
 | **Security** | JWT Decoder, Hash Generator (MD5/SHA), Encryption (AES-GCM/RSA-OAEP) |
 | **Developer** | JSON Explorer (tree view), Cron Expression Builder, Regex Tester, Text Diff, Command Palette, REST API Client, CURL Builder, SSH Terminal |
 | **AI** | AI Chat (requires local Ollama) |
+| **Games** | Sudoku (play & solve), Ladder Game (Amidakuji random picker), Roulette (spin-the-wheel picker) |
 | **Other** | PDF Tools, Pomodoro Timer, Iframe Viewer |
 
 ## Tech Stack
