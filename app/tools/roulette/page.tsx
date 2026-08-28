@@ -39,7 +39,7 @@ export default function RoulettePage() {
   return (
     <ToolLayout title="Roulette" description="Spin the wheel to make a random choice.">
       <div className="flex flex-col items-center gap-8">
-        <div className="relative w-72 h-72">
+        <div className="relative w-[min(18rem,80vw)] h-[min(18rem,80vw)]">
           {/* Pointer */}
           <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-6 bg-primary z-10 clip-path-polygon" />
           
@@ -83,7 +83,7 @@ export default function RoulettePage() {
         </div>
 
         {result && (
-          <div className="text-3xl font-bold text-primary animate-bounce">
+          <div className="text-2xl sm:text-3xl font-bold text-primary animate-bounce text-center px-4 break-words max-w-full">
             Result: {result}
           </div>
         )}

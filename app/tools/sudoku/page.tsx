@@ -71,15 +71,16 @@ export default function SudokuPage() {
   return (
     <ToolLayout title="Sudoku" description="Play Sudoku or use the solver.">
       <div className="flex flex-col items-center gap-6">
-        <div className="grid grid-cols-9 border-2 border-primary shadow-lg">
+        <div className="grid grid-cols-9 border-2 border-primary shadow-lg w-full max-w-[min(90vw,420px)]">
           {grid.map((row, r) =>
             row.map((cell, c) => (
               <input
                 key={`${r}-${c}`}
                 type="text"
+                inputMode="numeric"
                 maxLength={1}
                 disabled={initialGrid[r][c] !== 0}
-                className={`w-10 h-10 border border-muted text-center text-lg font-bold 
+                className={`aspect-square w-full min-w-0 border border-muted text-center text-base sm:text-lg font-bold
                   ${c % 3 === 2 && c !== 8 ? "border-r-2 border-r-primary" : ""}
                   ${r % 3 === 2 && r !== 8 ? "border-b-2 border-b-primary" : ""}
                   ${initialGrid[r][c] !== 0 ? "bg-muted" : "focus:bg-primary/10"}
@@ -95,7 +96,7 @@ export default function SudokuPage() {
             ))
           )}
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
           <Button onClick={() => setGrid(generatePuzzle())} variant="outline" className="gap-2">
             <RefreshCw className="h-4 w-4" /> New Puzzle
           </Button>

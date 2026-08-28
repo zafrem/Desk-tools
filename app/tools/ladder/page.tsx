@@ -18,6 +18,8 @@ import {
   Users,
   Eye,
   Undo2,
+  Shuffle,
+  Plus,
 } from "lucide-react";
 
 interface Rung {
@@ -46,6 +48,16 @@ const COLORS = [
   "#6366F1", // Indigo
 ];
 
+// Fisher–Yates shuffle (returns a new array).
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function LadderPage() {
   const [numPlayers, setNumPlayers] = React.useState(4);
   const [names, setNames] = React.useState<string[]>(["Player 1", "Player 2", "Player 3", "Player 4"]);
@@ -65,6 +77,12 @@ export default function LadderPage() {
 
   const [revealedResults, setRevealedResults] = React.useState<Record<number, boolean>>({});
   const [completedMatches, setCompletedMatches] = React.useState<Record<number, number>>({}); // playerIndex -> resultIndex
+
+  // Hidden mapping: board bottom position -> index into the results pool.
+  // The input list is just the prize pool; this permutation decides where each
+  // prize actually sits, so the input never reveals which line wins.
+  const [resultPerm, setResultPerm] = React.useState<number[]>([]);
+  const prizeAt = (boardPos: number) => results[resultPerm[boardPos] ?? boardPos];
 
   const LADDER_HEIGHT = 400;
   const LADDER_WIDTH = 600;
@@ -87,7 +105,7 @@ export default function LadderPage() {
       const next = [...prev];
       if (next.length < numPlayers) {
         for (let i = next.length; i < numPlayers; i++) {
-          next.push(`Result ${i + 1}`);
+          next.push("Pass");
         }
       } else {
         next.splice(numPlayers);
@@ -99,6 +117,7 @@ export default function LadderPage() {
     setActiveTraces({});
     setRevealedResults({});
     setCompletedMatches({});
+    setResultPerm([]);
   }, [numPlayers]);
 
   // Adjust player count
@@ -111,7 +130,7 @@ export default function LadderPage() {
   const applyPreset = (type: "winner" | "coffee" | "numbers") => {
     if (type === "winner") {
       const next = Array(numPlayers).fill("Pass");
-      next[0] = "WINNER 👑";
+      next[Math.floor(Math.random() * numPlayers)] = "WIN 👑";
       setResults(next);
     } else if (type === "coffee") {
       const next = Array(numPlayers).fill("SAFE ☕");
@@ -155,11 +174,50 @@ export default function LadderPage() {
     }
 
     setRungs(newRungs);
+    // Randomize which line gets which prize so WIN lands in a random spot.
+    setResultPerm(shuffle(Array.from({ length: numPlayers }, (_, i) => i)));
     setIsGenerated(true);
     setActiveTraces({});
     setRevealedResults({});
     setCompletedMatches({});
     setAnimationState(null);
+  };
+
+  // Re-randomize the line -> prize mapping (keeps the current ladder rungs).
+  const shuffleResults = () => {
+    if (animationState) return;
+    setResultPerm(shuffle(Array.from({ length: numPlayers }, (_, i) => i)));
+    setActiveTraces({});
+    setRevealedResults({});
+    setCompletedMatches({});
+  };
+
+  // Insert one extra horizontal rung at a random free spot.
+  const addRandomRung = () => {
+    if (!isGenerated || animationState || numPlayers < 2) return;
+    const maxCol = numPlayers - 2; // rung.col is the left line index
+    const yMin = 40;
+    const yMax = LADDER_HEIGHT - 40;
+
+    for (let attempt = 0; attempt < 60; attempt++) {
+      const col = Math.floor(Math.random() * (maxCol + 1));
+      const y = Math.round(yMin + Math.random() * (yMax - yMin));
+      const tooClose = rungs.some((r) => {
+        // Same column too close vertically -> hard to read / overlapping.
+        if (r.col === col && Math.abs(r.y - y) < 28) return true;
+        // Adjacent column at nearly the same height -> ambiguous crossing.
+        if (Math.abs(r.col - col) === 1 && Math.abs(r.y - y) < 18) return true;
+        return false;
+      });
+      if (tooClose) continue;
+
+      setRungs((prev) => [...prev, { id: `add-${col}-${y}-${Math.random()}`, col, y }]);
+      // Paths change, so any existing traces/results are now stale.
+      setActiveTraces({});
+      setRevealedResults({});
+      setCompletedMatches({});
+      return;
+    }
   };
 
   // Helper: Get X position of a line index
@@ -365,44 +423,69 @@ export default function LadderPage() {
           </Card>
 
           {/* Player Names Input list */}
-          <Card className="max-h-[350px] overflow-y-auto">
-            <CardContent className="p-4 space-y-4">
+          <Card className="max-h-[280px] overflow-y-auto">
+            <CardContent className="p-4 space-y-3">
               <h4 className="font-semibold text-xs text-muted-foreground flex items-center gap-1.5">
-                <Users className="h-4 w-4" /> Customize Names & Results
+                <Users className="h-4 w-4" /> Player Names
               </h4>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {Array.from({ length: numPlayers }).map((_, i) => (
-                  <div key={i} className="space-y-1.5 p-2 rounded-lg bg-muted/20 border">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="w-2.5 h-2.5 rounded-full shrink-0"
-                        style={{ backgroundColor: COLORS[i % COLORS.length] }}
-                      />
-                      <span className="text-[10px] font-bold text-muted-foreground">Line {i + 1}</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <Input
-                        value={names[i] || ""}
-                        placeholder={`Player ${i + 1}`}
-                        onChange={(e) => {
-                          const next = [...names];
-                          next[i] = e.target.value;
-                          setNames(next);
-                        }}
-                        className="h-8 text-xs px-2 bg-background"
-                      />
-                      <Input
-                        value={results[i] || ""}
-                        placeholder={`Result ${i + 1}`}
-                        onChange={(e) => {
-                          const next = [...results];
-                          next[i] = e.target.value;
-                          setResults(next);
-                        }}
-                        className="h-8 text-xs px-2 bg-background"
-                      />
-                    </div>
+                  <div key={i} className="flex items-center gap-2">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full shrink-0"
+                      style={{ backgroundColor: COLORS[i % COLORS.length] }}
+                    />
+                    <Input
+                      value={names[i] || ""}
+                      placeholder={`Player ${i + 1}`}
+                      onChange={(e) => {
+                        const next = [...names];
+                        next[i] = e.target.value;
+                        setNames(next);
+                      }}
+                      className="h-8 text-xs px-2 bg-background"
+                    />
                   </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Results Input list (separate from names, order is randomized) */}
+          <Card className="max-h-[280px] overflow-y-auto">
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-xs text-muted-foreground flex items-center gap-1.5">
+                  <Trophy className="h-4 w-4" /> Results
+                </h4>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-7 text-[10px] px-2 gap-1"
+                  onClick={shuffleResults}
+                  disabled={animationState !== null}
+                  title="Shuffle result order"
+                >
+                  <Shuffle className="h-3 w-3" /> Shuffle
+                </Button>
+              </div>
+              <p className="text-[10px] text-muted-foreground leading-snug">
+                This is the prize pool — the order here doesn&apos;t matter. Prizes
+                are dealt onto the lines at random and stay hidden until revealed.
+              </p>
+              <div className="space-y-2">
+                {Array.from({ length: numPlayers }).map((_, i) => (
+                  <Input
+                    key={i}
+                    value={results[i] || ""}
+                    placeholder={`Result ${i + 1}`}
+                    onChange={(e) => {
+                      const next = [...results];
+                      next[i] = e.target.value;
+                      setResults(next);
+                    }}
+                    className="h-8 text-xs px-2 bg-background"
+                  />
                 ))}
               </div>
             </CardContent>
@@ -412,7 +495,7 @@ export default function LadderPage() {
         {/* Main Game Screen */}
         <div className="space-y-4">
           <Card className="bg-muted/5 border">
-            <CardContent className="p-6 flex flex-col items-center justify-center">
+            <CardContent className="p-3 sm:p-6 flex flex-col items-center justify-center">
               {!isGenerated ? (
                 <div className="h-[480px] flex flex-col items-center justify-center text-center p-6 space-y-4">
                   <div className="p-4 rounded-full bg-primary/10 text-primary">
@@ -431,7 +514,17 @@ export default function LadderPage() {
               ) : (
                 <div className="w-full flex flex-col items-center select-none">
                   {/* Top Header Controls */}
-                  <div className="flex gap-2 mb-6">
+                  <div className="flex flex-wrap justify-center gap-2 mb-6">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={addRandomRung}
+                      disabled={animationState !== null}
+                      className="gap-1.5 text-xs"
+                      title="Add a random horizontal line"
+                    >
+                      <Plus className="h-4 w-4" /> Add Line
+                    </Button>
                     <Button
                       variant="outline"
                       size="sm"
@@ -458,14 +551,14 @@ export default function LadderPage() {
                   </div>
 
                   {/* Player Buttons Top */}
-                  <div className="w-[660px] max-w-full flex justify-between px-7 mb-2">
+                  <div className="w-[600px] max-w-full flex justify-between gap-1 px-4 mb-2">
                     {names.map((name, idx) => (
                       <button
                         key={idx}
                         disabled={animationState !== null}
                         onClick={() => startTraceAnimation(idx)}
                         style={{ borderColor: COLORS[idx % COLORS.length] }}
-                        className={`px-3 py-1 text-xs font-semibold rounded-full border-2 bg-background hover:bg-muted/50 transition-all shadow-sm shrink-0 min-w-[70px] text-center truncate ${
+                        className={`px-1 sm:px-2 py-1 text-[10px] sm:text-xs font-semibold rounded-full border-2 bg-background hover:bg-muted/50 transition-all shadow-sm flex-1 min-w-0 text-center truncate ${
                           activeTraces[idx] ? "scale-95 opacity-80" : "hover:scale-105"
                         }`}
                       >
@@ -569,13 +662,14 @@ export default function LadderPage() {
                   </div>
 
                   {/* Bottom Results List */}
-                  <div className="w-[660px] max-w-full flex justify-between px-7 mt-4">
-                    {results.map((res, idx) => {
+                  <div className="w-[600px] max-w-full flex justify-between gap-1 px-4 mt-4">
+                    {Array.from({ length: numPlayers }).map((_, idx) => {
                       const isRevealed = revealedResults[idx];
+                      const res = prizeAt(idx);
                       return (
                         <div
                           key={idx}
-                          className={`px-3 py-1.5 text-xs font-bold rounded-lg border text-center truncate min-w-[70px] max-w-[90px] shadow-sm transition-all duration-300 shrink-0 ${
+                          className={`px-1 sm:px-2 py-1.5 text-[10px] sm:text-xs font-bold rounded-lg border text-center truncate flex-1 min-w-0 shadow-sm transition-all duration-300 ${
                             isRevealed
                               ? "bg-primary text-primary-foreground border-primary scale-105 animate-pulse"
                               : "bg-muted text-muted-foreground border-muted-foreground/20"
@@ -612,7 +706,7 @@ export default function LadderPage() {
                         </span>
                         <span className="text-muted-foreground mx-1">➔</span>
                         <span className="font-bold truncate max-w-[80px] text-primary">
-                          {results[rIdx]}
+                          {prizeAt(rIdx)}
                         </span>
                       </div>
                     );
