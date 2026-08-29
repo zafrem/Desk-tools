@@ -6,17 +6,15 @@ A high-performance, local-first utility platform designed for multi-tasking indi
 
 ![Main Page](./images/Init-page.jpg)
 
-## The purpose behind the development
+## Why I made this
 
-"This was made to be at least some help to people who have to handle frontend and backend development, design, and planning all by themselves. With the rise of Vibe Coding these days, it feels like there are more and more people like that—including myself. When you're a one-person team, you're the frontend dev, the backend dev, the designer, and the planner all in the same afternoon, constantly switching between a dozen scattered, ad-covered websites just to get small things done. So I gathered everything I kept reaching for into one place. That's how Desk-tools came to life."
+I built Desk-tools for people who end up doing everything on their own: the frontend, the backend, the design, and the planning. With vibe coding taking off, I think there are a lot more of us now, and I'm one of them.
+
+When you're the whole team, a normal day means jumping between totally different jobs, and each one sends you off to some other website. Format some JSON here, grab a color there, test a regex somewhere else, then go update your board. Most of those sites are slow and covered in ads. I got tired of it, so I put the things I actually use in one place.
 
 ## Overview
 
-Desk-tools is a comprehensive suite of 64+ utilities built for **solo builders who have to wear every hat**—the frontend dev, the backend dev, the designer, and the planner, all at once. As Vibe Coding lowers the barrier to shipping whole products alone, more of us are doing exactly that, and this is meant to be a fast, private workspace for it.
-
-Instead of bouncing between a dozen different sites for a JSON formatter, a color palette, a regex tester, and a kanban board, everything lives in one place—organized around the hats a solo builder wears.
-
-Built with **Next.js 15** and **React 19**, it runs entirely in your browser. All data is stored locally using **IndexedDB** (via Dexie.js), ensuring your work stays private and never leaves your machine.
+Desk-tools is a set of 64+ small utilities that all live in one app, aimed at solo builders who have to wear every hat. It runs entirely in your browser, built with **Next.js 15** and **React 19**. Nothing you type gets uploaded anywhere. Your data is saved locally in your browser (**IndexedDB** via Dexie.js), so it stays on your machine, and once the page has loaded it keeps working offline.
 
 ### Privacy & Local-First
 
@@ -211,7 +209,7 @@ This project is configured for **GitHub Pages** with automatic deployment. Any p
 
 ## Feedback & Requests
 
-I am committed to constantly evolving this platform. If you have a tool request or found a bug, please [open an issue on GitHub](https://github.com/zafrem/Desk-tools/issues).
+I'm still adding to this whenever I hit something I need. If there's a tool you want or you run into a bug, [open an issue on GitHub](https://github.com/zafrem/Desk-tools/issues).
 
 ### Support the Project
 If you find this useful, consider buying me a coffee!

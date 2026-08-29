@@ -1,7 +1,7 @@
 {
   "title": "Desk-tools",
-  "subtitle": "A high-performance, local-first utility platform with 64+ specialized tools.",
-  "description": "Originally created for multi-tasking individuals at startups. With the advancement of AI, the lines between developer, designer, planner, and marketer are collapsing. Desk-tools is designed to empower this new breed of hybrid professionals by providing a comprehensive suite of utilities in one place.",
+  "subtitle": "64+ small tools in one place, all running locally in your browser.",
+  "description": "I built this for people who end up doing everything on their own: the frontend, the backend, the design, and the planning. With vibe coding taking off, there are a lot more of us now, and I'm one of them. Instead of chasing down a different website for every little task, the things I actually use are all here.",
   "features": {
     "privacy": {
       "title": "Privacy First",
@@ -12,8 +12,8 @@
       "description": "Find any tool quickly using the tag-based fuzzy search in the sidebar."
     },
     "evolving": {
-      "title": "Constantly Evolving",
-      "description": "I am committed to adding more challenging and useful tools. Have a request? File an issue on GitHub!"
+      "title": "Still Growing",
+      "description": "I keep adding tools whenever I hit something I need. Want one? File an issue on GitHub."
     }
   },
   "howToUse": {
@@ -36,13 +36,13 @@
     },
     "feedback": {
       "label": "Feedback & Requests:",
-      "text": "If you need a specific tool or have a feature request, please open an issue on GitHub. I will continue to update the platform with new features.",
+      "text": "Need a specific tool or have an idea? Open an issue on GitHub. I keep adding to this over time.",
       "linkText": "open an issue on GitHub"
     }
   },
   "roadmap": {
     "title": "Future Roadmap",
-    "description": "I aim to build more complex and \"challenging\" tools that solve real-world engineering problems directly in the browser. This project is a living workspace that grows with your needs.",
+    "description": "I want to add bigger tools that handle real engineering work right in the browser. This is a workspace I keep building on as I run into new things I need.",
     "requestFeature": "Request a Feature"
   }
 }
