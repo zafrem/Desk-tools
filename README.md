@@ -213,6 +213,14 @@ This project is configured for **GitHub Pages** with automatic deployment. Any p
 
 I am committed to constantly evolving this platform. If you have a tool request or found a bug, please [open an issue on GitHub](https://github.com/zafrem/Desk-tools/issues).
 
+### Support the Project
+If you find this useful, consider buying me a coffee!
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/zafrem)
+
+
+
 ---
 
 Created by [zafrem](https://github.com/zafrem)
+
