@@ -75,6 +75,9 @@ npm install
 npm start
 ```
 
+The same package also has a CLI for automation without a browser — run queries or SSH commands from scripts and
+export CSV / JSON / NDJSON (see the [proxy README](./Desk-tools-local-proxy/README.md#automation-no-browser-needed)).
+
 Clone with `git clone --recurse-submodules`, or run `git submodule update --init` afterwards.
 
 ### Instant Search
