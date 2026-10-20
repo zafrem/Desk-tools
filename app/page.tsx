@@ -65,6 +65,10 @@ export default function Home() {
                 <span dangerouslySetInnerHTML={{ __html: t("howToUse.terms.text") }} />
               </li>
               <li>
+                <strong className="text-foreground">{t("howToUse.consoles.label")}</strong>{" "}
+                <span dangerouslySetInnerHTML={{ __html: t("howToUse.consoles.text") }} />
+              </li>
+              <li>
                 <strong className="text-foreground">{t("howToUse.feedback.label")}</strong>{" "}
                 {t("howToUse.feedback.text").split(t("howToUse.feedback.linkText"))[0]}
                 <a href="https://github.com/zafrem/Desk-tools/issues" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{t("howToUse.feedback.linkText")}</a>

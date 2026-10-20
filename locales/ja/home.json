@@ -34,6 +34,10 @@
       "label": "用語定義：",
       "text": "<strong>用語集</strong>セクションでプロジェクトの用語を整理します。"
     },
+    "consoles": {
+      "label": "コンソールと自動化：",
+      "text": "<strong>コンソール</strong>では、自分で起動するローカルプロキシ経由で SSH、Telnet、読み取り専用のデータベースコンソール（MySQL、PostgreSQL、Hive、Trino）を使えます。<strong>設定 → インストール</strong>で準備でき、プロキシの CLI を使えばブラウザなしでスクリプトからクエリ実行や CSV/JSON エクスポートも可能です。"
+    },
     "feedback": {
       "label": "フィードバックとリクエスト：",
       "text": "特定のツールが必要な場合や機能リクエストがある場合は、GitHubでissueを作成してください。新機能でプラットフォームを更新し続けます。",

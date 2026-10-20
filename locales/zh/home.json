@@ -34,6 +34,10 @@
       "label": "术语定义：",
       "text": "在<strong>术语</strong>部分整理您的项目术语。"
     },
+    "consoles": {
+      "label": "控制台与自动化：",
+      "text": "在<strong>控制台</strong>中，通过您自己运行的本地代理使用 SSH、Telnet 以及只读数据库控制台（MySQL、PostgreSQL、Hive、Trino）。在<strong>设置 → 安装</strong>中完成配置；代理的 CLI 还能在脚本中无需浏览器执行查询并导出 CSV/JSON。"
+    },
     "feedback": {
       "label": "反馈与请求：",
       "text": "如果您需要特定工具或有功能请求，请在GitHub上提交issue。我将继续用新功能更新平台。",

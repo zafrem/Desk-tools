@@ -34,6 +34,10 @@
       "label": "Definition of Terms:",
       "text": "Organize your project terminology in the <strong>Terms</strong> section."
     },
+    "consoles": {
+      "label": "Consoles & Automation:",
+      "text": "Open <strong>Consoles</strong> for SSH, Telnet and read-only database consoles (MySQL, PostgreSQL, Hive, Trino) through a local proxy you run yourself. Set it up under <strong>Settings → Install</strong>; the proxy's CLI also runs queries and exports CSV/JSON from scripts, no browser needed."
+    },
     "feedback": {
       "label": "Feedback & Requests:",
       "text": "Need a specific tool or have an idea? Open an issue on GitHub. I keep adding to this over time.",
