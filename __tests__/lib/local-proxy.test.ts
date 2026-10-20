@@ -1,6 +1,6 @@
 import {
   SERVICES,
-  detectOs,
+  INSTALL_STEPS,
   fetchHealth,
   formatCell,
   getService,
@@ -22,17 +22,13 @@ describe("services", () => {
   });
 });
 
-describe("detectOs", () => {
-  it("detects the platform", () => {
-    expect(detectOs("Mozilla/5.0 (Windows NT 10.0; Win64; x64)", "Win32").key).toBe("windows-x64");
-    expect(detectOs("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)", "MacIntel").key).toBe("macos-arm64");
-    expect(detectOs("Mozilla/5.0 (X11; Linux x86_64)", "Linux x86_64").key).toBe("linux-x64");
-    expect(detectOs().key).toBe("linux-x64");
-  });
-
-  it("uses the binary names published by the proxy releases", () => {
-    expect(detectOs("", "Win32").file).toBe("local-proxy-windows-x64.exe");
-    expect(detectOs("", "Linux").file).toBe("local-proxy-linux-x64");
+describe("install steps", () => {
+  it("clone, install and start from the GitHub repo", () => {
+    expect(INSTALL_STEPS.map((s) => s.command)).toEqual([
+      "git clone https://github.com/zafrem/Desk-tools-local-proxy.git",
+      "cd Desk-tools-local-proxy && npm install",
+      "npm start",
+    ]);
   });
 });
 

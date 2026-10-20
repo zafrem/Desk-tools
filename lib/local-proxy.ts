@@ -8,8 +8,13 @@ export const PROXY_HEALTH_URL = `${PROXY_HTTP}/health`;
 export const PROXY_SERVICE_NAME = "desk-tools-local-proxy";
 
 export const PROXY_REPO = "https://github.com/zafrem/Desk-tools-local-proxy";
-export const RELEASE_BASE = `${PROXY_REPO}/releases/latest/download`;
-export const NPX_COMMAND = "npx desk-tools-local-proxy";
+
+/** The proxy is not published to npm or as binaries: users clone and run it. */
+export const INSTALL_STEPS: { label: string; command: string }[] = [
+  { label: "Clone the code", command: `git clone ${PROXY_REPO}.git` },
+  { label: "Install dependencies", command: "cd Desk-tools-local-proxy && npm install" },
+  { label: "Start the proxy", command: "npm start" },
+];
 
 /** Highest protocol version this web app understands. */
 export const SUPPORTED_PROTOCOL = 2;
@@ -37,41 +42,6 @@ export const SERVICES: ServiceMeta[] = [
 
 export function getService(id: string): ServiceMeta | undefined {
   return SERVICES.find((s) => s.id === id);
-}
-
-// ---- OS detection for the download buttons --------------------------------
-
-export interface OsInfo {
-  key: "macos-arm64" | "macos-x64" | "linux-x64" | "windows-x64";
-  label: string;
-  file: string;
-}
-
-export const OS_BUILDS: OsInfo[] = [
-  { key: "macos-arm64", label: "macOS (Apple Silicon)", file: "local-proxy-macos-arm64" },
-  { key: "macos-x64", label: "macOS (Intel)", file: "local-proxy-macos-x64" },
-  { key: "linux-x64", label: "Linux", file: "local-proxy-linux-x64" },
-  { key: "windows-x64", label: "Windows", file: "local-proxy-windows-x64.exe" },
-];
-
-const build = (key: OsInfo["key"]) => OS_BUILDS.find((b) => b.key === key)!;
-
-export function detectOs(userAgent = "", platform = ""): OsInfo {
-  const ua = userAgent.toLowerCase();
-  const plat = platform.toLowerCase();
-  if (ua.includes("win") || plat.includes("win")) return build("windows-x64");
-  if (ua.includes("mac") || plat.includes("mac")) {
-    // Browsers report "MacIntel" even on Apple Silicon, so default to arm64
-    // (current Macs) unless the UA says otherwise.
-    return ua.includes("intel mac") && ua.includes("x86_64") ? build("macos-x64") : build("macos-arm64");
-  }
-  return build("linux-x64");
-}
-
-export function detectOsFromNavigator(): OsInfo {
-  // Also runs during static prerender, where `navigator` does not exist.
-  if (typeof navigator === "undefined") return build("linux-x64");
-  return detectOs(navigator.userAgent, navigator.platform);
 }
 
 // ---- Health ---------------------------------------------------------------

@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   Circle,
   Copy,
-  Download,
   Loader2,
   MinusCircle,
   Network,
@@ -17,13 +16,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  NPX_COMMAND,
-  OS_BUILDS,
+  INSTALL_STEPS,
   PROXY_PORT,
   PROXY_REPO,
-  RELEASE_BASE,
   SERVICES,
-  detectOsFromNavigator,
   initialTestSteps,
   runConnectionTest,
   testPassed,
@@ -148,7 +144,7 @@ export function ProxyTab({ active }: { active: boolean }) {
         )}
         {done && !passed && (
           <p className="text-sm text-muted-foreground">
-            Not working yet? Open the <strong>Install</strong> tab to download or start the proxy, then test again.
+            Not working yet? Open the <strong>Install</strong> tab to set up and start the proxy, then test again.
           </p>
         )}
       </div>
@@ -178,49 +174,25 @@ export function ProxyTab({ active }: { active: boolean }) {
   );
 }
 
-/** "Install" tab: download instructions for the local proxy. */
+/** "Install" tab: how to get and run the local proxy from source. */
 export function InstallTab() {
-  const os = React.useMemo(detectOsFromNavigator, []);
-
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        Pick <strong>one</strong> option. Once the proxy is running, use the <strong>Proxy</strong> tab to test the
-        connection.
+        The proxy is not shipped with Desk-tools. Clone it, install its dependencies and start it yourself (Node.js 18+
+        and git required). Then use the <strong>Proxy</strong> tab to test the connection.
       </p>
 
-      <div className="rounded-md border p-3 space-y-2">
-        <div className="flex items-center justify-between gap-2">
-          <h4 className="text-sm font-semibold">Option 1 — Download the app</h4>
-          <span className="text-xs text-muted-foreground">No Node.js needed</span>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          Detected: <strong>{os.label}</strong>. Download, then run it. You may need to allow it in your OS security
-          settings the first time (on macOS/Linux: <code className="bg-muted px-1 rounded">chmod +x</code> first).
-        </p>
-        <a href={`${RELEASE_BASE}/${os.file}`} download>
-          <Button size="sm" className="gap-2">
-            <Download className="h-4 w-4" /> Download for {os.label}
-          </Button>
-        </a>
-        <p className="text-xs text-muted-foreground">
-          Other builds:{" "}
-          {OS_BUILDS.filter((b) => b.key !== os.key).map((b, i, arr) => (
-            <React.Fragment key={b.key}>
-              <a className="underline" href={`${RELEASE_BASE}/${b.file}`}>
-                {b.label}
-              </a>
-              {i < arr.length - 1 && ", "}
-            </React.Fragment>
-          ))}
-        </p>
-      </div>
-
-      <div className="rounded-md border p-3 space-y-2">
-        <h4 className="text-sm font-semibold">Option 2 — Run with Node.js</h4>
-        <p className="text-xs text-muted-foreground">With Node.js 18+ installed, run this in a terminal:</p>
-        <CopyableCommand command={NPX_COMMAND} />
-      </div>
+      <ol className="space-y-3">
+        {INSTALL_STEPS.map((step, i) => (
+          <li key={step.command} className="space-y-1">
+            <h4 className="text-sm font-semibold">
+              {i + 1}. {step.label}
+            </h4>
+            <CopyableCommand command={step.command} />
+          </li>
+        ))}
+      </ol>
 
       <div className="space-y-1 text-xs text-muted-foreground">
         <p>
@@ -233,7 +205,7 @@ export function InstallTab() {
           <code className="bg-muted px-1 rounded">DESK_TOOLS_ALLOWED_ORIGINS=https://your.host</code>.
         </p>
         <p>
-          Source and releases:{" "}
+          Source:{" "}
           <a className="underline" href={PROXY_REPO} target="_blank" rel="noreferrer">
             {PROXY_REPO.replace("https://", "")}
           </a>
