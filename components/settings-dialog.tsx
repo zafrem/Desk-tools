@@ -22,6 +22,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { InstallTab, ProxyTab } from "@/components/proxy-settings";
+import { OPEN_SETTINGS_EVENT } from "@/components/console/proxy-gate";
 import { getPreference, setPreference } from "@/lib/db";
 
 interface OllamaModel {
@@ -31,6 +34,7 @@ interface OllamaModel {
 export function SettingsDialog() {
   const { t } = useTranslation("common");
   const [open, setOpen] = React.useState(false);
+  const [tab, setTab] = React.useState("llm");
   const [provider, setProvider] = React.useState<"ollama" | "vllm" | "sglang">("ollama");
   const [ollamaBaseUrl, setOllamaBaseUrl] = React.useState("http://localhost:11434");
   const [ollamaModel, setOllamaModel] = React.useState("");
@@ -42,6 +46,17 @@ export function SettingsDialog() {
   const [showVllmGuide, setShowVllmGuide] = React.useState(false);
   const [showSglangGuide, setShowSglangGuide] = React.useState(false);
   const [copiedCommand, setCopiedCommand] = React.useState(false);
+
+  // Console pages ask us to open on a specific tab (e.g. "install").
+  React.useEffect(() => {
+    const onOpen = (e: Event) => {
+      const requested = (e as CustomEvent<string>).detail;
+      if (requested === "llm" || requested === "proxy" || requested === "install") setTab(requested);
+      setOpen(true);
+    };
+    window.addEventListener(OPEN_SETTINGS_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_SETTINGS_EVENT, onOpen);
+  }, []);
 
   React.useEffect(() => {
     const loadSettings = async () => {
@@ -128,16 +143,24 @@ export function SettingsDialog() {
           <span className="sr-only">{t("labels.settings")}</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[520px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Settings className="h-5 w-5" />
             {t("labels.settings")}
           </DialogTitle>
           <DialogDescription>
-            Configure global application settings and local LLM integration.
+            Configure the local LLM and the local proxy used by the SSH, Telnet and database consoles.
           </DialogDescription>
         </DialogHeader>
+        <Tabs value={tab} onValueChange={setTab}>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="llm">LLM</TabsTrigger>
+            <TabsTrigger value="proxy">Proxy</TabsTrigger>
+            <TabsTrigger value="install">Install</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="llm">
         <div className="grid gap-4 py-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none flex items-center gap-2">
@@ -508,6 +531,16 @@ export function SettingsDialog() {
         <DialogFooter>
           <Button onClick={handleSave}>{t("buttons.save")}</Button>
         </DialogFooter>
+          </TabsContent>
+
+          <TabsContent value="proxy" className="py-4">
+            <ProxyTab active={open && tab === "proxy"} />
+          </TabsContent>
+
+          <TabsContent value="install" className="py-4">
+            <InstallTab />
+          </TabsContent>
+        </Tabs>
       </DialogContent>
     </Dialog>
   );

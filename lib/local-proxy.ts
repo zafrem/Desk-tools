@@ -1,0 +1,321 @@
+// Client side of the browser <-> local-proxy protocol.
+// The wire format is documented in Desk-tools-local-proxy/PROTOCOL.md.
+
+export const PROXY_PORT = 8722;
+export const PROXY_HTTP = `http://127.0.0.1:${PROXY_PORT}`;
+export const PROXY_WS = `ws://127.0.0.1:${PROXY_PORT}`;
+export const PROXY_HEALTH_URL = `${PROXY_HTTP}/health`;
+export const PROXY_SERVICE_NAME = "desk-tools-local-proxy";
+
+export const PROXY_REPO = "https://github.com/zafrem/Desk-tools-local-proxy";
+export const RELEASE_BASE = `${PROXY_REPO}/releases/latest/download`;
+export const NPX_COMMAND = "npx desk-tools-local-proxy";
+
+/** Highest protocol version this web app understands. */
+export const SUPPORTED_PROTOCOL = 2;
+
+export type ServiceId = "ssh" | "telnet" | "mysql" | "postgres" | "hive" | "trino";
+export type ServiceKind = "terminal" | "query";
+
+export interface ServiceMeta {
+  id: ServiceId;
+  label: string;
+  kind: ServiceKind;
+  defaultPort: number;
+  description: string;
+  icon: string; // lucide-react icon name
+}
+
+export const SERVICES: ServiceMeta[] = [
+  { id: "ssh", label: "SSH", kind: "terminal", defaultPort: 22, description: "Secure shell terminal", icon: "Terminal" },
+  { id: "telnet", label: "Telnet", kind: "terminal", defaultPort: 23, description: "Plain-text telnet terminal", icon: "SquareTerminal" },
+  { id: "mysql", label: "MySQL", kind: "query", defaultPort: 3306, description: "Run SELECT queries on MySQL / MariaDB", icon: "Database" },
+  { id: "postgres", label: "PostgreSQL", kind: "query", defaultPort: 5432, description: "Run SELECT queries on PostgreSQL", icon: "Database" },
+  { id: "hive", label: "Hive", kind: "query", defaultPort: 10000, description: "Run SELECT queries on HiveServer2", icon: "Database" },
+  { id: "trino", label: "Trino", kind: "query", defaultPort: 8080, description: "Run SELECT queries on Trino", icon: "Database" },
+];
+
+export function getService(id: string): ServiceMeta | undefined {
+  return SERVICES.find((s) => s.id === id);
+}
+
+// ---- OS detection for the download buttons --------------------------------
+
+export interface OsInfo {
+  key: "macos-arm64" | "macos-x64" | "linux-x64" | "windows-x64";
+  label: string;
+  file: string;
+}
+
+export const OS_BUILDS: OsInfo[] = [
+  { key: "macos-arm64", label: "macOS (Apple Silicon)", file: "local-proxy-macos-arm64" },
+  { key: "macos-x64", label: "macOS (Intel)", file: "local-proxy-macos-x64" },
+  { key: "linux-x64", label: "Linux", file: "local-proxy-linux-x64" },
+  { key: "windows-x64", label: "Windows", file: "local-proxy-windows-x64.exe" },
+];
+
+const build = (key: OsInfo["key"]) => OS_BUILDS.find((b) => b.key === key)!;
+
+export function detectOs(userAgent = "", platform = ""): OsInfo {
+  const ua = userAgent.toLowerCase();
+  const plat = platform.toLowerCase();
+  if (ua.includes("win") || plat.includes("win")) return build("windows-x64");
+  if (ua.includes("mac") || plat.includes("mac")) {
+    // Browsers report "MacIntel" even on Apple Silicon, so default to arm64
+    // (current Macs) unless the UA says otherwise.
+    return ua.includes("intel mac") && ua.includes("x86_64") ? build("macos-x64") : build("macos-arm64");
+  }
+  return build("linux-x64");
+}
+
+export function detectOsFromNavigator(): OsInfo {
+  // Also runs during static prerender, where `navigator` does not exist.
+  if (typeof navigator === "undefined") return build("linux-x64");
+  return detectOs(navigator.userAgent, navigator.platform);
+}
+
+// ---- Health ---------------------------------------------------------------
+
+export interface ProxyHealth {
+  service: string;
+  version: string;
+  protocol: number;
+  services: ServiceId[];
+  ok: boolean;
+}
+
+/** `AbortSignal.timeout` with a fallback for older browsers. */
+export function timeoutSignal(ms: number): AbortSignal {
+  if (typeof AbortSignal.timeout === "function") return AbortSignal.timeout(ms);
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), ms);
+  return controller.signal;
+}
+
+/** Fetches /health and normalises a v1 proxy (no `protocol` / `services`). */
+export async function fetchHealth(signal?: AbortSignal): Promise<ProxyHealth> {
+  const res = await fetch(PROXY_HEALTH_URL, { cache: "no-store", signal });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  if (data?.service !== PROXY_SERVICE_NAME) {
+    throw new Error("Something answered on this port, but it is not desk-tools-local-proxy");
+  }
+  return {
+    service: data.service,
+    version: String(data.version ?? "unknown"),
+    protocol: typeof data.protocol === "number" ? data.protocol : 1,
+    services: Array.isArray(data.services) ? data.services : ["ssh"],
+    ok: data.ok !== false,
+  };
+}
+
+export async function isProxyUp(): Promise<boolean> {
+  try {
+    await fetchHealth(timeoutSignal(2000));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// ---- Connection test (browser <-> proxy only; see PROTOCOL.md §8) ---------
+
+export type TestStepId = "http" | "websocket" | "roundtrip";
+export type TestStepStatus = "pending" | "running" | "ok" | "fail" | "skipped";
+
+export interface TestStep {
+  id: TestStepId;
+  label: string;
+  status: TestStepStatus;
+  detail?: string;
+}
+
+export const initialTestSteps = (): TestStep[] => [
+  { id: "http", label: "Reach the proxy over HTTP", status: "pending" },
+  { id: "websocket", label: "Open a WebSocket", status: "pending" },
+  { id: "roundtrip", label: "Exchange messages", status: "pending" },
+];
+
+/** Opens a WebSocket and resolves with it once open. */
+function openSocket(timeoutMs: number): Promise<WebSocket> {
+  return new Promise((resolve, reject) => {
+    const ws = new WebSocket(PROXY_WS);
+    const timer = setTimeout(() => {
+      ws.close();
+      reject(new Error("Timed out opening the WebSocket"));
+    }, timeoutMs);
+    ws.onopen = () => {
+      clearTimeout(timer);
+      resolve(ws);
+    };
+    ws.onerror = () => {
+      clearTimeout(timer);
+      reject(new Error("The proxy refused the WebSocket (is this site's origin allowed?)"));
+    };
+  });
+}
+
+/** Sends an unknown message and waits for the proxy's bad_message error. */
+function roundTrip(ws: WebSocket, timeoutMs: number): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error("No reply from the proxy")), timeoutMs);
+    ws.onmessage = (e) => {
+      if (typeof e.data !== "string") return;
+      try {
+        const msg = JSON.parse(e.data);
+        if (msg.type === "error" && msg.code === "bad_message") {
+          clearTimeout(timer);
+          resolve();
+        }
+      } catch {
+        /* keep waiting */
+      }
+    };
+    ws.onclose = () => {
+      clearTimeout(timer);
+      reject(new Error("The proxy closed the connection"));
+    };
+    ws.send(JSON.stringify({ type: "ping-test" }));
+  });
+}
+
+/**
+ * Runs the three-step browser <-> proxy test. Never contacts a target system.
+ * `onUpdate` receives a fresh copy of the steps after every change.
+ */
+export async function runConnectionTest(
+  onUpdate: (steps: TestStep[]) => void = () => {}
+): Promise<{ steps: TestStep[]; health?: ProxyHealth }> {
+  const steps = initialTestSteps();
+  const emit = () => onUpdate(steps.map((x) => ({ ...x })));
+  const set = (id: TestStepId, status: TestStepStatus, detail?: string) => {
+    const s = steps.find((x) => x.id === id)!;
+    s.status = status;
+    s.detail = detail;
+    emit();
+  };
+  const skipAfter = (id: TestStepId) => {
+    let after = false;
+    for (const s of steps) {
+      if (after) s.status = "skipped";
+      if (s.id === id) after = true;
+    }
+    emit();
+  };
+
+  let health: ProxyHealth | undefined;
+
+  set("http", "running");
+  try {
+    health = await fetchHealth(timeoutSignal(4000));
+    if (health.protocol > SUPPORTED_PROTOCOL) {
+      set(
+        "http",
+        "fail",
+        `Proxy speaks protocol ${health.protocol}; this app supports up to ${SUPPORTED_PROTOCOL}. Update Desk-tools.`
+      );
+      skipAfter("http");
+      return { steps, health };
+    }
+    set("http", "ok", `v${health.version}, protocol ${health.protocol}`);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    const unreachable = err instanceof TypeError; // fetch() network failure
+    set("http", "fail", unreachable ? `Nothing answered on 127.0.0.1:${PROXY_PORT}. Is the proxy running?` : msg);
+    skipAfter("http");
+    return { steps, health };
+  }
+
+  set("websocket", "running");
+  let ws: WebSocket;
+  try {
+    ws = await openSocket(4000);
+    set("websocket", "ok");
+  } catch (err) {
+    set("websocket", "fail", err instanceof Error ? err.message : String(err));
+    skipAfter("websocket");
+    return { steps, health };
+  }
+
+  set("roundtrip", "running");
+  try {
+    await roundTrip(ws, 4000);
+    set("roundtrip", "ok");
+  } catch (err) {
+    set("roundtrip", "fail", err instanceof Error ? err.message : String(err));
+  } finally {
+    try {
+      ws.send(JSON.stringify({ type: "close" }));
+      ws.close();
+    } catch {
+      /* already closed */
+    }
+  }
+  return { steps, health };
+}
+
+export const testPassed = (steps: TestStep[]) => steps.every((s) => s.status === "ok");
+
+// ---- Wire types -----------------------------------------------------------
+
+export interface ConnectParams {
+  service: ServiceId;
+  host: string;
+  port: number;
+  username?: string;
+  password?: string;
+  privateKey?: string;
+  passphrase?: string;
+  database?: string;
+  catalog?: string;
+  schema?: string;
+  tls?: boolean;
+  auth?: "none" | "ldap";
+  cols?: number;
+  rows?: number;
+}
+
+export interface QueryColumn {
+  name: string;
+  type: string;
+}
+
+export type CellValue =
+  | string
+  | number
+  | boolean
+  | null
+  | { $base64: string }
+  | CellValue[]
+  | { [k: string]: CellValue };
+
+export interface QueryResult {
+  id: string;
+  columns: QueryColumn[];
+  rows: CellValue[][];
+  rowCount: number;
+  truncated: boolean;
+  elapsedMs: number;
+}
+
+/** Renders a result cell for display. */
+export function formatCell(v: CellValue): string {
+  if (v === null) return "NULL";
+  if (typeof v === "object") {
+    if (!Array.isArray(v) && "$base64" in v && Object.keys(v).length === 1) {
+      return `<binary ${Math.floor(((v.$base64 as string).length * 3) / 4)} bytes>`;
+    }
+    return JSON.stringify(v);
+  }
+  return String(v);
+}
+
+const csvField = (s: string) => (/[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s);
+
+export function resultToCsv(result: Pick<QueryResult, "columns" | "rows">): string {
+  const lines = [result.columns.map((c) => csvField(c.name)).join(",")];
+  for (const row of result.rows) {
+    lines.push(row.map((c) => csvField(c === null ? "" : formatCell(c))).join(","));
+  }
+  return lines.join("\n");
+}

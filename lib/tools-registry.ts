@@ -1,4 +1,5 @@
 import { Tool } from "@/types/tool";
+import { SERVICES } from "@/lib/local-proxy";
 
 export const TOOLS_REGISTRY: Tool[] = [
   {
@@ -56,13 +57,19 @@ export const TOOLS_REGISTRY: Tool[] = [
     icon: "Terminal",
   },
   {
-    id: "ssh-terminal",
-    name: "SSH Terminal",
-    description: "Connect to SSH servers from your browser via a local proxy",
-    tags: ["ssh", "terminal", "shell", "remote", "console", "cli"],
+    id: "consoles",
+    name: "Consoles",
+    description: "SSH, Telnet and read-only database consoles via a local proxy",
+    tags: ["ssh", "telnet", "mysql", "postgres", "hive", "trino", "terminal", "console", "sql"],
     category: "developer",
-    path: "/tools/ssh-terminal",
+    path: "/tools/consoles",
     icon: "Terminal",
+    subTools: SERVICES.map((s) => ({
+      id: s.id,
+      name: s.label,
+      path: `/tools/consoles/${s.id}`,
+      icon: s.icon,
+    })),
   },
   {
     id: "json-explorer",

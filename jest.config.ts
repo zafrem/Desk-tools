@@ -24,7 +24,7 @@ const config: Config = {
   ],
   coverageDirectory: "coverage",
   coverageReporters: ["text", "lcov", "html"],
-  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/", "<rootDir>/Desk-tools-local-proxy/"],
   transformIgnorePatterns: ["/node_modules/(?!(gifuct-js|gif.js)/)"],
 };
 

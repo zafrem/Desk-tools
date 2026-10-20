@@ -1,4 +1,5 @@
 {
+  "ignorePatterns": ["Desk-tools-local-proxy/"],
   "extends": [
     "next/core-web-vitals",
     "next/typescript"

@@ -47,30 +47,35 @@ Connect to a local [Ollama](https://ollama.com/) instance for private LLM-powere
 - Multiple chat sessions with history
 - No API keys needed — your data stays on your machine
 
-### SSH Terminal (local proxy)
+### Consoles (local proxy)
 
-Open a full terminal in the browser and connect to your servers over SSH:
-- Live terminal powered by [xterm.js](https://xtermjs.org/)
-- Saved connections (host/port/username) stored locally — credentials are never persisted
-- Works through a tiny local helper, [`desk-tools-ssh-proxy`](https://github.com/zafrem/Desk-tools-ssh-proxy)
+The **Consoles** menu has one sub-menu entry per service:
+- **SSH** and **Telnet** terminals, powered by [xterm.js](https://xtermjs.org/)
+- **MySQL**, **PostgreSQL**, **Hive** and **Trino** read-only SQL consoles (`SELECT`, `WITH`, `SHOW`, `DESCRIBE`, `EXPLAIN`) with a result table and CSV export
+- Saved connections (host/port/username) stored locally — passwords and keys are never persisted
 
-Because browsers can't open raw TCP sockets, SSH traffic is bridged by a local
-proxy that runs on your own machine — nothing is sent to any third party:
+Because browsers can't open raw TCP sockets, traffic is bridged by a local
+proxy ([`Desk-tools-local-proxy`](https://github.com/zafrem/Desk-tools-local-proxy), included as a git submodule)
+that runs on your own machine — nothing is sent to any third party:
 
 ```
-Browser (xterm.js)  ──WebSocket──►  desk-tools-ssh-proxy (127.0.0.1:8722)  ──SSH──►  your server
+Browser  ──WebSocket──►  local proxy (127.0.0.1:8722)  ──native protocol──►  target system
 ```
 
-Start the proxy with **either** option (the tool detects it automatically and
-connects):
+The wire format is specified in [`Desk-tools-local-proxy/PROTOCOL.md`](./Desk-tools-local-proxy/PROTOCOL.md).
+
+Downloading the proxy and testing the browser ↔ proxy link are in
+**Settings → Install** and **Settings → Proxy**. Start the proxy with **either** option:
 
 ```bash
 # Option 1 — download the prebuilt binary for your OS (no Node.js required)
-#   https://github.com/zafrem/Desk-tools-ssh-proxy/releases/latest
+#   https://github.com/zafrem/Desk-tools-local-proxy/releases/latest
 
 # Option 2 — run with Node.js 18+
-npx desk-tools-ssh-proxy
+npx desk-tools-local-proxy
 ```
+
+Clone with `git clone --recurse-submodules`, or run `git submodule update --init` afterwards.
 
 ### Instant Search
 
@@ -91,7 +96,7 @@ Export and import all your data (notes, tasks, bookmarks, etc.) as JSON from the
 | **Calculator** | Chmod, IP Subnet (IPv4/IPv6), Unit Converter, Date/D-Day, Salary/Tax, Loan, Compound Interest, Keyword Density, Meta Tag Checker, Reading Time, Word Counter, Canonical URL |
 | **Designer** | Design Tools (Color Picker/Palette), Icon Generator, Background Remover, Image Filters, Pixel Art Editor |
 | **Security** | JWT Decoder, Hash Generator (MD5/SHA), Encryption (AES-GCM/RSA-OAEP) |
-| **Developer** | JSON Explorer (tree view), Cron Expression Builder, Regex Tester, Text Diff, Command Palette, REST API Client, CURL Builder, SSH Terminal |
+| **Developer** | JSON Explorer (tree view), Cron Expression Builder, Regex Tester, Text Diff, Command Palette, REST API Client, CURL Builder, Consoles (SSH, Telnet, MySQL, PostgreSQL, Hive, Trino) |
 | **AI** | AI Chat (requires local Ollama) |
 | **Games** | Sudoku (play & solve), Ladder Game (Amidakuji random picker), Roulette (spin-the-wheel picker) |
 | **Other** | PDF Tools, Pomodoro Timer, Iframe Viewer |
