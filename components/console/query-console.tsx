@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { AlertTriangle, Download, Loader2, Play, Square } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -33,6 +34,7 @@ export function QueryConsole({ service }: { service: QueryService }) {
 }
 
 function QuerySession({ service }: { service: QueryService }) {
+  const { t } = useTranslation("proxy");
   const meta = getService(service)!;
   const saved = useSavedConnections(service);
 
@@ -87,7 +89,7 @@ function QuerySession({ service }: { service: QueryService }) {
 
   const connect = async () => {
     if (!host || !username) {
-      setError("Host and username are required.");
+      setError(t("errors.hostUserRequired"));
       return;
     }
     setError(null);
@@ -156,7 +158,7 @@ function QuerySession({ service }: { service: QueryService }) {
       setRunningId(null);
     };
     ws.onerror = () => {
-      setError("WebSocket error — is the proxy still running?");
+      setError(t("errors.websocket"));
       setPhase("form");
     };
   };
@@ -191,22 +193,22 @@ function QuerySession({ service }: { service: QueryService }) {
         <Card className="p-5 md:col-span-2 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3">
             <div className="space-y-1">
-              <label className="text-sm font-medium" htmlFor="host">Host</label>
-              <Input id="host" placeholder="db.example.com" value={host} onChange={(e) => setHost(e.target.value)} />
+              <label className="text-sm font-medium" htmlFor="host">{t("form.host")}</label>
+              <Input id="host" placeholder={t("form.hostPlaceholderDb")} value={host} onChange={(e) => setHost(e.target.value)} />
             </div>
             <div className="space-y-1">
-              <label className="text-sm font-medium" htmlFor="port">Port</label>
+              <label className="text-sm font-medium" htmlFor="port">{t("form.port")}</label>
               <Input id="port" className="w-24" value={port} onChange={(e) => setPort(e.target.value)} />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-sm font-medium" htmlFor="username">Username</label>
+              <label className="text-sm font-medium" htmlFor="username">{t("form.username")}</label>
               <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div className="space-y-1">
-              <label className="text-sm font-medium" htmlFor="password">Password</label>
+              <label className="text-sm font-medium" htmlFor="password">{t("form.password")}</label>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
           </div>
@@ -214,17 +216,17 @@ function QuerySession({ service }: { service: QueryService }) {
           {service === "trino" ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label className="text-sm font-medium" htmlFor="catalog">Catalog (optional)</label>
+                <label className="text-sm font-medium" htmlFor="catalog">{t("form.catalog")}</label>
                 <Input id="catalog" value={catalog} onChange={(e) => setCatalog(e.target.value)} />
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-medium" htmlFor="schema">Schema (optional)</label>
+                <label className="text-sm font-medium" htmlFor="schema">{t("form.schema")}</label>
                 <Input id="schema" value={schema} onChange={(e) => setSchema(e.target.value)} />
               </div>
             </div>
           ) : (
             <div className="space-y-1">
-              <label className="text-sm font-medium" htmlFor="database">Database (optional)</label>
+              <label className="text-sm font-medium" htmlFor="database">{t("form.database")}</label>
               <Input id="database" value={database} onChange={(e) => setDatabase(e.target.value)} />
             </div>
           )}
@@ -232,20 +234,20 @@ function QuerySession({ service }: { service: QueryService }) {
           <div className="flex flex-wrap items-center gap-4">
             {service === "hive" ? (
               <label className="text-sm flex items-center gap-2">
-                Authentication
+                {t("form.authentication")}
                 <select
                   className="rounded-md border bg-background px-2 py-1 text-sm"
                   value={hiveAuth}
                   onChange={(e) => setHiveAuth(e.target.value as "none" | "ldap")}
                 >
-                  <option value="none">None</option>
-                  <option value="ldap">LDAP / username + password</option>
+                  <option value="none">{t("form.hiveNone")}</option>
+                  <option value="ldap">{t("form.hiveLdap")}</option>
                 </select>
               </label>
             ) : (
               <label className="text-sm flex items-center gap-2">
                 <input type="checkbox" checked={tls} onChange={(e) => setTls(e.target.checked)} />
-                Use TLS
+                {t("form.tls")}
               </label>
             )}
           </div>
@@ -258,11 +260,10 @@ function QuerySession({ service }: { service: QueryService }) {
 
           <Button onClick={connect} disabled={connecting} className="gap-2">
             {connecting && <Loader2 className="h-4 w-4 animate-spin" />}
-            {connecting ? "Connecting…" : "Connect"}
+            {connecting ? t("form.connecting") : t("form.connect")}
           </Button>
           <p className="text-xs text-muted-foreground">
-            Read-only console: only SELECT (plus WITH, SHOW, DESCRIBE, EXPLAIN) is allowed. For real protection also
-            use a read-only database account. Credentials go only to your local proxy and are never stored.
+            {t("query.readOnlyNote")}
           </p>
         </Card>
 
@@ -282,7 +283,7 @@ function QuerySession({ service }: { service: QueryService }) {
           {serverVersion && <span className="text-muted-foreground">v{serverVersion}</span>}
         </div>
         <Button variant="outline" size="sm" onClick={disconnect}>
-          Disconnect
+          {t("form.disconnect")}
         </Button>
       </div>
 
@@ -291,7 +292,7 @@ function QuerySession({ service }: { service: QueryService }) {
           className="w-full h-36 rounded-md border bg-background p-2 font-mono text-sm"
           value={sql}
           spellCheck={false}
-          aria-label="SQL"
+          aria-label={t("query.sql")}
           onChange={(e) => setSql(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
@@ -303,16 +304,16 @@ function QuerySession({ service }: { service: QueryService }) {
         <div className="flex flex-wrap items-center gap-3">
           {runningId ? (
             <Button variant="destructive" size="sm" className="gap-2" onClick={cancel}>
-              <Square className="h-4 w-4" /> Cancel
+              <Square className="h-4 w-4" /> {t("query.cancel")}
             </Button>
           ) : (
             <Button size="sm" className="gap-2" onClick={run}>
-              <Play className="h-4 w-4" /> Run
+              <Play className="h-4 w-4" /> {t("query.run")}
             </Button>
           )}
           {runningId && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
           <label className="text-sm flex items-center gap-2 text-muted-foreground">
-            Max rows
+            {t("query.maxRows")}
             <select
               className="rounded-md border bg-background px-2 py-1 text-sm text-foreground"
               value={maxRows}
@@ -325,7 +326,7 @@ function QuerySession({ service }: { service: QueryService }) {
               ))}
             </select>
           </label>
-          <span className="text-xs text-muted-foreground">Ctrl/⌘ + Enter to run</span>
+          <span className="text-xs text-muted-foreground">{t("query.shortcut")}</span>
         </div>
       </Card>
 
@@ -339,13 +340,13 @@ function QuerySession({ service }: { service: QueryService }) {
         <Card className="p-4 space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2 text-sm">
             <span className="text-muted-foreground">
-              {result.rowCount.toLocaleString()} row{result.rowCount === 1 ? "" : "s"} · {result.elapsedMs} ms
+              {t("query.rowCount", { count: result.rowCount, ms: result.elapsedMs })}
               {result.truncated && (
-                <span className="text-amber-600"> · truncated at {maxRows.toLocaleString()} rows — add a LIMIT</span>
+                <span className="text-amber-600">{t("query.truncated", { max: maxRows.toLocaleString() })}</span>
               )}
             </span>
             <Button variant="outline" size="sm" className="gap-2" onClick={exportCsv}>
-              <Download className="h-4 w-4" /> CSV
+              <Download className="h-4 w-4" /> {t("query.csv")}
             </Button>
           </div>
           <div className="overflow-auto max-h-[50vh] rounded-md border">

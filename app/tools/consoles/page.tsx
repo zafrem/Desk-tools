@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Trans, useTranslation } from "react-i18next";
 import * as LucideIcons from "lucide-react";
 import { Settings } from "lucide-react";
 import { ToolLayout } from "@/components/tool-layout";
@@ -10,13 +11,14 @@ import { openSettings } from "@/components/console/proxy-gate";
 import { SERVICES } from "@/lib/local-proxy";
 
 export default function ConsolesPage() {
+  const { t } = useTranslation("proxy");
   return (
     <ToolLayout
-      title="Consoles"
-      description="SSH, Telnet and read-only database consoles, connected through a local proxy that runs on your machine."
+      title={t("consoles.title")}
+      description={t("consoles.description")}
       extraActions={
         <Button variant="outline" className="gap-2" onClick={() => openSettings("proxy")}>
-          <Settings className="h-4 w-4" /> Proxy settings
+          <Settings className="h-4 w-4" /> {t("consoles.proxySettings")}
         </Button>
       }
     >
@@ -30,14 +32,14 @@ export default function ConsolesPage() {
                   {Icon && <Icon className="h-4 w-4" />}
                   {s.label}
                 </div>
-                <p className="text-sm text-muted-foreground">{s.description}</p>
+                <p className="text-sm text-muted-foreground">{t(`services.${s.id}`)}</p>
               </Card>
             </Link>
           );
         })}
       </div>
       <p className="text-sm text-muted-foreground">
-        Set up and test the local proxy under <strong>Settings → Proxy server</strong>.
+        <Trans i18nKey="consoles.setupHint" ns="proxy" components={{ b: <strong /> }} />
       </p>
     </ToolLayout>
   );

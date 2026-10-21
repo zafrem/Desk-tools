@@ -6,12 +6,14 @@ import enCommon from '@/locales/en/common.json';
 import enNavigation from '@/locales/en/navigation.json';
 import enHome from '@/locales/en/home.json';
 import enTools from '@/locales/en/tools.json';
+import enProxy from '@/locales/en/proxy.json';
 
 // Korean translations
 import koCommon from '@/locales/ko/common.json';
 import koNavigation from '@/locales/ko/navigation.json';
 import koHome from '@/locales/ko/home.json';
 import koTools from '@/locales/ko/tools.json';
+import koProxy from '@/locales/ko/proxy.json';
 
 // Chinese translations
 import zhCommon from '@/locales/zh/common.json';
@@ -24,6 +26,7 @@ import jaCommon from '@/locales/ja/common.json';
 import jaNavigation from '@/locales/ja/navigation.json';
 import jaHome from '@/locales/ja/home.json';
 import jaTools from '@/locales/ja/tools.json';
+import jaProxy from '@/locales/ja/proxy.json';
 
 export const SUPPORTED_LANGUAGES = ['en', 'ko', 'zh', 'ja'] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
@@ -41,12 +44,14 @@ const resources = {
     navigation: enNavigation,
     home: enHome,
     tools: enTools,
+    proxy: enProxy,
   },
   ko: {
     common: koCommon,
     navigation: koNavigation,
     home: koHome,
     tools: koTools,
+    proxy: koProxy,
   },
   zh: {
     common: zhCommon,
@@ -59,6 +64,7 @@ const resources = {
     navigation: jaNavigation,
     home: jaHome,
     tools: jaTools,
+    proxy: jaProxy,
   },
 };
 
@@ -69,7 +75,7 @@ i18n
     lng: 'en', // Initial language for server-side compatibility
     fallbackLng: 'en',
     defaultNS: 'common',
-    ns: ['common', 'navigation', 'home', 'tools'],
+    ns: ['common', 'navigation', 'home', 'tools', 'proxy'],
 
     interpolation: {
       escapeValue: false, // React already escapes

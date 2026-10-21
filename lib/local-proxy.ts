@@ -10,10 +10,10 @@ export const PROXY_SERVICE_NAME = "desk-tools-local-proxy";
 export const PROXY_REPO = "https://github.com/zafrem/Desk-tools-local-proxy";
 
 /** The proxy is not published to npm or as binaries: users clone and run it. */
-export const INSTALL_STEPS: { label: string; command: string }[] = [
-  { label: "Clone the code", command: `git clone ${PROXY_REPO}.git` },
-  { label: "Install dependencies", command: "cd Desk-tools-local-proxy && npm install" },
-  { label: "Start the proxy", command: "npm start" },
+export const INSTALL_STEPS: { id: "clone" | "install" | "start"; label: string; command: string }[] = [
+  { id: "clone", label: "Clone the code", command: `git clone ${PROXY_REPO}.git` },
+  { id: "install", label: "Install dependencies", command: "cd Desk-tools-local-proxy && npm install" },
+  { id: "start", label: "Start the proxy", command: "npm start" },
 ];
 
 /** Highest protocol version this web app understands. */
@@ -68,7 +68,7 @@ export async function fetchHealth(signal?: AbortSignal): Promise<ProxyHealth> {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json();
   if (data?.service !== PROXY_SERVICE_NAME) {
-    throw new Error("Something answered on this port, but it is not desk-tools-local-proxy");
+    throw new TestError("Something answered on this port, but it is not desk-tools-local-proxy", "notProxy");
   }
   return {
     service: data.service,
@@ -97,7 +97,17 @@ export interface TestStep {
   id: TestStepId;
   label: string;
   status: TestStepStatus;
+  /** English text; `detailKey` + `detailParams` let the UI show a translation instead. */
   detail?: string;
+  detailKey?: string;
+  detailParams?: Record<string, string | number>;
+}
+
+/** A test failure that carries a translation key for the UI. */
+class TestError extends Error {
+  constructor(message: string, public key: string) {
+    super(message);
+  }
 }
 
 export const initialTestSteps = (): TestStep[] => [
@@ -112,7 +122,7 @@ function openSocket(timeoutMs: number): Promise<WebSocket> {
     const ws = new WebSocket(PROXY_WS);
     const timer = setTimeout(() => {
       ws.close();
-      reject(new Error("Timed out opening the WebSocket"));
+      reject(new TestError("Timed out opening the WebSocket", "wsTimeout"));
     }, timeoutMs);
     ws.onopen = () => {
       clearTimeout(timer);
@@ -120,7 +130,7 @@ function openSocket(timeoutMs: number): Promise<WebSocket> {
     };
     ws.onerror = () => {
       clearTimeout(timer);
-      reject(new Error("The proxy refused the WebSocket (is this site's origin allowed?)"));
+      reject(new TestError("The proxy refused the WebSocket (is this site's origin allowed?)", "wsRefused"));
     };
   });
 }
@@ -128,7 +138,7 @@ function openSocket(timeoutMs: number): Promise<WebSocket> {
 /** Sends an unknown message and waits for the proxy's bad_message error. */
 function roundTrip(ws: WebSocket, timeoutMs: number): Promise<void> {
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error("No reply from the proxy")), timeoutMs);
+    const timer = setTimeout(() => reject(new TestError("No reply from the proxy", "noReply")), timeoutMs);
     ws.onmessage = (e) => {
       if (typeof e.data !== "string") return;
       try {
@@ -143,7 +153,7 @@ function roundTrip(ws: WebSocket, timeoutMs: number): Promise<void> {
     };
     ws.onclose = () => {
       clearTimeout(timer);
-      reject(new Error("The proxy closed the connection"));
+      reject(new TestError("The proxy closed the connection", "closed"));
     };
     ws.send(JSON.stringify({ type: "ping-test" }));
   });
@@ -158,10 +168,18 @@ export async function runConnectionTest(
 ): Promise<{ steps: TestStep[]; health?: ProxyHealth }> {
   const steps = initialTestSteps();
   const emit = () => onUpdate(steps.map((x) => ({ ...x })));
-  const set = (id: TestStepId, status: TestStepStatus, detail?: string) => {
+  const set = (
+    id: TestStepId,
+    status: TestStepStatus,
+    detail?: string,
+    key?: string,
+    params?: Record<string, string | number>
+  ) => {
     const s = steps.find((x) => x.id === id)!;
     s.status = status;
     s.detail = detail;
+    s.detailKey = key;
+    s.detailParams = params;
     emit();
   };
   const skipAfter = (id: TestStepId) => {
@@ -182,16 +200,25 @@ export async function runConnectionTest(
       set(
         "http",
         "fail",
-        `Proxy speaks protocol ${health.protocol}; this app supports up to ${SUPPORTED_PROTOCOL}. Update Desk-tools.`
+        `Proxy speaks protocol ${health.protocol}; this app supports up to ${SUPPORTED_PROTOCOL}. Update Desk-tools.`,
+        "protocolTooNew",
+        { protocol: health.protocol, supported: SUPPORTED_PROTOCOL }
       );
       skipAfter("http");
       return { steps, health };
     }
-    set("http", "ok", `v${health.version}, protocol ${health.protocol}`);
+    set("http", "ok", `v${health.version}, protocol ${health.protocol}`, "versionInfo", {
+      version: health.version,
+      protocol: health.protocol,
+    });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     const unreachable = err instanceof TypeError; // fetch() network failure
-    set("http", "fail", unreachable ? `Nothing answered on 127.0.0.1:${PROXY_PORT}. Is the proxy running?` : msg);
+    if (unreachable) {
+      set("http", "fail", `Nothing answered on 127.0.0.1:${PROXY_PORT}. Is the proxy running?`, "unreachable", { port: PROXY_PORT });
+    } else {
+      set("http", "fail", msg, err instanceof TestError ? err.key : undefined);
+    }
     skipAfter("http");
     return { steps, health };
   }
@@ -202,7 +229,7 @@ export async function runConnectionTest(
     ws = await openSocket(4000);
     set("websocket", "ok");
   } catch (err) {
-    set("websocket", "fail", err instanceof Error ? err.message : String(err));
+    set("websocket", "fail", err instanceof Error ? err.message : String(err), err instanceof TestError ? err.key : undefined);
     skipAfter("websocket");
     return { steps, health };
   }
@@ -212,7 +239,7 @@ export async function runConnectionTest(
     await roundTrip(ws, 4000);
     set("roundtrip", "ok");
   } catch (err) {
-    set("roundtrip", "fail", err instanceof Error ? err.message : String(err));
+    set("roundtrip", "fail", err instanceof Error ? err.message : String(err), err instanceof TestError ? err.key : undefined);
   } finally {
     try {
       ws.send(JSON.stringify({ type: "close" }));

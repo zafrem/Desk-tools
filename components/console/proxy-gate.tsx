@@ -2,9 +2,10 @@
 
 import * as React from "react";
 import { Loader2, PlugZap, Settings } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { fetchHealth, timeoutSignal, type ProxyHealth, type ServiceId } from "@/lib/local-proxy";
+import { PROXY_PORT, fetchHealth, timeoutSignal, type ProxyHealth, type ServiceId } from "@/lib/local-proxy";
 
 export const OPEN_SETTINGS_EVENT = "desk-tools:open-settings";
 
@@ -19,6 +20,7 @@ export function openSettings(tab: "llm" | "proxy") {
  * Settings, not on each console page.
  */
 export function ProxyGate({ service, children }: { service: ServiceId; children: React.ReactNode }) {
+  const { t } = useTranslation("proxy");
   const [state, setState] = React.useState<"checking" | "down" | "outdated" | "up">("checking");
 
   React.useEffect(() => {
@@ -56,7 +58,7 @@ export function ProxyGate({ service, children }: { service: ServiceId; children:
     return (
       <Card className="p-8 flex items-center justify-center gap-3 text-muted-foreground">
         <Loader2 className="h-5 w-5 animate-spin" />
-        Looking for the local proxy…
+        {t("gate.checking")}
       </Card>
     );
   }
@@ -67,22 +69,20 @@ export function ProxyGate({ service, children }: { service: ServiceId; children:
         <PlugZap className="h-5 w-5 mt-0.5 text-muted-foreground" />
         <div className="space-y-1">
           <h2 className="font-semibold">
-            {state === "outdated" ? "Your local proxy is too old for this console" : "The local proxy isn't running"}
+            {state === "outdated" ? t("gate.outdatedTitle") : t("gate.downTitle")}
           </h2>
           <p className="text-sm text-muted-foreground">
-            {state === "outdated"
-              ? "The running proxy doesn't support this service. Download the latest version and restart it."
-              : "This console connects through a small helper on your own machine. Start it, and this page connects automatically."}
+            {state === "outdated" ? t("gate.outdatedText") : t("gate.downText")}
           </p>
         </div>
       </div>
       <div className="flex flex-wrap gap-2">
         <Button className="gap-2" onClick={() => openSettings("proxy")}>
-          <Settings className="h-4 w-4" /> Settings → Proxy server
+          <Settings className="h-4 w-4" /> {t("gate.openSettings")}
         </Button>
       </div>
       <p className="text-xs text-muted-foreground flex items-center gap-2">
-        <Loader2 className="h-3 w-3 animate-spin" /> Waiting for the proxy on 127.0.0.1:8722…
+        <Loader2 className="h-3 w-3 animate-spin" /> {t("gate.waiting", { port: PROXY_PORT })}
       </p>
     </Card>
   );

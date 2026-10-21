@@ -1,6 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import type { SavedConnection } from "./use-saved-connections";
 
@@ -13,11 +14,12 @@ export function SavedList({
   onLoad: (c: SavedConnection) => void;
   onDelete: (id: string) => void;
 }) {
+  const { t } = useTranslation("proxy");
   return (
     <Card className="p-5 space-y-3">
-      <h3 className="text-sm font-semibold">Saved connections</h3>
+      <h3 className="text-sm font-semibold">{t("saved.title")}</h3>
       {items.length === 0 ? (
-        <p className="text-sm text-muted-foreground">Connections you use will appear here.</p>
+        <p className="text-sm text-muted-foreground">{t("saved.empty")}</p>
       ) : (
         <ul className="space-y-2">
           {items.map((h) => (
@@ -33,7 +35,7 @@ export function SavedList({
               <button
                 className="text-muted-foreground hover:text-red-500"
                 onClick={() => onDelete(h.id)}
-                aria-label={`Delete ${h.label}`}
+                aria-label={t("saved.delete", { label: h.label })}
               >
                 <Trash2 className="h-4 w-4" />
               </button>
@@ -41,7 +43,7 @@ export function SavedList({
           ))}
         </ul>
       )}
-      <p className="text-xs text-muted-foreground">Only host, port and username are saved — never passwords or keys.</p>
+      <p className="text-xs text-muted-foreground">{t("saved.note")}</p>
     </Card>
   );
 }

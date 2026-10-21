@@ -1,0 +1,120 @@
+{
+  "consoles": {
+    "title": "콘솔",
+    "description": "내 컴퓨터에서 실행되는 로컬 프록시를 통해 연결하는 SSH, Telnet 및 읽기 전용 데이터베이스 콘솔입니다.",
+    "proxySettings": "프록시 설정",
+    "setupHint": "로컬 프록시 설정과 테스트는 <b>설정 → 프록시 서버</b>에서 할 수 있습니다."
+  },
+  "services": {
+    "ssh": "보안 셸 터미널",
+    "telnet": "평문 Telnet 터미널",
+    "mysql": "MySQL / MariaDB에서 SELECT 쿼리 실행",
+    "postgres": "PostgreSQL에서 SELECT 쿼리 실행",
+    "hive": "HiveServer2에서 SELECT 쿼리 실행",
+    "trino": "Trino에서 SELECT 쿼리 실행"
+  },
+  "page": {
+    "title": "{{service}} 콘솔",
+    "terminalDescription": "로컬 프록시를 통해 브라우저에서 {{service}} 터미널을 엽니다. 자격 증명은 내 컴퓨터 밖으로 나가지 않습니다.",
+    "queryDescription": "로컬 프록시를 통해 {{service}}에서 읽기 전용 SELECT 쿼리를 실행합니다. 자격 증명은 내 컴퓨터 밖으로 나가지 않습니다."
+  },
+  "gate": {
+    "checking": "로컬 프록시를 찾는 중…",
+    "downTitle": "로컬 프록시가 실행되고 있지 않습니다",
+    "outdatedTitle": "로컬 프록시가 이 콘솔을 사용하기에는 너무 오래되었습니다",
+    "downText": "이 콘솔은 내 컴퓨터에서 실행되는 작은 도우미를 통해 연결합니다. 프록시를 시작하면 이 페이지가 자동으로 연결됩니다.",
+    "outdatedText": "실행 중인 프록시가 이 서비스를 지원하지 않습니다. 최신 버전으로 업데이트한 뒤 다시 시작하세요.",
+    "openSettings": "설정 → 프록시 서버",
+    "waiting": "127.0.0.1:{{port}}에서 프록시를 기다리는 중…"
+  },
+  "saved": {
+    "title": "저장된 연결",
+    "empty": "사용한 연결이 여기에 표시됩니다.",
+    "delete": "{{label}} 삭제",
+    "note": "호스트, 포트, 사용자 이름만 저장되며 비밀번호나 키는 저장되지 않습니다."
+  },
+  "form": {
+    "host": "호스트",
+    "port": "포트",
+    "username": "사용자 이름",
+    "password": "비밀번호",
+    "hostPlaceholderTerminal": "example.com 또는 192.168.1.10",
+    "hostPlaceholderDb": "db.example.com",
+    "database": "데이터베이스 (선택)",
+    "catalog": "카탈로그 (선택)",
+    "schema": "스키마 (선택)",
+    "tls": "TLS 사용",
+    "authentication": "인증",
+    "authPassword": "비밀번호",
+    "authKey": "개인 키",
+    "privateKey": "개인 키",
+    "passphrase": "암호 구문 (선택)",
+    "hiveNone": "없음",
+    "hiveLdap": "LDAP / 사용자 이름 + 비밀번호",
+    "connect": "연결",
+    "connecting": "연결 중…",
+    "disconnect": "연결 끊기",
+    "credentialsNote": "자격 증명은 로컬 프록시로만 전송되며 저장되지 않습니다."
+  },
+  "errors": {
+    "hostUserRequired": "호스트와 사용자 이름을 입력하세요.",
+    "hostRequired": "호스트를 입력하세요.",
+    "websocket": "WebSocket 오류 — 프록시가 계속 실행 중인가요?"
+  },
+  "terminal": {
+    "telnetWarning": "Telnet은 비밀번호를 포함한 모든 내용을 암호화하지 않고 전송합니다. 신뢰할 수 있는 네트워크에서만 사용하세요.",
+    "starting": "터미널 시작 중…",
+    "connecting": "{{target}}에 연결 중",
+    "connected": "연결됨",
+    "closed": "세션 종료됨"
+  },
+  "query": {
+    "readOnlyNote": "읽기 전용 콘솔: SELECT(및 WITH, SHOW, DESCRIBE, EXPLAIN)만 허용됩니다. 확실한 보호를 위해 읽기 전용 데이터베이스 계정도 함께 사용하세요. 자격 증명은 로컬 프록시로만 전송되며 저장되지 않습니다.",
+    "sql": "SQL",
+    "run": "실행",
+    "cancel": "취소",
+    "maxRows": "최대 행 수",
+    "shortcut": "Ctrl/⌘ + Enter로 실행",
+    "rowCount_other": "{{count}}행 · {{ms}} ms",
+    "truncated": " · {{max}}행에서 잘림 — LIMIT을 추가하세요",
+    "csv": "CSV"
+  },
+  "settings": {
+    "connectionMethod": "연결 방식",
+    "connectionMethodText": "브라우저는 원시 TCP 소켓을 열 수 없으므로 SSH, Telnet 및 데이터베이스 콘솔은 내 컴퓨터에서 실행되는 작은 도우미를 거쳐 연결됩니다. 제3자에게는 아무것도 전송되지 않습니다.",
+    "browser": "브라우저",
+    "localProxy": "로컬 프록시 :{{port}}",
+    "target": "대상 시스템",
+    "setupTitle": "프록시 설치",
+    "setupText": "프록시는 Desk-tools에 포함되어 있지 않습니다. 직접 복제하고 의존성을 설치한 뒤 실행하세요 (Node.js 18 이상과 git 필요). 그런 다음 아래에서 연결을 테스트하세요.",
+    "stepClone": "코드 복제",
+    "stepInstall": "의존성 설치",
+    "stepStart": "프록시 시작",
+    "copyCommand": "명령어 복사",
+    "testTitle": "브라우저 ↔ 프록시 테스트",
+    "testButton": "연결 테스트",
+    "testHelp": "이 페이지와 프록시 사이의 연결만 확인합니다. 어떤 서버에도 접속하지 않습니다.",
+    "testOk": "프록시에 연결할 수 있으며 응답하고 있습니다.",
+    "testFailHint": "프록시가 실행 중인지 확인하세요 (위의 <b>프록시 설치</b> 참고). 그런 다음 다시 테스트하세요.",
+    "step": {
+      "http": "HTTP로 프록시에 연결",
+      "websocket": "WebSocket 열기",
+      "roundtrip": "메시지 주고받기"
+    },
+    "detail": {
+      "versionInfo": "v{{version}}, 프로토콜 {{protocol}}",
+      "protocolTooNew": "프록시가 프로토콜 {{protocol}}을(를) 사용하지만 이 앱은 최대 {{supported}}까지 지원합니다. Desk-tools를 업데이트하세요.",
+      "unreachable": "127.0.0.1:{{port}}에서 응답이 없습니다. 프록시가 실행 중인가요?",
+      "notProxy": "이 포트에서 응답이 있었지만 desk-tools-local-proxy가 아닙니다",
+      "wsTimeout": "WebSocket을 여는 중 시간이 초과되었습니다",
+      "wsRefused": "프록시가 WebSocket을 거부했습니다 (이 사이트의 Origin이 허용되어 있나요?)",
+      "noReply": "프록시에서 응답이 없습니다",
+      "closed": "프록시가 연결을 닫았습니다"
+    },
+    "servicesTitle": "서비스",
+    "serviceUnsupported": "실행 중인 프록시가 지원하지 않습니다 — 업데이트하세요",
+    "noteListen": "프록시는 <code>127.0.0.1:{{port}}</code>에서만 수신하며 Desk-tools 사이트의 연결만 허용합니다. 자격 증명은 세션 동안 메모리에만 보관되고 디스크에 기록되지 않습니다.",
+    "noteOrigins": "Desk-tools를 직접 호스팅하시나요? <code>DESK_TOOLS_ALLOWED_ORIGINS=https://your.host</code>로 Origin을 허용하세요.",
+    "noteSource": "소스:"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "consoles": {
+    "title": "コンソール",
+    "description": "お使いのマシンで動作するローカルプロキシ経由で接続する、SSH・Telnet・読み取り専用データベースのコンソールです。",
+    "proxySettings": "プロキシ設定",
+    "setupHint": "ローカルプロキシのセットアップとテストは <b>設定 → プロキシサーバー</b> で行えます。"
+  },
+  "services": {
+    "ssh": "セキュアシェルターミナル",
+    "telnet": "平文の Telnet ターミナル",
+    "mysql": "MySQL / MariaDB で SELECT クエリを実行",
+    "postgres": "PostgreSQL で SELECT クエリを実行",
+    "hive": "HiveServer2 で SELECT クエリを実行",
+    "trino": "Trino で SELECT クエリを実行"
+  },
+  "page": {
+    "title": "{{service}} コンソール",
+    "terminalDescription": "ローカルプロキシ経由で、ブラウザ上に {{service}} ターミナルを開きます。認証情報がお使いのマシンの外に出ることはありません。",
+    "queryDescription": "ローカルプロキシ経由で {{service}} に読み取り専用の SELECT クエリを実行します。認証情報がお使いのマシンの外に出ることはありません。"
+  },
+  "gate": {
+    "checking": "ローカルプロキシを探しています…",
+    "downTitle": "ローカルプロキシが起動していません",
+    "outdatedTitle": "ローカルプロキシがこのコンソールに対応していません（古いバージョンです）",
+    "downText": "このコンソールは、お使いのマシン上の小さなヘルパー経由で接続します。起動すると、このページが自動的に接続します。",
+    "outdatedText": "起動中のプロキシはこのサービスに対応していません。最新バージョンに更新して再起動してください。",
+    "openSettings": "設定 → プロキシサーバー",
+    "waiting": "127.0.0.1:{{port}} でプロキシを待っています…"
+  },
+  "saved": {
+    "title": "保存済みの接続",
+    "empty": "使用した接続がここに表示されます。",
+    "delete": "{{label}} を削除",
+    "note": "保存されるのはホスト、ポート、ユーザー名のみです。パスワードや鍵は保存されません。"
+  },
+  "form": {
+    "host": "ホスト",
+    "port": "ポート",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "hostPlaceholderTerminal": "example.com または 192.168.1.10",
+    "hostPlaceholderDb": "db.example.com",
+    "database": "データベース（任意）",
+    "catalog": "カタログ（任意）",
+    "schema": "スキーマ（任意）",
+    "tls": "TLS を使用",
+    "authentication": "認証",
+    "authPassword": "パスワード",
+    "authKey": "秘密鍵",
+    "privateKey": "秘密鍵",
+    "passphrase": "パスフレーズ（任意）",
+    "hiveNone": "なし",
+    "hiveLdap": "LDAP / ユーザー名 + パスワード",
+    "connect": "接続",
+    "connecting": "接続中…",
+    "disconnect": "切断",
+    "credentialsNote": "認証情報はローカルプロキシにのみ送信され、保存されません。"
+  },
+  "errors": {
+    "hostUserRequired": "ホストとユーザー名は必須です。",
+    "hostRequired": "ホストは必須です。",
+    "websocket": "WebSocket エラー — プロキシはまだ起動していますか？"
+  },
+  "terminal": {
+    "telnetWarning": "Telnet はパスワードを含むすべての通信を暗号化せずに送信します。信頼できるネットワークでのみ使用してください。",
+    "starting": "ターミナルを起動中…",
+    "connecting": "{{target}} に接続中",
+    "connected": "接続済み",
+    "closed": "セッションが終了しました"
+  },
+  "query": {
+    "readOnlyNote": "読み取り専用コンソール：SELECT（および WITH、SHOW、DESCRIBE、EXPLAIN）のみ実行できます。確実に保護するには、読み取り専用のデータベースアカウントも併用してください。認証情報はローカルプロキシにのみ送信され、保存されません。",
+    "sql": "SQL",
+    "run": "実行",
+    "cancel": "キャンセル",
+    "maxRows": "最大行数",
+    "shortcut": "Ctrl/⌘ + Enter で実行",
+    "rowCount_other": "{{count}} 行 · {{ms}} ms",
+    "truncated": " · {{max}} 行で切り捨て — LIMIT を追加してください",
+    "csv": "CSV"
+  },
+  "settings": {
+    "connectionMethod": "接続方法",
+    "connectionMethodText": "ブラウザは生の TCP ソケットを開けないため、SSH・Telnet・データベースのコンソールは、お使いのマシン上で動く小さなヘルパーを経由します。第三者には何も送信されません。",
+    "browser": "ブラウザ",
+    "localProxy": "ローカルプロキシ :{{port}}",
+    "target": "接続先システム",
+    "setupTitle": "プロキシのセットアップ",
+    "setupText": "プロキシは Desk-tools に同梱されていません。クローンして依存パッケージをインストールし、自分で起動してください（Node.js 18 以上と git が必要です）。その後、下で接続をテストします。",
+    "stepClone": "コードをクローン",
+    "stepInstall": "依存パッケージをインストール",
+    "stepStart": "プロキシを起動",
+    "copyCommand": "コマンドをコピー",
+    "testTitle": "ブラウザ ↔ プロキシのテスト",
+    "testButton": "接続テスト",
+    "testHelp": "このページとプロキシ間のリンクのみを確認します。どのサーバーにも接続しません。",
+    "testOk": "プロキシに接続でき、応答しています。",
+    "testFailHint": "プロキシが起動しているか確認してください（上の<b>プロキシのセットアップ</b>を参照）。その後、もう一度テストしてください。",
+    "step": {
+      "http": "HTTP でプロキシに到達",
+      "websocket": "WebSocket を開く",
+      "roundtrip": "メッセージを送受信"
+    },
+    "detail": {
+      "versionInfo": "v{{version}}、プロトコル {{protocol}}",
+      "protocolTooNew": "プロキシはプロトコル {{protocol}} を使用していますが、このアプリは {{supported}} までに対応しています。Desk-tools を更新してください。",
+      "unreachable": "127.0.0.1:{{port}} から応答がありません。プロキシは起動していますか？",
+      "notProxy": "このポートで応答がありましたが、desk-tools-local-proxy ではありません",
+      "wsTimeout": "WebSocket を開く際にタイムアウトしました",
+      "wsRefused": "プロキシが WebSocket を拒否しました（このサイトのオリジンは許可されていますか？）",
+      "noReply": "プロキシから応答がありません",
+      "closed": "プロキシが接続を閉じました"
+    },
+    "servicesTitle": "サービス",
+    "serviceUnsupported": "起動中のプロキシは未対応です — 更新してください",
+    "noteListen": "プロキシは <code>127.0.0.1:{{port}}</code> のみで待ち受け、Desk-tools サイトからの接続だけを受け付けます。認証情報はセッション中メモリ上にのみ保持され、ディスクには書き込まれません。",
+    "noteOrigins": "Desk-tools を自分でホストしていますか？ <code>DESK_TOOLS_ALLOWED_ORIGINS=https://your.host</code> でオリジンを許可してください。",
+    "noteSource": "ソース："
+  }
+}

@@ -3,6 +3,7 @@
 import * as React from "react";
 import "@xterm/xterm/css/xterm.css";
 import { AlertTriangle, Terminal as TerminalIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -24,6 +25,7 @@ export function TerminalConsole({ service }: { service: "ssh" | "telnet" }) {
 }
 
 function TerminalSession({ service }: { service: "ssh" | "telnet" }) {
+  const { t } = useTranslation("proxy");
   const meta = getService(service)!;
   const isSsh = service === "ssh";
   const saved = useSavedConnections(service);
@@ -66,11 +68,11 @@ function TerminalSession({ service }: { service: "ssh" | "telnet" }) {
 
   const connect = async () => {
     if (!host || (isSsh && !username)) {
-      setError(isSsh ? "Host and username are required." : "Host is required.");
+      setError(isSsh ? t("errors.hostUserRequired") : t("errors.hostRequired"));
       return;
     }
     setError(null);
-    setStatusText("Starting terminal…");
+    setStatusText(t("terminal.starting"));
     setPhase("connecting");
 
     const portNum = Number(port) || meta.defaultPort;
@@ -132,16 +134,16 @@ function TerminalSession({ service }: { service: "ssh" | "telnet" }) {
           term.writeln(`\r\n\x1b[31m[proxy] ${msg.message}\x1b[0m`);
           setError(msg.message);
         } else if (msg.type === "status") {
-          if (msg.state === "connecting") setStatusText(`Connecting ${msg.message || ""}`);
-          if (msg.state === "ready") setStatusText("Connected");
-          if (msg.state === "closed") setStatusText("Session closed");
+          if (msg.state === "connecting") setStatusText(t("terminal.connecting", { target: msg.message || "" }));
+          if (msg.state === "ready") setStatusText(t("terminal.connected"));
+          if (msg.state === "closed") setStatusText(t("terminal.closed"));
         }
       } catch {
         /* ignore */
       }
     };
     ws.onclose = () => term.writeln("\r\n\x1b[33m[proxy] connection closed\x1b[0m");
-    ws.onerror = () => setError("WebSocket error — is the proxy still running?");
+    ws.onerror = () => setError(t("errors.websocket"));
 
     const dataDisposable = term.onData((d) => {
       if (ws.readyState === WebSocket.OPEN) ws.send(encoder.encode(d));
@@ -179,7 +181,7 @@ function TerminalSession({ service }: { service: "ssh" | "telnet" }) {
             {statusText && <span className="text-muted-foreground">— {statusText}</span>}
           </div>
           <Button variant="outline" size="sm" onClick={disconnect}>
-            Disconnect
+            {t("form.disconnect")}
           </Button>
         </div>
         {error && (
@@ -198,17 +200,17 @@ function TerminalSession({ service }: { service: "ssh" | "telnet" }) {
         {!isSsh && (
           <p className="text-sm text-amber-600 flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 shrink-0" />
-            Telnet sends everything — including passwords — unencrypted. Use it only on trusted networks.
+            {t("terminal.telnetWarning")}
           </p>
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3">
           <div className="space-y-1">
-            <label className="text-sm font-medium" htmlFor="host">Host</label>
-            <Input id="host" placeholder="example.com or 192.168.1.10" value={host} onChange={(e) => setHost(e.target.value)} />
+            <label className="text-sm font-medium" htmlFor="host">{t("form.host")}</label>
+            <Input id="host" placeholder={t("form.hostPlaceholderTerminal")} value={host} onChange={(e) => setHost(e.target.value)} />
           </div>
           <div className="space-y-1">
-            <label className="text-sm font-medium" htmlFor="port">Port</label>
+            <label className="text-sm font-medium" htmlFor="port">{t("form.port")}</label>
             <Input id="port" className="w-24" value={port} onChange={(e) => setPort(e.target.value)} />
           </div>
         </div>
@@ -216,31 +218,31 @@ function TerminalSession({ service }: { service: "ssh" | "telnet" }) {
         {isSsh && (
           <>
             <div className="space-y-1">
-              <label className="text-sm font-medium" htmlFor="username">Username</label>
+              <label className="text-sm font-medium" htmlFor="username">{t("form.username")}</label>
               <Input id="username" placeholder="root" value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Authentication</label>
+              <label className="text-sm font-medium">{t("form.authentication")}</label>
               <div className="flex gap-2">
                 <Button type="button" variant={authType === "password" ? "default" : "outline"} size="sm" onClick={() => setAuthType("password")}>
-                  Password
+                  {t("form.authPassword")}
                 </Button>
                 <Button type="button" variant={authType === "key" ? "default" : "outline"} size="sm" onClick={() => setAuthType("key")}>
-                  Private key
+                  {t("form.authKey")}
                 </Button>
               </div>
             </div>
 
             {authType === "password" ? (
               <div className="space-y-1">
-                <label className="text-sm font-medium" htmlFor="password">Password</label>
+                <label className="text-sm font-medium" htmlFor="password">{t("form.password")}</label>
                 <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
             ) : (
               <div className="space-y-3">
                 <div className="space-y-1">
-                  <label className="text-sm font-medium" htmlFor="key">Private key</label>
+                  <label className="text-sm font-medium" htmlFor="key">{t("form.privateKey")}</label>
                   <textarea
                     id="key"
                     className="w-full h-32 rounded-md border bg-background p-2 font-mono text-xs"
@@ -250,7 +252,7 @@ function TerminalSession({ service }: { service: "ssh" | "telnet" }) {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-sm font-medium" htmlFor="passphrase">Passphrase (optional)</label>
+                  <label className="text-sm font-medium" htmlFor="passphrase">{t("form.passphrase")}</label>
                   <Input id="passphrase" type="password" value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
                 </div>
               </div>
@@ -265,10 +267,10 @@ function TerminalSession({ service }: { service: "ssh" | "telnet" }) {
         )}
 
         <Button onClick={connect} className="gap-2">
-          <TerminalIcon className="h-4 w-4" /> Connect
+          <TerminalIcon className="h-4 w-4" /> {t("form.connect")}
         </Button>
         <p className="text-xs text-muted-foreground">
-          Credentials are sent only to your local proxy and are never stored.
+          {t("form.credentialsNote")}
         </p>
       </Card>
 
