@@ -203,5 +203,33 @@
     "newChat": "新しいチャット",
     "startConversation": "ローカルAIと新しい会話を開始する",
     "inputPlaceholder": "メッセージを入力..."
+  },
+  "background-remover": {
+    "name": "背景削除",
+    "description": "色を指定して PNG・GIF 画像の背景を削除"
+  },
+  "scientific-calculator": {
+    "name": "関数電卓",
+    "description": "三角関数・対数・指数関数を使った高度な数式計算"
+  },
+  "image-filters": {
+    "name": "画像フィルター",
+    "description": "明るさやコントラストなどのフィルターを画像に適用"
+  },
+  "pixel-art-editor": {
+    "name": "ピクセルアートエディター",
+    "description": "ピクセルアートのアイコンやスプライトを作成"
+  },
+  "character-map": {
+    "name": "文字コード表",
+    "description": "特殊文字・記号・絵文字を閲覧、検索、コピー"
+  },
+  "encoding-converter": {
+    "name": "エンコーディング変換",
+    "description": "文字エンコーディングを変換して文字化けを修正"
+  },
+  "consoles": {
+    "name": "コンソール",
+    "description": "ローカルプロキシ経由の SSH、Telnet、読み取り専用データベースコンソール"
   }
 }

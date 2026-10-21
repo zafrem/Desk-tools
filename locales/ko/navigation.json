@@ -22,5 +22,6 @@
   "noRecentChats": "최근 채팅 내역이 없습니다",
   "github": "GitHub",
   "changeLanguage": "언어 변경",
-  "settings": "설정"
+  "settings": "설정",
+  "weeklyScheduler": "스케줄"
 }

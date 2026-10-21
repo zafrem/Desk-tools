@@ -45,5 +45,58 @@
     "todo": "할 일",
     "inProgress": "진행 중",
     "done": "완료"
+  },
+  "setupGuide": {
+    "title": "Ollama 설정 및 사용 가이드",
+    "step1": {
+      "title": "1. 플랫폼 설치",
+      "description": "Ollama를 설치하고 브라우저의 요청을 허용하도록 CORS를 설정합니다.",
+      "corsTitle": "필수: Ollama에서 Origin 허용",
+      "corsDesc": "Ollama는 기본적으로 외부 Origin의 요청을 차단합니다. OLLAMA_ORIGINS 환경 변수를 설정한 뒤 Ollama를 다시 시작하세요."
+    },
+    "step2": {
+      "title": "2. 모델 목록 (설정)",
+      "description": "Ollama를 Desk-tools에 연결하고 사용할 모델을 선택합니다.",
+      "test": "Base URL(보통 http://localhost:11434)을 입력하고 '테스트'를 클릭하세요.",
+      "select": "연결되면 드롭다운에서 모델을 선택하고 '저장'을 클릭하세요."
+    },
+    "step3": {
+      "title": "3. 모델 사용",
+      "description": "저장한 후 사이드바의 'AI 모듈'에서 'AI 채팅'을 찾아 로컬 LLM을 사용해 보세요."
+    }
+  },
+  "vllmGuide": {
+    "title": "vLLM 설정 및 사용 가이드",
+    "step1": {
+      "title": "1. 설치",
+      "description": "pip로 vLLM을 설치하여 시작하세요."
+    },
+    "step2": {
+      "title": "2. 서버 시작",
+      "description": "원하는 모델로 OpenAI 호환 API 서버를 실행합니다."
+    },
+    "step3": {
+      "title": "3. 설정",
+      "description": "Base URL(기본값: http://localhost:8000)을 입력하고 '테스트'를 클릭하여 사용 가능한 모델을 불러오세요."
+    }
+  },
+  "sglangGuide": {
+    "title": "SGLang 설정 및 사용 가이드",
+    "step1": {
+      "title": "1. 설치",
+      "description": "pip로 SGLang을 설치하여 시작하세요."
+    },
+    "step2": {
+      "title": "2. 서버 시작",
+      "description": "원하는 모델과 포트로 SGLang 서버를 실행합니다."
+    },
+    "step3": {
+      "title": "3. 설정",
+      "description": "Base URL(기본값: http://localhost:30000)을 입력하고 '테스트'를 클릭하여 사용 가능한 모델을 불러오세요."
+    }
+  },
+  "settingsDialog": {
+    "proxyTab": "프록시 서버",
+    "description": "로컬 LLM과 SSH, Telnet 및 데이터베이스 콘솔에 사용하는 로컬 프록시를 설정합니다."
   }
 }

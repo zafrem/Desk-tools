@@ -227,5 +227,9 @@
     "newChat": "New Chat",
     "startConversation": "Start a new conversation with your local AI",
     "inputPlaceholder": "Type your message..."
+  },
+  "consoles": {
+    "name": "Consoles",
+    "description": "SSH, Telnet and read-only database consoles via a local proxy"
   }
 }

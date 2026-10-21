@@ -94,5 +94,9 @@
       "title": "3. Configuration",
       "description": "Enter the Base URL (default: http://localhost:30000) and click 'Test' to fetch available models."
     }
+  },
+  "settingsDialog": {
+    "proxyTab": "Proxy server",
+    "description": "Configure the local LLM and the local proxy used by the SSH, Telnet and database consoles."
   }
 }

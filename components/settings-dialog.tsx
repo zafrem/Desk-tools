@@ -150,13 +150,13 @@ export function SettingsDialog() {
             {t("labels.settings")}
           </DialogTitle>
           <DialogDescription>
-            Configure the local LLM and the local proxy used by the SSH, Telnet and database consoles.
+            {t("settingsDialog.description")}
           </DialogDescription>
         </DialogHeader>
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="llm">LLM</TabsTrigger>
-            <TabsTrigger value="proxy">Proxy server</TabsTrigger>
+            <TabsTrigger value="proxy">{t("settingsDialog.proxyTab")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="llm">

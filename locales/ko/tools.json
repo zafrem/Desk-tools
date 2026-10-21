@@ -227,5 +227,9 @@
     "newChat": "새 채팅",
     "startConversation": "로컬 AI와 새로운 대화를 시작하세요",
     "inputPlaceholder": "메시지를 입력하세요..."
+  },
+  "consoles": {
+    "name": "콘솔",
+    "description": "로컬 프록시를 통한 SSH, Telnet 및 읽기 전용 데이터베이스 콘솔"
   }
 }

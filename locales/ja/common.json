@@ -45,5 +45,58 @@
     "todo": "未着手",
     "inProgress": "進行中",
     "done": "完了"
+  },
+  "setupGuide": {
+    "title": "Ollama のセットアップと使い方ガイド",
+    "step1": {
+      "title": "1. プラットフォームのインストール",
+      "description": "Ollama をインストールし、ブラウザからのリクエストを許可するよう CORS を設定します。",
+      "corsTitle": "必須：Ollama でオリジンを許可",
+      "corsDesc": "Ollama は既定で外部オリジンからのリクエストをブロックします。環境変数 OLLAMA_ORIGINS を設定してから Ollama を再起動してください。"
+    },
+    "step2": {
+      "title": "2. モデル一覧（設定）",
+      "description": "Ollama を Desk-tools に接続し、使用するモデルを選択します。",
+      "test": "Base URL（通常は http://localhost:11434）を入力して「テスト」をクリックします。",
+      "select": "接続できたらドロップダウンからモデルを選び、「保存」をクリックします。"
+    },
+    "step3": {
+      "title": "3. モデルの利用",
+      "description": "保存後、サイドバーの「AI モジュール」にある「AI チャット」からローカル LLM を使い始められます。"
+    }
+  },
+  "vllmGuide": {
+    "title": "vLLM のセットアップと使い方ガイド",
+    "step1": {
+      "title": "1. インストール",
+      "description": "pip で vLLM をインストールして始めます。"
+    },
+    "step2": {
+      "title": "2. サーバーの起動",
+      "description": "使用するモデルを指定して、OpenAI 互換 API サーバーを起動します。"
+    },
+    "step3": {
+      "title": "3. 設定",
+      "description": "Base URL（既定：http://localhost:8000）を入力し、「テスト」をクリックして利用可能なモデルを取得します。"
+    }
+  },
+  "sglangGuide": {
+    "title": "SGLang のセットアップと使い方ガイド",
+    "step1": {
+      "title": "1. インストール",
+      "description": "pip で SGLang をインストールして始めます。"
+    },
+    "step2": {
+      "title": "2. サーバーの起動",
+      "description": "使用するモデルとポートを指定して SGLang サーバーを起動します。"
+    },
+    "step3": {
+      "title": "3. 設定",
+      "description": "Base URL（既定：http://localhost:30000）を入力し、「テスト」をクリックして利用可能なモデルを取得します。"
+    }
+  },
+  "settingsDialog": {
+    "proxyTab": "プロキシサーバー",
+    "description": "ローカル LLM と、SSH・Telnet・データベースコンソールで使うローカルプロキシを設定します。"
   }
 }
