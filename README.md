@@ -65,8 +65,7 @@ Browser  ──WebSocket──►  local proxy (127.0.0.1:8722)  ──native pr
 The wire format is specified in [`Desk-tools-local-proxy/PROTOCOL.md`](./Desk-tools-local-proxy/PROTOCOL.md).
 
 The proxy is not bundled or published as a package: clone it, install its dependencies and start it yourself
-(Node.js 18+ and git). Setup steps and the browser ↔ proxy test are in **Settings → Install** and
-**Settings → Proxy**.
+(Node.js 18+ and git). Setup steps and the browser ↔ proxy test are in **Settings → Proxy server**.
 
 ```bash
 git clone https://github.com/zafrem/Desk-tools-local-proxy.git

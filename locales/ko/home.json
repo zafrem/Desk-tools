@@ -36,7 +36,7 @@
     },
     "consoles": {
       "label": "콘솔 및 자동화:",
-      "text": "<strong>콘솔</strong>에서 직접 실행하는 로컬 프록시를 통해 SSH, Telnet 및 읽기 전용 데이터베이스 콘솔(MySQL, PostgreSQL, Hive, Trino)을 사용하세요. <strong>설정 → 설치</strong>에서 준비할 수 있으며, 프록시 CLI로 브라우저 없이 스크립트에서 쿼리를 실행하고 CSV/JSON으로 내보낼 수도 있습니다."
+      "text": "<strong>콘솔</strong>에서 직접 실행하는 로컬 프록시를 통해 SSH, Telnet 및 읽기 전용 데이터베이스 콘솔(MySQL, PostgreSQL, Hive, Trino)을 사용하세요. <strong>설정 → 프록시 서버</strong>에서 준비할 수 있으며, 프록시 CLI로 브라우저 없이 스크립트에서 쿼리를 실행하고 CSV/JSON으로 내보낼 수도 있습니다."
     },
     "feedback": {
       "label": "피드백 및 요청:",

@@ -36,7 +36,7 @@
     },
     "consoles": {
       "label": "コンソールと自動化：",
-      "text": "<strong>コンソール</strong>では、自分で起動するローカルプロキシ経由で SSH、Telnet、読み取り専用のデータベースコンソール（MySQL、PostgreSQL、Hive、Trino）を使えます。<strong>設定 → インストール</strong>で準備でき、プロキシの CLI を使えばブラウザなしでスクリプトからクエリ実行や CSV/JSON エクスポートも可能です。"
+      "text": "<strong>コンソール</strong>では、自分で起動するローカルプロキシ経由で SSH、Telnet、読み取り専用のデータベースコンソール（MySQL、PostgreSQL、Hive、Trino）を使えます。<strong>設定 → プロキシサーバー</strong>で準備でき、プロキシの CLI を使えばブラウザなしでスクリプトからクエリ実行や CSV/JSON エクスポートも可能です。"
     },
     "feedback": {
       "label": "フィードバックとリクエスト：",

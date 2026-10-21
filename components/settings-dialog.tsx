@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { InstallTab, ProxyTab } from "@/components/proxy-settings";
+import { ProxyTab } from "@/components/proxy-settings";
 import { OPEN_SETTINGS_EVENT } from "@/components/console/proxy-gate";
 import { getPreference, setPreference } from "@/lib/db";
 
@@ -47,11 +47,11 @@ export function SettingsDialog() {
   const [showSglangGuide, setShowSglangGuide] = React.useState(false);
   const [copiedCommand, setCopiedCommand] = React.useState(false);
 
-  // Console pages ask us to open on a specific tab (e.g. "install").
+  // Console pages ask us to open on a specific tab (e.g. "proxy").
   React.useEffect(() => {
     const onOpen = (e: Event) => {
       const requested = (e as CustomEvent<string>).detail;
-      if (requested === "llm" || requested === "proxy" || requested === "install") setTab(requested);
+      if (requested === "llm" || requested === "proxy") setTab(requested);
       setOpen(true);
     };
     window.addEventListener(OPEN_SETTINGS_EVENT, onOpen);
@@ -154,10 +154,9 @@ export function SettingsDialog() {
           </DialogDescription>
         </DialogHeader>
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="llm">LLM</TabsTrigger>
-            <TabsTrigger value="proxy">Proxy</TabsTrigger>
-            <TabsTrigger value="install">Install</TabsTrigger>
+            <TabsTrigger value="proxy">Proxy server</TabsTrigger>
           </TabsList>
 
           <TabsContent value="llm">
@@ -535,10 +534,6 @@ export function SettingsDialog() {
 
           <TabsContent value="proxy" className="py-4">
             <ProxyTab active={open && tab === "proxy"} />
-          </TabsContent>
-
-          <TabsContent value="install" className="py-4">
-            <InstallTab />
           </TabsContent>
         </Tabs>
       </DialogContent>

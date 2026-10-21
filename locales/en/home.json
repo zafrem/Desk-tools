@@ -36,7 +36,7 @@
     },
     "consoles": {
       "label": "Consoles & Automation:",
-      "text": "Open <strong>Consoles</strong> for SSH, Telnet and read-only database consoles (MySQL, PostgreSQL, Hive, Trino) through a local proxy you run yourself. Set it up under <strong>Settings → Install</strong>; the proxy's CLI also runs queries and exports CSV/JSON from scripts, no browser needed."
+      "text": "Open <strong>Consoles</strong> for SSH, Telnet and read-only database consoles (MySQL, PostgreSQL, Hive, Trino) through a local proxy you run yourself. Set it up under <strong>Settings → Proxy server</strong>; the proxy's CLI also runs queries and exports CSV/JSON from scripts, no browser needed."
     },
     "feedback": {
       "label": "Feedback & Requests:",

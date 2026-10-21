@@ -11,6 +11,7 @@ import {
   Loader2,
   MinusCircle,
   Network,
+  Terminal,
   PlugZap,
   RefreshCw,
 } from "lucide-react";
@@ -105,6 +106,27 @@ export function ProxyTab({ active }: { active: boolean }) {
       </div>
 
       <div className="space-y-2 border-t pt-4">
+        <h4 className="font-medium leading-none flex items-center gap-2">
+          <Terminal className="h-4 w-4" />
+          Set up the proxy
+        </h4>
+        <p className="text-sm text-muted-foreground">
+          The proxy is not shipped with Desk-tools. Clone it, install its dependencies and start it yourself (Node.js
+          18+ and git required), then test the connection below.
+        </p>
+        <ol className="space-y-2">
+          {INSTALL_STEPS.map((step, i) => (
+            <li key={step.command} className="space-y-1">
+              <div className="text-xs font-medium">
+                {i + 1}. {step.label}
+              </div>
+              <CopyableCommand command={step.command} />
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="space-y-2 border-t pt-4">
         <div className="flex items-center justify-between gap-2">
           <h4 className="font-medium leading-none flex items-center gap-2">
             <PlugZap className="h-4 w-4" />
@@ -144,7 +166,7 @@ export function ProxyTab({ active }: { active: boolean }) {
         )}
         {done && !passed && (
           <p className="text-sm text-muted-foreground">
-            Not working yet? Open the <strong>Install</strong> tab to set up and start the proxy, then test again.
+            Not working yet? Check that the proxy is running (see <strong>Set up the proxy</strong> above), then test again.
           </p>
         )}
       </div>
@@ -170,31 +192,7 @@ export function ProxyTab({ active }: { active: boolean }) {
           })}
         </div>
       </div>
-    </div>
-  );
-}
-
-/** "Install" tab: how to get and run the local proxy from source. */
-export function InstallTab() {
-  return (
-    <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">
-        The proxy is not shipped with Desk-tools. Clone it, install its dependencies and start it yourself (Node.js 18+
-        and git required). Then use the <strong>Proxy</strong> tab to test the connection.
-      </p>
-
-      <ol className="space-y-3">
-        {INSTALL_STEPS.map((step, i) => (
-          <li key={step.command} className="space-y-1">
-            <h4 className="text-sm font-semibold">
-              {i + 1}. {step.label}
-            </h4>
-            <CopyableCommand command={step.command} />
-          </li>
-        ))}
-      </ol>
-
-      <div className="space-y-1 text-xs text-muted-foreground">
+      <div className="space-y-1 border-t pt-4 text-xs text-muted-foreground">
         <p>
           The proxy listens on <code className="bg-muted px-1 rounded">127.0.0.1:{PROXY_PORT}</code> only and accepts
           connections just from the Desk-tools site. Credentials are held in memory for the session and never written

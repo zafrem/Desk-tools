@@ -9,7 +9,7 @@ import { fetchHealth, timeoutSignal, type ProxyHealth, type ServiceId } from "@/
 export const OPEN_SETTINGS_EVENT = "desk-tools:open-settings";
 
 /** Asks the settings dialog to open on the given tab. */
-export function openSettings(tab: "llm" | "proxy" | "install") {
+export function openSettings(tab: "llm" | "proxy") {
   window.dispatchEvent(new CustomEvent(OPEN_SETTINGS_EVENT, { detail: tab }));
 }
 
@@ -77,11 +77,8 @@ export function ProxyGate({ service, children }: { service: ServiceId; children:
         </div>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button className="gap-2" onClick={() => openSettings("install")}>
-          <Settings className="h-4 w-4" /> Settings → Install
-        </Button>
-        <Button variant="outline" onClick={() => openSettings("proxy")}>
-          Test connection
+        <Button className="gap-2" onClick={() => openSettings("proxy")}>
+          <Settings className="h-4 w-4" /> Settings → Proxy server
         </Button>
       </div>
       <p className="text-xs text-muted-foreground flex items-center gap-2">

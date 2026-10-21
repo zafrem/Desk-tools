@@ -37,7 +37,7 @@ export default function ConsolesPage() {
         })}
       </div>
       <p className="text-sm text-muted-foreground">
-        Download and test the local proxy under <strong>Settings → Install / Proxy</strong>.
+        Set up and test the local proxy under <strong>Settings → Proxy server</strong>.
       </p>
     </ToolLayout>
   );
